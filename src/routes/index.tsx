@@ -150,10 +150,10 @@ function Index() {
         .pricing-title { font-family: 'Bebas Neue', sans-serif; font-size: 46px; letter-spacing: 1px; line-height: 1.05; color: var(--blue); padding: 30px 0; }
         .pricing-grid { display: flex; flex-direction: column; gap: var(--g); }
         .price-card { background: var(--blue); border-radius: 4px; color: #fff; overflow: hidden; border: 1px solid var(--blue); }
-        .price-card-header { display: flex; justify-content: space-between; align-items: center; padding: 16px var(--p); border-bottom: 1px solid rgba(255,255,255,.3); }
+        .price-card-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid rgba(255,255,255,.3); }
         .plan-name { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
         .plan-icon { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 13px; }
-        .price-card-body { padding: var(--p); }
+        .price-card-body { padding: 20px; }
         .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: -1px; line-height: 1; margin-bottom: 6px; }
         .price-delivery { font-size: 12px; font-weight: 700; margin-bottom: var(--g); }
         .price-divider { height: 1px; background: rgba(255,255,255,.3); margin-bottom: var(--g); }
@@ -162,7 +162,7 @@ function Index() {
         .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.45; }
         .price-features li.add-on { opacity: .6; }
         .check { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
-        .btn-white { display: block; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 16px var(--p); border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; }
+        .btn-white { display: inline-block; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 16px 28px; border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
         .btn-white:hover { background: #000; color: #fff; border-color: #000; }
         .faq-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
         .faq-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 2px; padding: 30px 0; }
