@@ -339,7 +339,17 @@ function Index() {
           <a href="#contact" className="btn-black">Start a project</a>
         </section>
 
-        <div className="ticker-wrapper">
+        <div
+          className="ticker-wrapper"
+          ref={tickerRef}
+          onMouseDown={onDown}
+          onMouseMove={onMove}
+          onMouseUp={onUp}
+          onMouseLeave={onUp}
+          onTouchStart={onDown}
+          onTouchMove={onMove}
+          onTouchEnd={onUp}
+        >
           <div className="ticker-track">
             {[...tickerImages, ...tickerImages].map((src, i) => (
               <div key={i} className="ticker-item"><img src={src} alt="" /></div>
