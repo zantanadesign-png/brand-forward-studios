@@ -439,13 +439,15 @@ function Index() {
           <div className="about-inner">
             <h2 className="about-title">MORE ABOUT<br />ZANTANA STUDIO</h2>
             <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" />
-            <div className="about-headline">
-              HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT CREATES STANDOUT BRANDS WITH LASTING IMPACT. I BLEND DESIGN, STRATEGY, AND SMART SOLUTIONS TO CREATE UNIQUE DIGITAL EXPERIENCES.
+            <div className="about-right">
+              <div className="about-headline">
+                HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT CREATES STANDOUT BRANDS WITH LASTING IMPACT. I BLEND DESIGN, STRATEGY, AND SMART SOLUTIONS TO CREATE UNIQUE DIGITAL EXPERIENCES.
+              </div>
+              <p className="about-body">
+                Building strategic brand identities and high-performing websites that connect deeply with your target audience. Every project is crafted with precision to help your business grow online.
+              </p>
+              <a href="#contact" className="btn-white-outline">Start a project</a>
             </div>
-            <p className="about-body">
-              Building strategic brand identities and high-performing websites that connect deeply with your target audience. Every project is crafted with precision to help your business grow online.
-            </p>
-            <a href="#contact" className="btn-white-outline">Start a project</a>
           </div>
         </section>
 
