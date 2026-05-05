@@ -206,6 +206,78 @@ function Index() {
         .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; display: flex; align-items: center; gap: 6px; }
         .footer-desc { max-width: 480px; margin: 30px auto 0; padding: 24px var(--p) 0; border-top: 1px solid #000; }
         .footer-desc p { font-size: 12px; font-weight: 700; text-transform: uppercase; text-align: left; letter-spacing: .5px; line-height: 1.75; }
+
+        @media (min-width: 900px) {
+          .z-root nav,
+          .hero,
+          .section-title,
+          .phases,
+          .projects,
+          .cta-banner,
+          .process-section,
+          .pricing-section,
+          .faq-section,
+          .about-inner,
+          .contact-section,
+          .footer-links,
+          .footer-desc { max-width: 1200px !important; margin-left: auto; margin-right: auto; padding-left: 40px; padding-right: 40px; }
+
+          .z-root nav { padding-top: 32px; }
+          .nav-links { gap: 32px; }
+          .nav-links a { font-size: 12px; }
+
+          .hero { padding-top: 80px; }
+          .hero h1 { font-size: 96px; letter-spacing: -3px; max-width: 1000px; }
+          .hero-sub { font-size: 18px; max-width: 540px; }
+
+          .section-title { font-size: 110px; letter-spacing: 2px; padding: 60px 40px; }
+          .process-title, .pricing-title, .faq-title { font-size: 110px; padding: 60px 0; }
+          .about-title { font-size: 96px; text-align: left; }
+          .contact-title { font-size: 88px; letter-spacing: -3px; }
+
+          .phases { display: grid; grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+          .phase-card { display: flex; flex-direction: column; }
+          .phase-card-bottom { flex: 1; }
+
+          .projects { display: grid; grid-template-columns: repeat(2, 1fr); }
+          .project-card img { height: 360px; }
+
+          .cta-banner-inner { display: grid; grid-template-columns: 1fr 1fr; }
+          .cta-banner-inner img { height: 100%; min-height: 220px; }
+          .cta-body { border-top: none; border-left: 1px solid #000; }
+          .cta-text { font-size: 18px; }
+
+          .process-step { display: grid; grid-template-columns: 100px 260px 1fr; gap: 32px; align-items: start; padding: 28px 0; }
+          .process-num { margin-bottom: 0; font-size: 13px; }
+          .process-name { margin-bottom: 0; font-size: 16px; }
+          .process-step p { font-size: 15px; }
+
+          .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); align-items: stretch; }
+          .price-card { display: flex; flex-direction: column; }
+          .price-card-body { flex: 1; display: flex; flex-direction: column; }
+          .price-features { flex: 1; }
+          .price-amount { font-size: 96px; }
+
+          .faq-question { padding: 28px 40px; }
+          .faq-question span { font-size: 15px; }
+
+          .about-section { padding: 60px 0; }
+          .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+          .about-title { grid-column: 1 / -1; margin-bottom: 0; }
+          .about-photo { margin-bottom: 0; aspect-ratio: 1/1; }
+          .about-right { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
+          .about-headline { text-align: left; font-size: 18px; margin-bottom: 0; }
+          .about-body { text-align: left; margin-bottom: 0; font-size: 15px; }
+          .btn-white-outline { display: inline-block; width: auto; padding: 18px 40px; }
+
+          .contact-form { padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+          .contact-form .form-group:nth-child(5),
+          .contact-form .btn-form-submit { grid-column: 1 / -1; }
+          .btn-form-submit { width: auto; justify-self: start; padding: 18px 40px; }
+
+          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 32px; }
+          .ticker-item { width: 280px; height: 160px; }
+        }
       `}</style>
 
       <div className="z-root">
@@ -367,13 +439,15 @@ function Index() {
           <div className="about-inner">
             <h2 className="about-title">MORE ABOUT<br />ZANTANA STUDIO</h2>
             <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" />
-            <div className="about-headline">
-              HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT CREATES STANDOUT BRANDS WITH LASTING IMPACT. I BLEND DESIGN, STRATEGY, AND SMART SOLUTIONS TO CREATE UNIQUE DIGITAL EXPERIENCES.
+            <div className="about-right">
+              <div className="about-headline">
+                HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT CREATES STANDOUT BRANDS WITH LASTING IMPACT. I BLEND DESIGN, STRATEGY, AND SMART SOLUTIONS TO CREATE UNIQUE DIGITAL EXPERIENCES.
+              </div>
+              <p className="about-body">
+                Building strategic brand identities and high-performing websites that connect deeply with your target audience. Every project is crafted with precision to help your business grow online.
+              </p>
+              <a href="#contact" className="btn-white-outline">Start a project</a>
             </div>
-            <p className="about-body">
-              Building strategic brand identities and high-performing websites that connect deeply with your target audience. Every project is crafted with precision to help your business grow online.
-            </p>
-            <a href="#contact" className="btn-white-outline">Start a project</a>
           </div>
         </section>
 
