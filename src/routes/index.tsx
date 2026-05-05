@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -90,6 +90,27 @@ const faqs = [
 
 function Index() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const tickerRef = useRef<HTMLDivElement>(null);
+  const drag = useRef({ down: false, startX: 0, scrollLeft: 0 });
+
+  const onDown = (e: React.MouseEvent | React.TouchEvent) => {
+    const el = tickerRef.current;
+    if (!el) return;
+    const x = "touches" in e ? e.touches[0].pageX : e.pageX;
+    drag.current = { down: true, startX: x, scrollLeft: el.scrollLeft };
+    el.classList.add("dragging");
+  };
+  const onMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!drag.current.down) return;
+    const el = tickerRef.current;
+    if (!el) return;
+    const x = "touches" in e ? e.touches[0].pageX : e.pageX;
+    el.scrollLeft = drag.current.scrollLeft - (x - drag.current.startX);
+  };
+  const onUp = () => {
+    drag.current.down = false;
+    tickerRef.current?.classList.remove("dragging");
+  };
 
   return (
     <>
@@ -105,29 +126,31 @@ function Index() {
         .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: var(--g); }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
-        .hero h1 { font-weight: 700; font-size: 48px; line-height: 1; letter-spacing: -2px; margin-bottom: var(--g); }
+        .hero h1 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 56px; line-height: .95; letter-spacing: 1px; margin-bottom: var(--g); }
         .hero-sub { font-size: 16px; line-height: 1.65; color: #333; margin-bottom: 28px; max-width: 340px; }
-        .btn-black { display: inline-block; background: #000; color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: var(--p) 28px; border-radius: 4px; text-decoration: none; border: 1px solid #000; cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s; }
+        .btn-black { display: inline-block; background: #000; color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid #000; cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s; width: auto; align-self: flex-start; }
         .btn-black:hover { background: var(--blue); border-color: var(--blue); }
-        .ticker-wrapper { overflow: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; }
-        .ticker-track { display: flex; gap: 16px; width: max-content; animation: ticker-scroll 30s linear infinite; }
-        .ticker-track:hover { animation-play-state: paused; }
+        .ticker-wrapper { overflow-x: auto; overflow-y: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; cursor: grab; user-select: none; scrollbar-width: none; }
+        .ticker-wrapper::-webkit-scrollbar { display: none; }
+        .ticker-wrapper.dragging { cursor: grabbing; }
+        .ticker-track { display: flex; gap: 16px; width: max-content; }
         @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .ticker-item { width: 260px; height: 160px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+        .ticker-item { width: 280px; height: 180px; border-radius: 4px; overflow: hidden; flex-shrink: 0; pointer-events: none; }
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 1px; line-height: 1; text-align: left; padding: 30px var(--p); max-width: 480px; margin: 0 auto; }
         .phases, .projects { max-width: 480px; margin: 0 auto; padding: 0 var(--p); display: flex; flex-direction: column; gap: var(--g); }
+        .see-all-wrap { max-width: 480px; margin: 0 auto; padding: 30px var(--p) 0; }
         .phase-card { border-radius: 4px; overflow: hidden; border: 1px solid #000; }
-        .phase-card-top { background: var(--blue); color: #fff; padding: var(--p); }
+        .phase-card-top { background: var(--blue); color: #fff; padding: 20px; }
         .phase-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
         .phase-card-top ol { padding-left: 16px; }
         .phase-card-top ol li { font-size: 14px; margin-bottom: 4px; }
-        .phase-card-bottom { background: #000; color: #fff; padding: var(--p); }
+        .phase-card-bottom { background: #000; color: #fff; padding: 20px; }
         .phase-card-bottom .tagline { font-weight: 700; font-size: 14px; line-height: 1.35; margin-bottom: 8px; }
         .phase-card-bottom p { font-size: 13px; line-height: 1.7; }
         .project-card { border: 1px solid #000; border-radius: 4px; overflow: hidden; }
         .project-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
-        .project-info { padding: 12px var(--p) 16px; }
+        .project-info { padding: 20px; }
         .project-name { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; }
         .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; }
         .cta-banner { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); }
@@ -148,10 +171,10 @@ function Index() {
         .pricing-title { font-family: 'Bebas Neue', sans-serif; font-size: 46px; letter-spacing: 1px; line-height: 1.05; color: var(--blue); padding: 30px 0; }
         .pricing-grid { display: flex; flex-direction: column; gap: var(--g); }
         .price-card { background: var(--blue); border-radius: 4px; color: #fff; overflow: hidden; border: 1px solid var(--blue); }
-        .price-card-header { display: flex; justify-content: space-between; align-items: center; padding: 16px var(--p); border-bottom: 1px solid rgba(255,255,255,.3); }
+        .price-card-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid rgba(255,255,255,.3); }
         .plan-name { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
         .plan-icon { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 13px; }
-        .price-card-body { padding: var(--p); }
+        .price-card-body { padding: 20px; }
         .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: -1px; line-height: 1; margin-bottom: 6px; }
         .price-delivery { font-size: 12px; font-weight: 700; margin-bottom: var(--g); }
         .price-divider { height: 1px; background: rgba(255,255,255,.3); margin-bottom: var(--g); }
@@ -160,14 +183,14 @@ function Index() {
         .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.45; }
         .price-features li.add-on { opacity: .6; }
         .check { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
-        .btn-white { display: block; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 16px var(--p); border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; }
+        .btn-white { display: inline-block; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 16px 28px; border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
         .btn-white:hover { background: #000; color: #fff; border-color: #000; }
         .faq-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
         .faq-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 2px; padding: 30px 0; }
         .faq-list { display: flex; flex-direction: column; gap: var(--g); }
         .faq-item { background: #f2f2f2; border-radius: 4px; overflow: hidden; transition: background .2s; }
         .faq-item.open { background: var(--blue); }
-        .faq-question { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: var(--p); text-align: left; }
+        .faq-question { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 20px; text-align: left; }
         .faq-question span { font-size: 13px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; line-height: 1.4; flex: 1; color: #000; transition: color .2s; }
         .faq-item.open .faq-question span { color: #fff; }
         .faq-icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; }
@@ -176,8 +199,8 @@ function Index() {
         .faq-icon::after { width: 1px; height: 14px; }
         .faq-item.open .faq-icon::before, .faq-item.open .faq-icon::after { background: #fff; }
         .faq-item.open .faq-icon::after { opacity: 0; transform: rotate(90deg); }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 var(--p); }
-        .faq-answer p { font-size: 13px; line-height: 1.7; padding-bottom: var(--p); color: #000; transition: color .2s; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 20px; }
+        .faq-answer p { font-size: 13px; line-height: 1.7; padding-bottom: 20px; color: #000; transition: color .2s; }
         .faq-item.open .faq-answer { max-height: 400px; }
         .faq-item.open .faq-answer p { color: #fff; }
         .about-section { background: #000; margin-top: 30px; padding: 30px var(--p); }
@@ -228,54 +251,61 @@ function Index() {
           .nav-links a { font-size: 12px; }
 
           .hero { padding-top: 80px; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 60px; }
-          .hero h1 { font-size: 96px; letter-spacing: -3px; max-width: 1000px; }
+          .hero h1 { font-size: 140px; letter-spacing: 2px; max-width: 1100px; }
           .hero-sub { font-size: 18px; max-width: 540px; }
-          .btn-black { margin-bottom: 0; }
+          .btn-black { margin-bottom: 0; padding: 18px 36px; }
 
           .section-title { font-size: 110px; letter-spacing: 2px; padding: 60px 40px; }
           .process-title, .pricing-title, .faq-title { font-size: 110px; padding: 60px 0; }
-          .about-title { font-size: 96px; text-align: left; }
+          .about-title { font-size: 96px; text-align: center; }
           .contact-title { font-size: 88px; letter-spacing: -3px; }
 
           .phases { display: grid; grid-template-columns: repeat(3, 1fr); align-items: stretch; }
           .phase-card { display: flex; flex-direction: column; }
+          .phase-card-top, .phase-card-bottom { padding: 20px; }
           .phase-card-bottom { flex: 1; }
 
           .projects { display: grid; grid-template-columns: repeat(2, 1fr); }
           .project-card img { height: 360px; }
+          .project-info { padding: 20px; }
 
-          .cta-banner-inner { display: grid; grid-template-columns: 1fr 1fr; }
-          .cta-banner-inner img { height: 100%; min-height: 220px; }
-          .cta-body { border-top: none; border-left: 1px solid #000; }
-          .cta-text { font-size: 18px; }
+          .see-all-wrap { max-width: none; padding: 30px 40px 0; display: flex; justify-content: flex-start; }
 
-          .process-step { display: grid; grid-template-columns: 100px 260px 1fr; gap: 32px; align-items: start; padding: 28px 0; }
+          .process-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+          .process-title { padding: 60px 0 0; position: sticky; top: 40px; }
+          .process-steps-col { display: flex; flex-direction: column; padding-top: 60px; }
+          .process-step { display: grid; grid-template-columns: 60px 1fr; gap: 24px; align-items: start; padding: 24px 0; }
           .process-num { margin-bottom: 0; font-size: 13px; }
-          .process-name { margin-bottom: 0; font-size: 16px; }
+          .process-name { margin-bottom: 6px; font-size: 16px; }
           .process-step p { font-size: 15px; }
 
           .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); align-items: stretch; }
           .price-card { display: flex; flex-direction: column; }
-          .price-card-body { flex: 1; display: flex; flex-direction: column; }
+          .price-card-body { flex: 1; display: flex; flex-direction: column; padding: 20px; }
           .price-features { flex: 1; }
           .price-amount { font-size: 96px; }
+          .btn-white { padding: 16px 28px; }
 
-          .faq-question { padding: 28px 40px; }
-          .faq-question span { font-size: 15px; }
+          .faq-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+          .faq-title { padding: 60px 0 0; position: sticky; top: 40px; }
+          .faq-list { padding-top: 60px; }
+          .faq-question { padding: 24px; }
+          .faq-question span { font-size: 14px; }
+          .faq-answer { padding: 0 24px; }
+          .faq-answer p { padding-bottom: 24px; }
 
           .about-section { padding: 60px 0; }
-          .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-          .about-title { grid-column: 1 / -1; margin-bottom: 0; }
-          .about-photo { margin-bottom: 0; aspect-ratio: 1/1; }
-          .about-right { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
-          .about-headline { text-align: left; font-size: 18px; margin-bottom: 0; }
-          .about-body { text-align: left; margin-bottom: 0; font-size: 15px; }
-          .btn-white-outline { display: inline-block; width: auto; padding: 18px 40px; }
+          .about-inner { max-width: 60% !important; margin: 0 auto !important; padding-left: 0 !important; padding-right: 0 !important; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+          .about-title { margin-bottom: 0; }
+          .about-photo { width: 100%; margin-bottom: 0; aspect-ratio: 16/10; }
+          .about-right { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
+          .about-headline { text-align: center; font-size: 18px; margin-bottom: 0; }
+          .about-body { text-align: center; margin-bottom: 0; font-size: 15px; }
+          .btn-white-outline { display: inline-block; width: auto; padding: 16px 32px; }
 
-          .contact-form { padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-          .contact-form .form-group:nth-child(5),
-          .contact-form .btn-form-submit { grid-column: 1 / -1; }
-          .btn-form-submit { width: auto; justify-self: start; padding: 18px 40px; }
+          .contact-section { max-width: 560px !important; margin: 0 auto !important; padding-left: 40px !important; padding-right: 40px !important; }
+          .contact-form { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+          .btn-form-submit { width: 100%; padding: 16px 20px; }
 
           .footer-logo-row { text-align: center; }
           .footer-logo { text-align: center; }
@@ -308,7 +338,17 @@ function Index() {
           <a href="#contact" className="btn-black">Start a project</a>
         </section>
 
-        <div className="ticker-wrapper">
+        <div
+          className="ticker-wrapper"
+          ref={tickerRef}
+          onMouseDown={onDown}
+          onMouseMove={onMove}
+          onMouseUp={onUp}
+          onMouseLeave={onUp}
+          onTouchStart={onDown}
+          onTouchMove={onMove}
+          onTouchEnd={onUp}
+        >
           <div className="ticker-track">
             {[...tickerImages, ...tickerImages].map((src, i) => (
               <div key={i} className="ticker-item"><img src={src} alt="" /></div>
@@ -358,27 +398,23 @@ function Index() {
           ))}
         </div>
 
-        <div className="cta-banner">
-          <div className="cta-banner-inner">
-            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b8?w=800&q=80" alt="" />
-            <div className="cta-body">
-              <div className="cta-text">
-                Need a brand identity?<br />Click here to explore visual identity solutions.
-              </div>
-              <a href="#contact" className="cta-arrow">→</a>
-            </div>
-          </div>
+        <div className="see-all-wrap">
+          <a href="#contact" className="btn-black">See all visual ID projects</a>
         </div>
 
         <section className="process-section">
           <h2 className="process-title">CREATIVE<br />PROCESS</h2>
-          {processSteps.map((s) => (
-            <div key={s.num} className="process-step">
-              <div className="process-num">{s.num}</div>
-              <div className="process-name">{s.name}</div>
-              <p>{s.body}</p>
-            </div>
-          ))}
+          <div className="process-steps-col">
+            {processSteps.map((s) => (
+              <div key={s.num} className="process-step">
+                <div className="process-num">{s.num}</div>
+                <div>
+                  <div className="process-name">{s.name}</div>
+                  <p>{s.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section className="pricing-section" id="pricing">
