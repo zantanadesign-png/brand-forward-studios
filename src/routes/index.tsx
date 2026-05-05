@@ -109,11 +109,11 @@ function Index() {
         .hero-sub { font-size: 16px; line-height: 1.65; color: #333; margin-bottom: 28px; max-width: 340px; }
         .btn-black { display: inline-block; background: #000; color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: var(--p) 28px; border-radius: 4px; text-decoration: none; border: 1px solid #000; cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s; }
         .btn-black:hover { background: var(--blue); border-color: var(--blue); }
-        .ticker-wrapper { overflow: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 12px 0; }
-        .ticker-track { display: flex; gap: 12px; width: max-content; animation: ticker-scroll 30s linear infinite; }
+        .ticker-wrapper { overflow: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; }
+        .ticker-track { display: flex; gap: 16px; width: max-content; animation: ticker-scroll 30s linear infinite; }
         .ticker-track:hover { animation-play-state: paused; }
         @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .ticker-item { width: 190px; height: 110px; border-radius: 4px; overflow: hidden; flex-shrink: 0; border: 1px solid #000; }
+        .ticker-item { width: 260px; height: 160px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 1px; line-height: 1; text-align: left; padding: 30px var(--p); max-width: 480px; margin: 0 auto; }
         .phases, .projects { max-width: 480px; margin: 0 auto; padding: 0 var(--p); display: flex; flex-direction: column; gap: var(--g); }
