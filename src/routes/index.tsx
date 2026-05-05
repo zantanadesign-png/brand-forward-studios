@@ -139,6 +139,7 @@ function Index() {
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 1px; line-height: 1; text-align: left; padding: 30px var(--p); max-width: 480px; margin: 0 auto; }
         .phases, .projects { max-width: 480px; margin: 0 auto; padding: 0 var(--p); display: flex; flex-direction: column; gap: var(--g); }
+        .see-all-wrap { max-width: 480px; margin: 0 auto; padding: 30px var(--p) 0; }
         .phase-card { border-radius: 4px; overflow: hidden; border: 1px solid #000; }
         .phase-card-top { background: var(--blue); color: #fff; padding: 20px; }
         .phase-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
