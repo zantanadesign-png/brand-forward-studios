@@ -133,9 +133,7 @@ function Index() {
         .ticker-wrapper { overflow-x: auto; overflow-y: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; cursor: grab; user-select: none; scrollbar-width: none; }
         .ticker-wrapper::-webkit-scrollbar { display: none; }
         .ticker-wrapper.dragging { cursor: grabbing; }
-        .ticker-track { display: flex; gap: 16px; width: max-content; animation: ticker-scroll 40s linear infinite; }
-        .ticker-wrapper.dragging .ticker-track,
-        .ticker-wrapper:hover .ticker-track { animation-play-state: paused; }
+        .ticker-track { display: flex; gap: 16px; width: max-content; }
         @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .ticker-item { width: 280px; height: 180px; border-radius: 4px; overflow: hidden; flex-shrink: 0; pointer-events: none; }
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
