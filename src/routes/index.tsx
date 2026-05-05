@@ -120,16 +120,16 @@ function Index() {
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 1px; line-height: 1; text-align: left; padding: 30px var(--p); max-width: 480px; margin: 0 auto; }
         .phases, .projects { max-width: 480px; margin: 0 auto; padding: 0 var(--p); display: flex; flex-direction: column; gap: var(--g); }
         .phase-card { border-radius: 4px; overflow: hidden; border: 1px solid #000; }
-        .phase-card-top { background: var(--blue); color: #fff; padding: var(--p); }
+        .phase-card-top { background: var(--blue); color: #fff; padding: 20px; }
         .phase-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
         .phase-card-top ol { padding-left: 16px; }
         .phase-card-top ol li { font-size: 14px; margin-bottom: 4px; }
-        .phase-card-bottom { background: #000; color: #fff; padding: var(--p); }
+        .phase-card-bottom { background: #000; color: #fff; padding: 20px; }
         .phase-card-bottom .tagline { font-weight: 700; font-size: 14px; line-height: 1.35; margin-bottom: 8px; }
         .phase-card-bottom p { font-size: 13px; line-height: 1.7; }
         .project-card { border: 1px solid #000; border-radius: 4px; overflow: hidden; }
         .project-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
-        .project-info { padding: 12px var(--p) 16px; }
+        .project-info { padding: 20px; }
         .project-name { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; }
         .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; }
         .cta-banner { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); }
