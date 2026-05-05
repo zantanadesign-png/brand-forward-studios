@@ -90,6 +90,27 @@ const faqs = [
 
 function Index() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const tickerRef = useRef<HTMLDivElement>(null);
+  const drag = useRef({ down: false, startX: 0, scrollLeft: 0 });
+
+  const onDown = (e: React.MouseEvent | React.TouchEvent) => {
+    const el = tickerRef.current;
+    if (!el) return;
+    const x = "touches" in e ? e.touches[0].pageX : e.pageX;
+    drag.current = { down: true, startX: x, scrollLeft: el.scrollLeft };
+    el.classList.add("dragging");
+  };
+  const onMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!drag.current.down) return;
+    const el = tickerRef.current;
+    if (!el) return;
+    const x = "touches" in e ? e.touches[0].pageX : e.pageX;
+    el.scrollLeft = drag.current.scrollLeft - (x - drag.current.startX);
+  };
+  const onUp = () => {
+    drag.current.down = false;
+    tickerRef.current?.classList.remove("dragging");
+  };
 
   return (
     <>
