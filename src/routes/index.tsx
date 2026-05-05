@@ -397,27 +397,23 @@ function Index() {
           ))}
         </div>
 
-        <div className="cta-banner">
-          <div className="cta-banner-inner">
-            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b8?w=800&q=80" alt="" />
-            <div className="cta-body">
-              <div className="cta-text">
-                Need a brand identity?<br />Click here to explore visual identity solutions.
-              </div>
-              <a href="#contact" className="cta-arrow">→</a>
-            </div>
-          </div>
+        <div className="see-all-wrap">
+          <a href="#contact" className="btn-black">See all visual ID projects</a>
         </div>
 
         <section className="process-section">
           <h2 className="process-title">CREATIVE<br />PROCESS</h2>
-          {processSteps.map((s) => (
-            <div key={s.num} className="process-step">
-              <div className="process-num">{s.num}</div>
-              <div className="process-name">{s.name}</div>
-              <p>{s.body}</p>
-            </div>
-          ))}
+          <div className="process-steps-col">
+            {processSteps.map((s) => (
+              <div key={s.num} className="process-step">
+                <div className="process-num">{s.num}</div>
+                <div>
+                  <div className="process-name">{s.name}</div>
+                  <p>{s.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section className="pricing-section" id="pricing">
