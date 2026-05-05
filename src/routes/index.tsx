@@ -109,11 +109,11 @@ function Index() {
         .hero-sub { font-size: 16px; line-height: 1.65; color: #333; margin-bottom: 28px; max-width: 340px; }
         .btn-black { display: inline-block; background: #000; color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: var(--p) 28px; border-radius: 4px; text-decoration: none; border: 1px solid #000; cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s; }
         .btn-black:hover { background: var(--blue); border-color: var(--blue); }
-        .ticker-wrapper { overflow: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 12px 0; }
-        .ticker-track { display: flex; gap: 12px; width: max-content; animation: ticker-scroll 30s linear infinite; }
+        .ticker-wrapper { overflow: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; }
+        .ticker-track { display: flex; gap: 16px; width: max-content; animation: ticker-scroll 30s linear infinite; }
         .ticker-track:hover { animation-play-state: paused; }
         @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .ticker-item { width: 190px; height: 110px; border-radius: 4px; overflow: hidden; flex-shrink: 0; border: 1px solid #000; }
+        .ticker-item { width: 260px; height: 160px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 1px; line-height: 1; text-align: left; padding: 30px var(--p); max-width: 480px; margin: 0 auto; }
         .phases, .projects { max-width: 480px; margin: 0 auto; padding: 0 var(--p); display: flex; flex-direction: column; gap: var(--g); }
@@ -200,14 +200,15 @@ function Index() {
         .btn-form-submit { display: block; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px var(--p); border-radius: 4px; text-align: center; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s; }
         .btn-form-submit:hover { background: #000; color: #fff; border-color: #000; }
         .z-footer { padding: 30px 0 40px; }
-        .footer-logo-row { overflow: hidden; width: 100%; border-top: 1px solid #000; border-bottom: 1px solid #000; }
+        .footer-logo-row { overflow: hidden; width: 100%; }
         .footer-logo { font-weight: 700; font-size: clamp(72px, 20vw, 160px); letter-spacing: -4px; line-height: 1; display: block; padding: 8px var(--p); white-space: nowrap; }
         .footer-links { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
         .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; display: flex; align-items: center; gap: 6px; }
-        .footer-desc { max-width: 480px; margin: 30px auto 0; padding: 24px var(--p) 0; border-top: 1px solid #000; }
+        .footer-desc { max-width: 480px; margin: 30px auto 0; padding: 24px var(--p) 0; }
         .footer-desc p { font-size: 12px; font-weight: 700; text-transform: uppercase; text-align: left; letter-spacing: .5px; line-height: 1.75; }
 
         @media (min-width: 900px) {
+          .z-root { --p: 40px; }
           .z-root nav,
           .hero,
           .section-title,
@@ -220,15 +221,16 @@ function Index() {
           .about-inner,
           .contact-section,
           .footer-links,
-          .footer-desc { max-width: 1200px !important; margin-left: auto; margin-right: auto; padding-left: 40px; padding-right: 40px; }
+          .footer-desc { max-width: none !important; margin-left: 0; margin-right: 0; padding-left: 40px; padding-right: 40px; }
 
           .z-root nav { padding-top: 32px; }
           .nav-links { gap: 32px; }
           .nav-links a { font-size: 12px; }
 
-          .hero { padding-top: 80px; }
+          .hero { padding-top: 80px; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 60px; }
           .hero h1 { font-size: 96px; letter-spacing: -3px; max-width: 1000px; }
           .hero-sub { font-size: 18px; max-width: 540px; }
+          .btn-black { margin-bottom: 0; }
 
           .section-title { font-size: 110px; letter-spacing: 2px; padding: 60px 40px; }
           .process-title, .pricing-title, .faq-title { font-size: 110px; padding: 60px 0; }
@@ -275,8 +277,12 @@ function Index() {
           .contact-form .btn-form-submit { grid-column: 1 / -1; }
           .btn-form-submit { width: auto; justify-self: start; padding: 18px 40px; }
 
-          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 32px; }
-          .ticker-item { width: 280px; height: 160px; }
+          .footer-logo-row { text-align: center; }
+          .footer-logo { text-align: center; }
+          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 32px; justify-content: center; align-items: center; }
+          .footer-desc { text-align: center; }
+          .footer-desc p { text-align: center; }
+          .ticker-item { width: 360px; height: 220px; }
         }
       `}</style>
 
