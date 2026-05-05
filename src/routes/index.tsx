@@ -130,7 +130,8 @@ function Index() {
         .hero-sub { font-size: 16px; line-height: 1.65; color: #333; margin-bottom: 28px; max-width: 340px; }
         .btn-black { display: inline-block; background: #000; color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid #000; cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s; width: auto; align-self: flex-start; }
         .btn-black:hover { background: var(--blue); border-color: var(--blue); }
-        .ticker-wrapper { overflow: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; cursor: grab; user-select: none; }
+        .ticker-wrapper { overflow-x: auto; overflow-y: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; cursor: grab; user-select: none; scrollbar-width: none; }
+        .ticker-wrapper::-webkit-scrollbar { display: none; }
         .ticker-wrapper.dragging { cursor: grabbing; }
         .ticker-track { display: flex; gap: 16px; width: max-content; animation: ticker-scroll 40s linear infinite; }
         .ticker-wrapper.dragging .ticker-track,
