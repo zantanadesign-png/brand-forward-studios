@@ -428,7 +428,6 @@ function Index() {
             <div className="price-card">
               <div className="price-card-header">
                 <span className="plan-name">Landing Page</span>
-                <span className="plan-icon">→</span>
               </div>
               <div className="price-card-body">
                 <div className="price-amount">$1000</div>
