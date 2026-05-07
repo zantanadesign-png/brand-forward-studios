@@ -200,7 +200,7 @@ function Index() {
         .price-card-body { padding: 20px; }
         .price-amount { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; }
         .price-delivery { font-size: 13px; font-weight: 700; margin-bottom: var(--g); }
-        .price-divider { height: 1px; background: rgba(255,255,255,.3); margin-bottom: var(--g); }
+        .price-divider { height: 2px; background: rgba(255,255,255,.5); margin-bottom: var(--g); }
         .price-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
         .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: var(--g); }
         .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.45; }
