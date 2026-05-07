@@ -91,13 +91,30 @@ const faqs = [
 function Index() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const tickerRef = useRef<HTMLDivElement>(null);
-  const drag = useRef({ down: false, startX: 0, scrollLeft: 0 });
+  const drag = useRef({ down: false, startX: 0, scrollLeft: 0, moved: false });
+
+  // Auto-scroll loop
+  React.useEffect(() => {
+    const el = tickerRef.current;
+    if (!el) return;
+    let raf = 0;
+    const tick = () => {
+      if (!drag.current.down && el) {
+        el.scrollLeft += 0.6;
+        const half = el.scrollWidth / 2;
+        if (el.scrollLeft >= half) el.scrollLeft -= half;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   const onDown = (e: React.MouseEvent | React.TouchEvent) => {
     const el = tickerRef.current;
     if (!el) return;
     const x = "touches" in e ? e.touches[0].pageX : e.pageX;
-    drag.current = { down: true, startX: x, scrollLeft: el.scrollLeft };
+    drag.current = { down: true, startX: x, scrollLeft: el.scrollLeft, moved: false };
     el.classList.add("dragging");
   };
   const onMove = (e: React.MouseEvent | React.TouchEvent) => {
@@ -106,6 +123,9 @@ function Index() {
     if (!el) return;
     const x = "touches" in e ? e.touches[0].pageX : e.pageX;
     el.scrollLeft = drag.current.scrollLeft - (x - drag.current.startX);
+    const half = el.scrollWidth / 2;
+    if (el.scrollLeft >= half) el.scrollLeft -= half;
+    if (el.scrollLeft < 0) el.scrollLeft += half;
   };
   const onUp = () => {
     drag.current.down = false;
