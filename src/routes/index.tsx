@@ -94,7 +94,7 @@ function Index() {
   const drag = useRef({ down: false, startX: 0, scrollLeft: 0, moved: false });
 
   // Auto-scroll loop
-  React.useEffect(() => {
+  useEffect(() => {
     const el = tickerRef.current;
     if (!el) return;
     let raf = 0;
