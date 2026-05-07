@@ -285,8 +285,8 @@ function Index() {
           .phase-card { display: flex; flex-direction: column; }
           .phase-card-bottom { flex: 1; }
 
-          .projects { display: grid; grid-template-columns: repeat(2, 1fr); }
-          .project-card img { height: 360px; }
+          .projects { display: grid; grid-template-columns: repeat(3, 1fr); }
+          .project-card img { height: 280px; }
 
           .see-all-wrap { max-width: none; padding: 30px 40px 0; display: flex; justify-content: center; }
 
