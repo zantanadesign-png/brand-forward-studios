@@ -64,11 +64,16 @@ const phases = [
 const websiteProjects = [
   { name: "LATE", type: "Catering Services", img: "https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80" },
   { name: "BLOOM", type: "Restaurant & Bar", img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" },
+  { name: "ORBIT", type: "SaaS Platform", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" },
+  { name: "PULSE", type: "Fitness Studio", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" },
+  { name: "VERA", type: "Skincare Brand", img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80" },
+  { name: "NORTH", type: "Travel Agency", img: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80" },
 ];
 
 const brandProjects = [
   { name: "SKIP", type: "Events Ticketing", img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80" },
   { name: "NOVA", type: "Brand Identity", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80" },
+  { name: "FERN", type: "Botanical Studio", img: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800&q=80" },
 ];
 
 const processSteps = [
