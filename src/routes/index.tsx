@@ -367,7 +367,7 @@ function Index() {
             <div key={p.label} className="phase-card">
               <div className="phase-card-top">
                 <div className="phase-label">{p.label}</div>
-                <ol>{p.items.map((it) => <li key={it}>{it}</li>)}</ol>
+                <ul className="phase-list">{p.items.map((it) => <li key={it}>{it}</li>)}</ul>
               </div>
               <div className="phase-card-bottom">
                 <div className="tagline">{p.tagline}</div>
