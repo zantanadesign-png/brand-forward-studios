@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/")({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap",
       },
     ],
   }),
@@ -91,13 +91,30 @@ const faqs = [
 function Index() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const tickerRef = useRef<HTMLDivElement>(null);
-  const drag = useRef({ down: false, startX: 0, scrollLeft: 0 });
+  const drag = useRef({ down: false, startX: 0, scrollLeft: 0, moved: false });
+
+  // Auto-scroll loop
+  useEffect(() => {
+    const el = tickerRef.current;
+    if (!el) return;
+    let raf = 0;
+    const tick = () => {
+      if (!drag.current.down && el) {
+        el.scrollLeft += 0.6;
+        const half = el.scrollWidth / 2;
+        if (el.scrollLeft >= half) el.scrollLeft -= half;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   const onDown = (e: React.MouseEvent | React.TouchEvent) => {
     const el = tickerRef.current;
     if (!el) return;
     const x = "touches" in e ? e.touches[0].pageX : e.pageX;
-    drag.current = { down: true, startX: x, scrollLeft: el.scrollLeft };
+    drag.current = { down: true, startX: x, scrollLeft: el.scrollLeft, moved: false };
     el.classList.add("dragging");
   };
   const onMove = (e: React.MouseEvent | React.TouchEvent) => {
@@ -106,6 +123,9 @@ function Index() {
     if (!el) return;
     const x = "touches" in e ? e.touches[0].pageX : e.pageX;
     el.scrollLeft = drag.current.scrollLeft - (x - drag.current.startX);
+    const half = el.scrollWidth / 2;
+    if (el.scrollLeft >= half) el.scrollLeft -= half;
+    if (el.scrollLeft < 0) el.scrollLeft += half;
   };
   const onUp = () => {
     drag.current.down = false;
@@ -117,106 +137,99 @@ function Index() {
       <style>{`
         :root { --blue: #2B2BFF; --black: #000; --white: #fff; --p: 20px; --g: 20px; }
         .z-root *, .z-root *::before, .z-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        .z-root { background: #fff; color: #000; font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
+        .z-root { background: #fff; color: #000; font-family: 'Inter', sans-serif; font-size: 20px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
+        .z-root p { font-size: 20px; line-height: 1.55; }
+        .z-root h1, .z-root h2, .z-root h3, .z-root h4 { font-family: 'Inter', sans-serif; }
         .z-root nav { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 24px var(--p) 0; }
-        .nav-logo { font-weight: 700; font-size: 20px; letter-spacing: -0.5px; }
+        .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
         .nav-links { display: flex; gap: var(--g); list-style: none; }
         .nav-links a { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; }
         .hero { max-width: 480px; margin: 0 auto; padding: 44px var(--p) 0; }
         .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: var(--g); }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
-        .hero h1 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 56px; line-height: .95; letter-spacing: 1px; margin-bottom: var(--g); }
-        .hero-sub { font-size: 16px; line-height: 1.65; color: #333; margin-bottom: 28px; max-width: 340px; }
+        .hero h1 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; line-height: 1; letter-spacing: -2px; margin-bottom: var(--g); }
+        .hero-sub { font-size: 20px; line-height: 1.5; color: #333; margin-bottom: 28px; max-width: 460px; }
         .btn-black { display: inline-block; background: #000; color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid #000; cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s; width: auto; align-self: flex-start; }
         .btn-black:hover { background: var(--blue); border-color: var(--blue); }
-        .ticker-wrapper { overflow-x: auto; overflow-y: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; cursor: grab; user-select: none; scrollbar-width: none; }
-        .ticker-wrapper::-webkit-scrollbar { display: none; }
+        .ticker-wrapper { overflow: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; cursor: grab; user-select: none; }
         .ticker-wrapper.dragging { cursor: grabbing; }
         .ticker-track { display: flex; gap: 16px; width: max-content; }
-        @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .ticker-item { width: 280px; height: 180px; border-radius: 4px; overflow: hidden; flex-shrink: 0; pointer-events: none; }
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 1px; line-height: 1; text-align: left; padding: 30px var(--p); max-width: 480px; margin: 0 auto; }
+        .section-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: left; padding: 30px var(--p); max-width: 480px; margin: 0 auto; }
         .phases, .projects { max-width: 480px; margin: 0 auto; padding: 0 var(--p); display: flex; flex-direction: column; gap: var(--g); }
-        .see-all-wrap { max-width: 480px; margin: 0 auto; padding: 30px var(--p) 0; }
-        .phase-card { border-radius: 4px; overflow: hidden; border: 1px solid #000; }
+        .see-all-wrap { max-width: 480px; margin: 0 auto; padding: 30px var(--p) 0; display: flex; justify-content: center; }
+        .phase-card { border-radius: 4px; overflow: hidden; }
         .phase-card-top { background: var(--blue); color: #fff; padding: 20px; }
-        .phase-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
-        .phase-card-top ol { padding-left: 16px; }
-        .phase-card-top ol li { font-size: 14px; margin-bottom: 4px; }
+        .phase-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+        .phase-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+        .phase-list li { font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .phase-list li::before { content: '→'; font-weight: 700; }
         .phase-card-bottom { background: #000; color: #fff; padding: 20px; }
         .phase-card-bottom .tagline { font-weight: 700; font-size: 14px; line-height: 1.35; margin-bottom: 8px; }
-        .phase-card-bottom p { font-size: 13px; line-height: 1.7; }
-        .project-card { border: 1px solid #000; border-radius: 4px; overflow: hidden; }
+        .phase-card-bottom p { font-size: 14px; line-height: 1.6; }
+        .project-card { background: #f2f2f2; border-radius: 4px; overflow: hidden; }
         .project-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
         .project-info { padding: 20px; }
         .project-name { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; }
         .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; }
-        .cta-banner { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); }
-        .cta-banner-inner { border: 1px solid #000; border-radius: 4px; overflow: hidden; }
-        .cta-banner-inner img { width: 100%; height: 150px; object-fit: cover; display: block; }
-        .cta-body { padding: var(--p); display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid #000; }
-        .cta-text { font-weight: 700; font-size: 14px; line-height: 1.4; flex: 1; }
-        .cta-arrow { width: 34px; height: 34px; border-radius: 50%; border: 1px solid #000; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; cursor: pointer; transition: background .18s, color .18s; text-decoration: none; color: #000; }
-        .cta-arrow:hover { background: #000; color: #fff; }
         .process-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
-        .process-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 1px; line-height: 1; text-align: left; padding: 30px 0; }
+        .process-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: left; padding: 30px 0; }
         .process-step { padding: var(--g) 0; border-top: 1px solid #000; }
         .process-step:last-child { border-bottom: 1px solid #000; }
         .process-num { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 1px; margin-bottom: 4px; }
         .process-name { font-weight: 700; font-size: 14px; letter-spacing: .3px; margin-bottom: 8px; }
-        .process-step p { font-size: 13px; line-height: 1.7; }
+        .process-step p { font-size: 15px; line-height: 1.6; }
         .pricing-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
-        .pricing-title { font-family: 'Bebas Neue', sans-serif; font-size: 46px; letter-spacing: 1px; line-height: 1.05; color: var(--blue); padding: 30px 0; }
+        .pricing-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1.05; color: var(--blue); padding: 30px 0; }
         .pricing-grid { display: flex; flex-direction: column; gap: var(--g); }
-        .price-card { background: var(--blue); border-radius: 4px; color: #fff; overflow: hidden; border: 1px solid var(--blue); }
-        .price-card-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid rgba(255,255,255,.3); }
+        .price-card { background: var(--blue); border-radius: 4px; color: #fff; overflow: hidden; }
+        .price-card-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,.3); }
         .plan-name { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-        .plan-icon { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 13px; }
         .price-card-body { padding: 20px; }
-        .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: -1px; line-height: 1; margin-bottom: 6px; }
-        .price-delivery { font-size: 12px; font-weight: 700; margin-bottom: var(--g); }
+        .price-amount { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; }
+        .price-delivery { font-size: 13px; font-weight: 700; margin-bottom: var(--g); }
         .price-divider { height: 1px; background: rgba(255,255,255,.3); margin-bottom: var(--g); }
         .price-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
         .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: var(--g); }
-        .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.45; }
+        .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.45; }
         .price-features li.add-on { opacity: .6; }
         .check { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
         .btn-white { display: inline-block; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 16px 28px; border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
         .btn-white:hover { background: #000; color: #fff; border-color: #000; }
         .faq-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
-        .faq-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 2px; padding: 30px 0; }
+        .faq-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; padding: 30px 0; }
         .faq-list { display: flex; flex-direction: column; gap: var(--g); }
         .faq-item { background: #f2f2f2; border-radius: 4px; overflow: hidden; transition: background .2s; }
         .faq-item.open { background: var(--blue); }
-        .faq-question { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 20px; text-align: left; }
-        .faq-question span { font-size: 13px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; line-height: 1.4; flex: 1; color: #000; transition: color .2s; }
-        .faq-item.open .faq-question span { color: #fff; }
-        .faq-icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; }
+        .faq-question { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 20px; text-align: left; }
+        .faq-question span.faq-q-text { font-size: 14px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; line-height: 1.4; flex: 1; color: #000; transition: color .2s; }
+        .faq-item.open .faq-question span.faq-q-text { color: #fff; }
+        .faq-icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
         .faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: #000; transition: transform .25s, opacity .25s, background .2s; }
         .faq-icon::before { width: 14px; height: 1px; }
         .faq-icon::after { width: 1px; height: 14px; }
         .faq-item.open .faq-icon::before, .faq-item.open .faq-icon::after { background: #fff; }
         .faq-item.open .faq-icon::after { opacity: 0; transform: rotate(90deg); }
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 20px; }
-        .faq-answer p { font-size: 13px; line-height: 1.7; padding-bottom: 20px; color: #000; transition: color .2s; }
+        .faq-answer p { font-size: 15px; line-height: 1.6; padding-bottom: 20px; color: #000; transition: color .2s; }
         .faq-item.open .faq-answer { max-height: 400px; }
         .faq-item.open .faq-answer p { color: #fff; }
         .about-section { background: #000; margin-top: 30px; padding: 30px var(--p); }
         .about-inner { max-width: 480px; margin: 0 auto; }
-        .about-title { font-family: 'Bebas Neue', sans-serif; font-size: 50px; letter-spacing: 1px; line-height: 1; text-align: center; color: #fff; margin-bottom: 28px; }
-        .about-photo { width: 100%; border-radius: 4px; display: block; margin-bottom: 28px; aspect-ratio: 4/3; object-fit: cover; object-position: top; filter: grayscale(100%); border: 1px solid rgba(255,255,255,.2); }
+        .about-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: center; color: #fff; margin-bottom: 28px; }
+        .about-photo { width: 100%; border-radius: 4px; display: block; margin-bottom: 28px; aspect-ratio: 4/3; object-fit: cover; object-position: top; filter: grayscale(100%); }
         .about-headline { font-weight: 700; font-size: 16px; line-height: 1.5; text-align: center; text-transform: uppercase; color: #fff; margin-bottom: 20px; letter-spacing: .3px; }
-        .about-body { font-size: 14px; color: #fff; line-height: 1.75; text-align: center; margin-bottom: 32px; }
+        .about-body { font-size: 16px; color: #fff; line-height: 1.6; text-align: center; margin-bottom: 32px; }
         .btn-white-outline { display: block; background: #fff; color: #000; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px var(--p); border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid #fff; transition: background .18s, color .18s, border-color .18s; }
         .btn-white-outline:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
         .contact-section { max-width: 480px; margin: 0 auto; padding: 30px var(--p) 0; }
-        .contact-title { font-weight: 700; font-size: 44px; letter-spacing: -1.5px; line-height: 1; margin-bottom: 30px; }
-        .contact-form { background: var(--blue); border-radius: 4px; padding: var(--p); display: flex; flex-direction: column; gap: 16px; }
+        .contact-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; margin-bottom: 30px; }
+        .contact-form { background: var(--blue); border-radius: 4px; padding: var(--p); display: flex; flex-direction: column; gap: 16px; max-width: 460px; margin: 0 auto; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
-        .form-group input, .form-group textarea { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); border-radius: 4px; padding: 14px var(--p); font-family: 'DM Sans', sans-serif; font-size: 14px; color: #fff; width: 100%; outline: none; resize: none; }
+        .form-group input, .form-group textarea { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); border-radius: 4px; padding: 14px var(--p); font-family: 'Inter', sans-serif; font-size: 15px; color: #fff; width: 100%; outline: none; resize: none; }
         .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.4); }
         .form-group input:focus, .form-group textarea:focus { border-color: #fff; }
         .form-group textarea { min-height: 110px; }
@@ -224,11 +237,11 @@ function Index() {
         .btn-form-submit:hover { background: #000; color: #fff; border-color: #000; }
         .z-footer { padding: 30px 0 40px; }
         .footer-logo-row { overflow: hidden; width: 100%; }
-        .footer-logo { font-weight: 700; font-size: clamp(72px, 20vw, 160px); letter-spacing: -4px; line-height: 1; display: block; padding: 8px var(--p); white-space: nowrap; }
+        .footer-logo { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(72px, 20vw, 160px); letter-spacing: -4px; line-height: 1; display: block; padding: 8px var(--p); white-space: nowrap; }
         .footer-links { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
         .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; display: flex; align-items: center; gap: 6px; }
         .footer-desc { max-width: 480px; margin: 30px auto 0; padding: 24px var(--p) 0; }
-        .footer-desc p { font-size: 12px; font-weight: 700; text-transform: uppercase; text-align: left; letter-spacing: .5px; line-height: 1.75; }
+        .footer-desc p { font-size: 13px; font-weight: 700; text-transform: uppercase; text-align: left; letter-spacing: .5px; line-height: 1.65; }
 
         @media (min-width: 900px) {
           .z-root { --p: 40px; }
@@ -237,7 +250,6 @@ function Index() {
           .section-title,
           .phases,
           .projects,
-          .cta-banner,
           .process-section,
           .pricing-section,
           .faq-section,
@@ -251,25 +263,22 @@ function Index() {
           .nav-links a { font-size: 12px; }
 
           .hero { padding-top: 80px; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 60px; }
-          .hero h1 { font-size: 140px; letter-spacing: 2px; max-width: 1100px; }
-          .hero-sub { font-size: 18px; max-width: 540px; }
+          .hero h1 { font-size: 60px; max-width: 1100px; }
+          .hero-sub { font-size: 20px; max-width: 540px; }
           .btn-black { margin-bottom: 0; padding: 18px 36px; }
 
-          .section-title { font-size: 110px; letter-spacing: 2px; padding: 60px 40px; }
-          .process-title, .pricing-title, .faq-title { font-size: 110px; padding: 60px 0; }
-          .about-title { font-size: 96px; text-align: center; }
-          .contact-title { font-size: 88px; letter-spacing: -3px; }
+          .section-title, .process-title, .pricing-title, .faq-title, .about-title, .contact-title, .price-amount { font-size: 60px; }
+          .section-title { padding: 60px 40px; }
+          .process-title, .pricing-title, .faq-title { padding: 60px 0; }
 
           .phases { display: grid; grid-template-columns: repeat(3, 1fr); align-items: stretch; }
           .phase-card { display: flex; flex-direction: column; }
-          .phase-card-top, .phase-card-bottom { padding: 20px; }
           .phase-card-bottom { flex: 1; }
 
           .projects { display: grid; grid-template-columns: repeat(2, 1fr); }
           .project-card img { height: 360px; }
-          .project-info { padding: 20px; }
 
-          .see-all-wrap { max-width: none; padding: 30px 40px 0; display: flex; justify-content: flex-start; }
+          .see-all-wrap { max-width: none; padding: 30px 40px 0; display: flex; justify-content: center; }
 
           .process-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
           .process-title { padding: 60px 0 0; position: sticky; top: 40px; }
@@ -277,20 +286,17 @@ function Index() {
           .process-step { display: grid; grid-template-columns: 60px 1fr; gap: 24px; align-items: start; padding: 24px 0; }
           .process-num { margin-bottom: 0; font-size: 13px; }
           .process-name { margin-bottom: 6px; font-size: 16px; }
-          .process-step p { font-size: 15px; }
+          .process-step p { font-size: 16px; }
 
           .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); align-items: stretch; }
           .price-card { display: flex; flex-direction: column; }
           .price-card-body { flex: 1; display: flex; flex-direction: column; padding: 20px; }
           .price-features { flex: 1; }
-          .price-amount { font-size: 96px; }
-          .btn-white { padding: 16px 28px; }
 
           .faq-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
           .faq-title { padding: 60px 0 0; position: sticky; top: 40px; }
           .faq-list { padding-top: 60px; }
           .faq-question { padding: 24px; }
-          .faq-question span { font-size: 14px; }
           .faq-answer { padding: 0 24px; }
           .faq-answer p { padding-bottom: 24px; }
 
@@ -300,12 +306,11 @@ function Index() {
           .about-photo { width: 100%; margin-bottom: 0; aspect-ratio: 16/10; }
           .about-right { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
           .about-headline { text-align: center; font-size: 18px; margin-bottom: 0; }
-          .about-body { text-align: center; margin-bottom: 0; font-size: 15px; }
+          .about-body { text-align: center; margin-bottom: 0; font-size: 16px; }
           .btn-white-outline { display: inline-block; width: auto; padding: 16px 32px; }
 
-          .contact-section { max-width: 560px !important; margin: 0 auto !important; padding-left: 40px !important; padding-right: 40px !important; }
-          .contact-form { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-          .btn-form-submit { width: 100%; padding: 16px 20px; }
+          .contact-section { padding: 60px 40px 0; }
+          .contact-form { max-width: 560px; margin: 0 auto; padding: 24px; }
 
           .footer-logo-row { text-align: center; }
           .footer-logo { text-align: center; }
@@ -362,7 +367,7 @@ function Index() {
             <div key={p.label} className="phase-card">
               <div className="phase-card-top">
                 <div className="phase-label">{p.label}</div>
-                <ol>{p.items.map((it) => <li key={it}>{it}</li>)}</ol>
+                <ul className="phase-list">{p.items.map((it) => <li key={it}>{it}</li>)}</ul>
               </div>
               <div className="phase-card-bottom">
                 <div className="tagline">{p.tagline}</div>
@@ -423,7 +428,6 @@ function Index() {
             <div className="price-card">
               <div className="price-card-header">
                 <span className="plan-name">Landing Page</span>
-                <span className="plan-icon">→</span>
               </div>
               <div className="price-card-body">
                 <div className="price-amount">$1000</div>
@@ -443,7 +447,6 @@ function Index() {
             <div className="price-card">
               <div className="price-card-header">
                 <span className="plan-name">Full Website</span>
-                <span className="plan-icon">→</span>
               </div>
               <div className="price-card-body">
                 <div className="price-amount">$2800</div>
@@ -468,7 +471,7 @@ function Index() {
             {faqs.map((f, i) => (
               <div key={i} className={`faq-item ${openFaq === i ? "open" : ""}`}>
                 <button className="faq-question" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                  <span>{f.q}</span>
+                  <span className="faq-q-text">{f.q}</span>
                   <span className="faq-icon" />
                 </button>
                 <div className="faq-answer"><p>{f.a}</p></div>
