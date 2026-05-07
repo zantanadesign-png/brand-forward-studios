@@ -313,7 +313,7 @@ function Index() {
           .about-section { padding: 60px 0; }
           .about-inner { max-width: 60% !important; margin: 0 auto !important; padding-left: 0 !important; padding-right: 0 !important; display: flex; flex-direction: column; align-items: center; gap: 28px; }
           .about-title { margin-bottom: 0; }
-          .about-photo { width: 100%; margin-bottom: 0; aspect-ratio: 16/10; }
+          .about-photo { width: 600px; max-width: 100%; margin-bottom: 0; aspect-ratio: 3/4; }
           .about-right { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
           .about-headline { text-align: center; font-size: 18px; margin-bottom: 0; }
           .about-body { text-align: center; margin-bottom: 0; font-size: 16px; }
