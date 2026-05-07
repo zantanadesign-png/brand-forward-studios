@@ -94,7 +94,12 @@ const faqs = [
 ];
 
 function Index() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
+  const toggleFaq = (i: number) => setOpenFaqs(prev => {
+    const next = new Set(prev);
+    if (next.has(i)) next.delete(i); else next.add(i);
+    return next;
+  });
   const tickerRef = useRef<HTMLDivElement>(null);
   const drag = useRef({ down: false, startX: 0, scrollLeft: 0, moved: false });
 
