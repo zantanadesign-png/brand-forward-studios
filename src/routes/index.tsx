@@ -64,11 +64,16 @@ const phases = [
 const websiteProjects = [
   { name: "LATE", type: "Catering Services", img: "https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80" },
   { name: "BLOOM", type: "Restaurant & Bar", img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" },
+  { name: "ORBIT", type: "SaaS Platform", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" },
+  { name: "PULSE", type: "Fitness Studio", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" },
+  { name: "VERA", type: "Skincare Brand", img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80" },
+  { name: "NORTH", type: "Travel Agency", img: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80" },
 ];
 
 const brandProjects = [
   { name: "SKIP", type: "Events Ticketing", img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80" },
   { name: "NOVA", type: "Brand Identity", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80" },
+  { name: "FERN", type: "Botanical Studio", img: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800&q=80" },
 ];
 
 const processSteps = [
@@ -89,7 +94,12 @@ const faqs = [
 ];
 
 function Index() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
+  const toggleFaq = (i: number) => setOpenFaqs(prev => {
+    const next = new Set(prev);
+    if (next.has(i)) next.delete(i); else next.add(i);
+    return next;
+  });
   const tickerRef = useRef<HTMLDivElement>(null);
   const drag = useRef({ down: false, startX: 0, scrollLeft: 0, moved: false });
 
@@ -144,7 +154,7 @@ function Index() {
         .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
         .nav-links { display: flex; gap: var(--g); list-style: none; }
         .nav-links a { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; }
-        .hero { max-width: 480px; margin: 0 auto; padding: 44px var(--p) 0; }
+        .hero { max-width: 480px; margin: 0 auto; padding: 44px var(--p) 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 40px; box-sizing: border-box; }
         .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: var(--g); }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
@@ -190,7 +200,7 @@ function Index() {
         .price-card-body { padding: 20px; }
         .price-amount { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; }
         .price-delivery { font-size: 13px; font-weight: 700; margin-bottom: var(--g); }
-        .price-divider { height: 1px; background: rgba(255,255,255,.3); margin-bottom: var(--g); }
+        .price-divider { height: 2px; background: rgba(255,255,255,.5); margin-bottom: var(--g); }
         .price-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
         .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: var(--g); }
         .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.45; }
@@ -275,8 +285,8 @@ function Index() {
           .phase-card { display: flex; flex-direction: column; }
           .phase-card-bottom { flex: 1; }
 
-          .projects { display: grid; grid-template-columns: repeat(2, 1fr); }
-          .project-card img { height: 360px; }
+          .projects { display: grid; grid-template-columns: repeat(3, 1fr); }
+          .project-card img { height: 280px; }
 
           .see-all-wrap { max-width: none; padding: 30px 40px 0; display: flex; justify-content: center; }
 
@@ -303,14 +313,15 @@ function Index() {
           .about-section { padding: 60px 0; }
           .about-inner { max-width: 60% !important; margin: 0 auto !important; padding-left: 0 !important; padding-right: 0 !important; display: flex; flex-direction: column; align-items: center; gap: 28px; }
           .about-title { margin-bottom: 0; }
-          .about-photo { width: 100%; margin-bottom: 0; aspect-ratio: 16/10; }
+          .about-photo { width: 600px; max-width: 100%; margin-bottom: 0; aspect-ratio: 3/4; }
           .about-right { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
           .about-headline { text-align: center; font-size: 18px; margin-bottom: 0; }
           .about-body { text-align: center; margin-bottom: 0; font-size: 16px; }
           .btn-white-outline { display: inline-block; width: auto; padding: 16px 32px; }
 
-          .contact-section { padding: 60px 40px 0; }
-          .contact-form { max-width: 560px; margin: 0 auto; padding: 24px; }
+          .contact-section { padding: 60px 40px 0; text-align: center; }
+          .contact-title { text-align: center; }
+          .contact-form { max-width: 560px; margin: 0 auto; padding: 24px; text-align: left; }
 
           .footer-logo-row { text-align: center; }
           .footer-logo { text-align: center; }
@@ -469,8 +480,8 @@ function Index() {
           <h2 className="faq-title">F.A.Q</h2>
           <div className="faq-list">
             {faqs.map((f, i) => (
-              <div key={i} className={`faq-item ${openFaq === i ? "open" : ""}`}>
-                <button className="faq-question" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+              <div key={i} className={`faq-item ${openFaqs.has(i) ? "open" : ""}`}>
+                <button className="faq-question" onClick={() => toggleFaq(i)}>
                   <span className="faq-q-text">{f.q}</span>
                   <span className="faq-icon" />
                 </button>
