@@ -319,8 +319,9 @@ function Index() {
           .about-body { text-align: center; margin-bottom: 0; font-size: 16px; }
           .btn-white-outline { display: inline-block; width: auto; padding: 16px 32px; }
 
-          .contact-section { padding: 60px 40px 0; }
-          .contact-form { max-width: 560px; margin: 0 auto; padding: 24px; }
+          .contact-section { padding: 60px 40px 0; text-align: center; }
+          .contact-title { text-align: center; }
+          .contact-form { max-width: 560px; margin: 0 auto; padding: 24px; text-align: left; }
 
           .footer-logo-row { text-align: center; }
           .footer-logo { text-align: center; }
