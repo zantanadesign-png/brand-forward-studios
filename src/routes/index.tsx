@@ -471,7 +471,7 @@ function Index() {
             {faqs.map((f, i) => (
               <div key={i} className={`faq-item ${openFaq === i ? "open" : ""}`}>
                 <button className="faq-question" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                  <span>{f.q}</span>
+                  <span className="faq-q-text">{f.q}</span>
                   <span className="faq-icon" />
                 </button>
                 <div className="faq-answer"><p>{f.a}</p></div>
