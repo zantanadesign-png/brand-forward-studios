@@ -409,6 +409,8 @@ function Index() {
         }
       `}</style>
 
+      <div ref={cursorRef} className="z-cursor" aria-hidden />
+      <div ref={cursorLabelRef} className="z-cursor-label" aria-hidden>View</div>
       <div className="z-root">
         <nav>
           <div className="nav-logo">(z)</div>
