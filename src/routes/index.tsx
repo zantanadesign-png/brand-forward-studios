@@ -154,7 +154,7 @@ function Index() {
         .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
         .nav-links { display: flex; gap: var(--g); list-style: none; }
         .nav-links a { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; }
-        .hero { max-width: 480px; margin: 0 auto; padding: 24px var(--p) 60px; min-height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box; }
+        .hero { max-width: 480px; margin: 0 auto; padding: 24px var(--p) 40px; min-height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box; }
         .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: var(--g); }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
