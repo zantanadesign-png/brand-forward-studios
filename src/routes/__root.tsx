@@ -37,6 +37,10 @@ export const Route = createRootRoute({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@ZantanaStudio" },
+      { name: "twitter:title", content: "Zantana Studio" },
+      { name: "twitter:description", content: "Zantana Studio - Websites Built to Move Brands Forward" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/487207db-6dfd-4c2d-be51-aa326ecac5b8/id-preview-f12e558a--a064e059-04c9-42fc-9424-b6183ebd76b4.lovable.app-1778205260086.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/487207db-6dfd-4c2d-be51-aa326ecac5b8/id-preview-f12e558a--a064e059-04c9-42fc-9424-b6183ebd76b4.lovable.app-1778205260086.png" },
     ],
     links: [
       {
