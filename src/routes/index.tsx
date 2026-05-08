@@ -367,7 +367,9 @@ function Index() {
           .process-name { margin-bottom: 6px; font-size: 16px; }
           .process-step p { font-size: 16px; }
 
-          .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); align-items: stretch; }
+          .pricing-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+          .pricing-title { padding: 60px 0 0; position: sticky; top: 40px; }
+          .pricing-grid { display: flex; flex-direction: column; gap: var(--g); padding-top: 60px; }
           .price-card { display: flex; flex-direction: column; }
           .price-card-body { flex: 1; display: flex; flex-direction: column; padding: 20px; }
           .price-features { flex: 1; }
