@@ -95,6 +95,65 @@ const faqs = [
 
 function Index() {
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
+  const [activeProjects, setActiveProjects] = useState<Set<string>>(new Set());
+  const toggleProject = (name: string) => setActiveProjects(prev => {
+    const next = new Set(prev);
+    if (next.has(name)) next.delete(name); else next.add(name);
+    return next;
+  });
+
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const cursorLabelRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch) return;
+    const cursor = cursorRef.current;
+    const label = cursorLabelRef.current;
+    if (!cursor || !label) return;
+
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let cx = mx, cy = my;
+    let targetEl: HTMLElement | null = null;
+    let raf = 0;
+
+    const onMove = (e: MouseEvent) => {
+      mx = e.clientX; my = e.clientY;
+      const t = (e.target as HTMLElement)?.closest<HTMLElement>("[data-magnetic]");
+      targetEl = t;
+      const viewT = (e.target as HTMLElement)?.closest<HTMLElement>(".project-card");
+      if (viewT) {
+        label.style.opacity = "1";
+        label.style.transform = "translate(-50%, -50%) scale(1)";
+      } else {
+        label.style.opacity = "0";
+        label.style.transform = "translate(-50%, -50%) scale(.6)";
+      }
+    };
+    const tick = () => {
+      let tx = mx, ty = my;
+      if (targetEl) {
+        const r = targetEl.getBoundingClientRect();
+        const ex = r.left + r.width / 2;
+        const ey = r.top + r.height / 2;
+        tx = mx + (ex - mx) * 0.3;
+        ty = my + (ey - my) * 0.3;
+        cursor.classList.add("is-magnetic");
+      } else {
+        cursor.classList.remove("is-magnetic");
+      }
+      cx += (tx - cx) * 0.2;
+      cy += (ty - cy) * 0.2;
+      cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      label.style.left = `${mx}px`;
+      label.style.top = `${my}px`;
+      raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener("mousemove", onMove);
+    raf = requestAnimationFrame(tick);
+    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
+  }, []);
+
   const toggleFaq = (i: number) => setOpenFaqs(prev => {
     const next = new Set(prev);
     if (next.has(i)) next.delete(i); else next.add(i);
@@ -148,20 +207,31 @@ function Index() {
         :root { --blue: #2B2BFF; --black: #000; --white: #fff; --p: 20px; --g: 20px; }
         .z-root *, .z-root *::before, .z-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
         .z-root { background: #fff; color: #000; font-family: 'Inter', sans-serif; font-size: 20px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
+        @media (hover: hover) and (pointer: fine) {
+          .z-root, .z-root * { cursor: none !important; }
+          .z-cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: #000; pointer-events: none; z-index: 9999; transition: width .2s, height .2s, background .2s; will-change: transform; }
+          .z-cursor.is-magnetic { width: 36px; height: 36px; background: rgba(0,0,0,.25); }
+          .z-cursor-label { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px; border-radius: 4px; opacity: 0; transform: translate(-50%, -50%) scale(.6); transition: opacity .2s, transform .2s; }
+        }
         .z-root p { font-size: 20px; line-height: 1.55; }
         .z-root h1, .z-root h2, .z-root h3, .z-root h4 { font-family: 'Inter', sans-serif; }
         .z-root nav { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 24px var(--p) 0; }
         .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
         .nav-links { display: flex; gap: var(--g); list-style: none; }
-        .nav-links a { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; }
+        .nav-links a { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
+        .nav-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
+        .nav-links a:hover { color: var(--blue); }
+        .nav-links a:hover::before { opacity: 1; transform: scale(1); }
         .hero { max-width: 480px; margin: 0 auto; padding: 24px var(--p) 40px; min-height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box; }
         .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: var(--g); }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
          .hero h1 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 40px; line-height: 1; letter-spacing: -1.5px; margin-bottom: var(--g); }
          .hero-sub { font-size: 20px; line-height: 1.5; color: #333; margin-bottom: 28px; max-width: 460px; }
-        .btn-black { display: inline-block; background: #000; color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid #000; cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s; width: auto; align-self: flex-start; }
+        .btn-black { display: inline-flex; align-items: center; gap: 8px; background: #000; color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid #000; cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s, color .18s; width: auto; align-self: flex-start; }
+        .btn-black::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; opacity: 0; width: 0; transition: opacity .2s, width .2s; }
         .btn-black:hover { background: var(--blue); border-color: var(--blue); }
+        .btn-black:hover::before { opacity: 1; width: 6px; }
         .ticker-wrapper { overflow: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; cursor: grab; user-select: none; }
         .ticker-wrapper.dragging { cursor: grabbing; }
         .ticker-track { display: flex; gap: 16px; width: max-content; }
@@ -179,11 +249,13 @@ function Index() {
         .phase-card-bottom { background: #000; color: #fff; padding: 20px; }
         .phase-card-bottom .tagline { font-weight: 700; font-size: 14px; line-height: 1.35; margin-bottom: 8px; }
         .phase-card-bottom p { font-size: 14px; line-height: 1.6; }
-        .project-card { background: #f2f2f2; border-radius: 4px; overflow: hidden; }
+        .project-card { background: #f2f2f2; border-radius: 4px; overflow: hidden; cursor: pointer; transition: background .25s; }
+        .project-card.is-active { background: var(--blue); }
+        .project-card.is-active .project-name, .project-card.is-active .project-type { color: #fff; }
         .project-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
         .project-info { padding: 20px; }
-        .project-name { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; }
-        .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; }
+        .project-name { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; transition: color .25s; }
+        .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color .25s; }
         .process-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
         .process-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: left; padding: 30px 0; }
         .process-step { padding: var(--g) 0; border-top: 1px solid #000; }
@@ -206,8 +278,10 @@ function Index() {
         .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.45; }
         .price-features li.add-on { opacity: .6; }
         .check { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
-        .btn-white { display: inline-block; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 16px 28px; border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
+        .btn-white { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 16px 28px; border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
+        .btn-white::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: #fff; opacity: 0; transition: opacity .2s, width .2s; }
         .btn-white:hover { background: #000; color: #fff; border-color: #000; }
+        .btn-white:hover::before { opacity: 1; width: 6px; }
         .faq-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
         .faq-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; padding: 30px 0; }
         .faq-list { display: flex; flex-direction: column; gap: var(--g); }
@@ -240,7 +314,7 @@ function Index() {
         .contact-form { background: var(--blue); border-radius: 4px; padding: var(--p); display: flex; flex-direction: column; gap: 16px; max-width: 460px; margin: 0 auto; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
-        .form-group input, .form-group textarea { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); border-radius: 4px; padding: 14px var(--p); font-family: 'Inter', sans-serif; font-size: 15px; color: #fff; width: 100%; outline: none; resize: none; }
+        .form-group input, .form-group textarea { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); border-radius: 4px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 15px; color: #fff; width: 100%; outline: none; resize: none; }
         .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.4); }
         .form-group input:focus, .form-group textarea:focus { border-color: #fff; }
         .form-group textarea { min-height: 110px; }
@@ -251,7 +325,7 @@ function Index() {
         .footer-logo { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(72px, 20vw, 160px); letter-spacing: -4px; line-height: 1; display: block; padding: 8px var(--p); white-space: nowrap; }
         .footer-links { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
         .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; display: flex; align-items: center; gap: 6px; }
-        .footer-desc { max-width: 480px; margin: 30px auto 0; padding: 24px var(--p) 0; }
+        .footer-desc { max-width: 50%; margin: 30px auto 0; padding: 24px var(--p) 0; }
         .footer-desc p { font-size: 13px; font-weight: 700; text-transform: uppercase; text-align: left; letter-spacing: .5px; line-height: 1.65; }
 
         @media (min-width: 900px) {
@@ -299,7 +373,9 @@ function Index() {
           .process-name { margin-bottom: 6px; font-size: 16px; }
           .process-step p { font-size: 16px; }
 
-          .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); align-items: stretch; }
+          .pricing-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+          .pricing-title { padding: 60px 0 0; position: sticky; top: 40px; }
+          .pricing-grid { display: flex; flex-direction: column; gap: var(--g); padding-top: 60px; }
           .price-card { display: flex; flex-direction: column; }
           .price-card-body { flex: 1; display: flex; flex-direction: column; padding: 20px; }
           .price-features { flex: 1; }
@@ -333,6 +409,8 @@ function Index() {
         }
       `}</style>
 
+      <div ref={cursorRef} className="z-cursor" aria-hidden />
+      <div ref={cursorLabelRef} className="z-cursor-label" aria-hidden>View</div>
       <div className="z-root">
         <nav>
           <div className="nav-logo">(z)</div>
@@ -392,7 +470,7 @@ function Index() {
         <h2 className="section-title" id="work">WEBSITE<br />PROJECTS</h2>
         <div className="projects">
           {websiteProjects.map((pr) => (
-            <div key={pr.name} className="project-card">
+            <div key={pr.name} className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
               <img src={pr.img} alt={pr.name} />
               <div className="project-info">
                 <div className="project-name">{pr.name}</div>
@@ -405,7 +483,7 @@ function Index() {
         <h2 className="section-title">VISUAL BRAND<br />PROJECTS</h2>
         <div className="projects">
           {brandProjects.map((pr) => (
-            <div key={pr.name} className="project-card">
+            <div key={pr.name} className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
               <img src={pr.img} alt={pr.name} />
               <div className="project-info">
                 <div className="project-name">{pr.name}</div>
