@@ -243,11 +243,13 @@ function Index() {
         .phase-card-bottom { background: #000; color: #fff; padding: 20px; }
         .phase-card-bottom .tagline { font-weight: 700; font-size: 14px; line-height: 1.35; margin-bottom: 8px; }
         .phase-card-bottom p { font-size: 14px; line-height: 1.6; }
-        .project-card { background: #f2f2f2; border-radius: 4px; overflow: hidden; }
+        .project-card { background: #f2f2f2; border-radius: 4px; overflow: hidden; cursor: pointer; transition: background .25s; }
+        .project-card.is-active { background: var(--blue); }
+        .project-card.is-active .project-name, .project-card.is-active .project-type { color: #fff; }
         .project-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
         .project-info { padding: 20px; }
-        .project-name { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; }
-        .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; }
+        .project-name { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; transition: color .25s; }
+        .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color .25s; }
         .process-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
         .process-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: left; padding: 30px 0; }
         .process-step { padding: var(--g) 0; border-top: 1px solid #000; }
