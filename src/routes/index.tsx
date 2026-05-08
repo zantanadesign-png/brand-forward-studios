@@ -95,6 +95,65 @@ const faqs = [
 
 function Index() {
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
+  const [activeProjects, setActiveProjects] = useState<Set<string>>(new Set());
+  const toggleProject = (name: string) => setActiveProjects(prev => {
+    const next = new Set(prev);
+    if (next.has(name)) next.delete(name); else next.add(name);
+    return next;
+  });
+
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const cursorLabelRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch) return;
+    const cursor = cursorRef.current;
+    const label = cursorLabelRef.current;
+    if (!cursor || !label) return;
+
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let cx = mx, cy = my;
+    let targetEl: HTMLElement | null = null;
+    let raf = 0;
+
+    const onMove = (e: MouseEvent) => {
+      mx = e.clientX; my = e.clientY;
+      const t = (e.target as HTMLElement)?.closest<HTMLElement>("[data-magnetic]");
+      targetEl = t;
+      const viewT = (e.target as HTMLElement)?.closest<HTMLElement>(".project-card");
+      if (viewT) {
+        label.style.opacity = "1";
+        label.style.transform = "translate(-50%, -50%) scale(1)";
+      } else {
+        label.style.opacity = "0";
+        label.style.transform = "translate(-50%, -50%) scale(.6)";
+      }
+    };
+    const tick = () => {
+      let tx = mx, ty = my;
+      if (targetEl) {
+        const r = targetEl.getBoundingClientRect();
+        const ex = r.left + r.width / 2;
+        const ey = r.top + r.height / 2;
+        tx = mx + (ex - mx) * 0.3;
+        ty = my + (ey - my) * 0.3;
+        cursor.classList.add("is-magnetic");
+      } else {
+        cursor.classList.remove("is-magnetic");
+      }
+      cx += (tx - cx) * 0.2;
+      cy += (ty - cy) * 0.2;
+      cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      label.style.left = `${mx}px`;
+      label.style.top = `${my}px`;
+      raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener("mousemove", onMove);
+    raf = requestAnimationFrame(tick);
+    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
+  }, []);
+
   const toggleFaq = (i: number) => setOpenFaqs(prev => {
     const next = new Set(prev);
     if (next.has(i)) next.delete(i); else next.add(i);
