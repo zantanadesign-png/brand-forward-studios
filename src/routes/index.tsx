@@ -4,17 +4,17 @@ import { useEffect, useRef, useState } from "react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "(z) — Websites Built to Move Brands Forward" },
+      { title: "(z) — WEBSITES BUILT" },
       {
         name: "description",
         content:
-          "Zantana Studio — strategic websites and visual identity built to move brands forward. Live in weeks, not months.",
+          "Zantana Studio — strategic websites and visual identity. Live in weeks, not months.",
       },
-      { property: "og:title", content: "(z) — Websites Built to Move Brands Forward" },
+      { property: "og:title", content: "(z) — WEBSITES BUILT" },
       {
         property: "og:description",
         content:
-          "Strategic websites and visual identity built to move brands forward. Live in weeks, not months.",
+          "Strategic websites and visual identity. Live in weeks, not months.",
       },
     ],
     links: [
@@ -347,7 +347,7 @@ function Index() {
             <span className="hero-dot" />
             <span>Available for new projects</span>
           </div>
-          <h1>WEBSITES BUILT TO MOVE BRANDS FORWARD</h1>
+          <h1>WEBSITES BUILT</h1>
           <p className="hero-sub">
             Whether you're raising, launching, or scaling — we ship sites fast, so you can seize the moment.
           </p>
