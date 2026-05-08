@@ -207,6 +207,12 @@ function Index() {
         :root { --blue: #2B2BFF; --black: #000; --white: #fff; --p: 20px; --g: 20px; }
         .z-root *, .z-root *::before, .z-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
         .z-root { background: #fff; color: #000; font-family: 'Inter', sans-serif; font-size: 20px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
+        @media (hover: hover) and (pointer: fine) {
+          .z-root, .z-root * { cursor: none !important; }
+          .z-cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: #000; pointer-events: none; z-index: 9999; transition: width .2s, height .2s, background .2s; will-change: transform; }
+          .z-cursor.is-magnetic { width: 36px; height: 36px; background: rgba(0,0,0,.25); }
+          .z-cursor-label { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px; border-radius: 4px; opacity: 0; transform: translate(-50%, -50%) scale(.6); transition: opacity .2s, transform .2s; }
+        }
         .z-root p { font-size: 20px; line-height: 1.55; }
         .z-root h1, .z-root h2, .z-root h3, .z-root h4 { font-family: 'Inter', sans-serif; }
         .z-root nav { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 24px var(--p) 0; }
