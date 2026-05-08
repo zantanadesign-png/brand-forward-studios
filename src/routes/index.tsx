@@ -319,7 +319,7 @@ function Index() {
         .footer-logo { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(72px, 20vw, 160px); letter-spacing: -4px; line-height: 1; display: block; padding: 8px var(--p); white-space: nowrap; }
         .footer-links { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
         .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; display: flex; align-items: center; gap: 6px; }
-        .footer-desc { max-width: 480px; margin: 30px auto 0; padding: 24px var(--p) 0; }
+        .footer-desc { max-width: 50%; margin: 30px auto 0; padding: 24px var(--p) 0; }
         .footer-desc p { font-size: 13px; font-weight: 700; text-transform: uppercase; text-align: left; letter-spacing: .5px; line-height: 1.65; }
 
         @media (min-width: 900px) {
