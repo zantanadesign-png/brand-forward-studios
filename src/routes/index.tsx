@@ -273,7 +273,7 @@ function Index() {
           .nav-links { gap: 32px; }
           .nav-links a { font-size: 12px; }
 
-          .hero { padding: 40px var(--p) 60px; min-height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-end; }
+          .hero { padding: 40px var(--p); min-height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-end; }
           .hero h1 { font-size: 60px; max-width: 1100px; }
           .hero-sub { font-size: 20px; max-width: 540px; }
           .btn-black { margin-bottom: 0; padding: 18px 36px; }
