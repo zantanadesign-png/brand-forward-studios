@@ -632,7 +632,7 @@ function Index() {
               setFormStatus('sending');
               const form = e.currentTarget;
               const formData = new FormData(form);
-              formData.append('access_key', 'YOUR_WEB3FORMS_KEY');
+              formData.append('access_key', 'ff788bc1-0eed-4d8a-b7db-fd1ad8c08a54');
               formData.append('subject', `New project inquiry from ${formData.get('name')}`);
               formData.append('from_name', 'Zantana Studio Website');
               try {
