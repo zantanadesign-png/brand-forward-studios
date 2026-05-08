@@ -483,7 +483,7 @@ function Index() {
         <h2 className="section-title">VISUAL BRAND<br />PROJECTS</h2>
         <div className="projects">
           {brandProjects.map((pr) => (
-            <div key={pr.name} className="project-card">
+            <div key={pr.name} className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
               <img src={pr.img} alt={pr.name} />
               <div className="project-info">
                 <div className="project-name">{pr.name}</div>
