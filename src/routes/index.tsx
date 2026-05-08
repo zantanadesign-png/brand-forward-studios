@@ -195,7 +195,7 @@ function Index() {
         .pricing-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1.05; color: var(--blue); padding: 30px 0; }
         .pricing-grid { display: flex; flex-direction: column; gap: var(--g); }
         .price-card { background: var(--blue); border-radius: 4px; color: #fff; overflow: hidden; }
-        .price-card-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,.3); }
+        .price-card-header { padding: 20px; border-bottom: 2px solid rgba(255,255,255,.5); }
         .plan-name { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
         .price-card-body { padding: 20px; }
         .price-amount { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; }
@@ -222,10 +222,11 @@ function Index() {
         .faq-icon::after { width: 1px; height: 14px; }
         .faq-item.open .faq-icon::before, .faq-item.open .faq-icon::after { background: #fff; }
         .faq-item.open .faq-icon::after { opacity: 0; transform: rotate(90deg); }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 20px; }
-        .faq-answer p { font-size: 15px; line-height: 1.6; padding-bottom: 20px; color: #000; transition: color .2s; }
-        .faq-item.open .faq-answer { max-height: 400px; }
-        .faq-item.open .faq-answer p { color: #fff; }
+         .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; padding: 0 20px; }
+         .faq-answer > div { overflow: hidden; min-height: 0; }
+         .faq-answer p { font-size: 15px; line-height: 1.6; padding-bottom: 20px; color: #000; transition: color .2s; }
+         .faq-item.open .faq-answer { grid-template-rows: 1fr; }
+         .faq-item.open .faq-answer p { color: #fff; }
         .about-section { background: #000; margin-top: 30px; padding: 30px var(--p); }
         .about-inner { max-width: 480px; margin: 0 auto; }
         .about-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: center; color: #fff; margin-bottom: 28px; }
@@ -272,7 +273,7 @@ function Index() {
           .nav-links { gap: 32px; }
           .nav-links a { font-size: 12px; }
 
-          .hero { padding-top: 80px; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 60px; }
+          .hero { padding-top: 80px; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 40px; }
           .hero h1 { font-size: 60px; max-width: 1100px; }
           .hero-sub { font-size: 20px; max-width: 540px; }
           .btn-black { margin-bottom: 0; padding: 18px 36px; }
@@ -313,7 +314,7 @@ function Index() {
           .about-section { padding: 60px 0; }
           .about-inner { max-width: 60% !important; margin: 0 auto !important; padding-left: 0 !important; padding-right: 0 !important; display: flex; flex-direction: column; align-items: center; gap: 28px; }
           .about-title { margin-bottom: 0; }
-          .about-photo { width: 600px; max-width: 100%; margin-bottom: 0; aspect-ratio: 3/4; }
+          .about-photo { width: 450px; max-width: 100%; margin-bottom: 0; aspect-ratio: 3/4; }
           .about-right { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
           .about-headline { text-align: center; font-size: 18px; margin-bottom: 0; }
           .about-body { text-align: center; margin-bottom: 0; font-size: 16px; }
@@ -485,7 +486,7 @@ function Index() {
                   <span className="faq-q-text">{f.q}</span>
                   <span className="faq-icon" />
                 </button>
-                <div className="faq-answer"><p>{f.a}</p></div>
+                <div className="faq-answer"><div><p>{f.a}</p></div></div>
               </div>
             ))}
           </div>
