@@ -94,7 +94,9 @@ const faqs = [
 ];
 
 function Index() {
+  const [isDark, setIsDark] = useState(false);
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [activeProjects, setActiveProjects] = useState<Set<string>>(new Set());
   const toggleProject = (name: string) => setActiveProjects(prev => {
     const next = new Set(prev);
@@ -124,10 +126,12 @@ function Index() {
       const viewT = (e.target as HTMLElement)?.closest<HTMLElement>(".project-card");
       if (viewT) {
         label.style.opacity = "1";
-        label.style.transform = "translate(-50%, -50%) scale(1)";
+        label.style.transform = "translate(0%, 0%) scale(1)";
+        cursor.style.opacity = "0";
       } else {
         label.style.opacity = "0";
-        label.style.transform = "translate(-50%, -50%) scale(.6)";
+        label.style.transform = "translate(0%, 0%) scale(.6)";
+        cursor.style.opacity = "1";
       }
     };
     const tick = () => {
@@ -144,9 +148,9 @@ function Index() {
       }
       cx += (tx - cx) * 0.2;
       cy += (ty - cy) * 0.2;
-      cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
-      label.style.left = `${mx}px`;
-      label.style.top = `${my}px`;
+      cursor.style.transform = `translate(${cx}px, ${cy}px) translate(25px, 25px)`;
+      label.style.left = `${mx + 20}px`;
+      label.style.top = `${my + 20}px`;
       raf = requestAnimationFrame(tick);
     };
     window.addEventListener("mousemove", onMove);
@@ -204,34 +208,35 @@ function Index() {
   return (
     <>
       <style>{`
-        :root { --blue: #2B2BFF; --black: #000; --white: #fff; --p: 20px; --g: 20px; }
+        :root { --blue: #2B2BFF; --black: #000; --white: #fff; --p: 20px; --g: 20px; --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; }
+        .z-root.dark { --bg: #000; --text: #fff; --surface: #1a1a1a; --muted: #aaa; }
         .z-root *, .z-root *::before, .z-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        .z-root { background: #fff; color: #000; font-family: 'Inter', sans-serif; font-size: 20px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
+        .z-root { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 20px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; transition: background .3s, color .3s; }
         @media (hover: hover) and (pointer: fine) {
-          .z-root, .z-root * { cursor: none !important; }
-          .z-cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: #000; pointer-events: none; z-index: 9999; transition: width .2s, height .2s, background .2s; will-change: transform; }
-          .z-cursor.is-magnetic { width: 36px; height: 36px; background: rgba(0,0,0,.25); }
-          .z-cursor-label { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px; border-radius: 4px; opacity: 0; transform: translate(-50%, -50%) scale(.6); transition: opacity .2s, transform .2s; }
+          .z-cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: #fff; mix-blend-mode: difference; pointer-events: none; z-index: 9999; transition: width .2s, height .2s, opacity .2s; will-change: transform; }
+          .z-cursor.is-magnetic { width: 36px; height: 36px; background: #fff; }
+          .z-cursor-label { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px; border-radius: 4px; opacity: 0; transform: translate(0%, 0%) scale(.6); transition: opacity .2s, transform .2s; }
         }
         .z-root p { font-size: 20px; line-height: 1.55; }
         .z-root h1, .z-root h2, .z-root h3, .z-root h4 { font-family: 'Inter', sans-serif; }
         .z-root nav { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 24px var(--p) 0; }
         .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
-        .nav-links { display: flex; gap: var(--g); list-style: none; }
-        .nav-links a { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
+        .nav-links { display: flex; gap: var(--g); list-style: none; align-items: center; }
+        .nav-links a, .theme-toggle { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
+        .theme-toggle { background: none; border: none; cursor: pointer; padding: 0; font-family: 'Inter', sans-serif; }
         .nav-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
-        .nav-links a:hover { color: var(--blue); }
+        .nav-links a:hover, .theme-toggle:hover { color: var(--blue); }
         .nav-links a:hover::before { opacity: 1; transform: scale(1); }
         .hero { max-width: 480px; margin: 0 auto; padding: 24px var(--p) 40px; min-height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box; }
         .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: var(--g); }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
          .hero h1 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 40px; line-height: 1; letter-spacing: -1.5px; margin-bottom: var(--g); }
-         .hero-sub { font-size: 20px; line-height: 1.5; color: #333; margin-bottom: 28px; max-width: 460px; }
-        .btn-black { display: inline-flex; align-items: center; gap: 8px; background: #000; color: #fff; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid #000; cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s, color .18s; width: auto; align-self: flex-start; }
-        .btn-black::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; opacity: 0; width: 0; transition: opacity .2s, width .2s; }
-        .btn-black:hover { background: var(--blue); border-color: var(--blue); }
-        .btn-black:hover::before { opacity: 1; width: 6px; }
+         .hero-sub { font-size: 20px; line-height: 1.5; color: var(--muted); margin-bottom: 28px; max-width: 460px; transition: color .3s; }
+        .btn-black { display: inline-flex; align-items: center; gap: 8px; background: var(--text); color: var(--bg); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--text); cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s, color .18s; width: auto; align-self: flex-start; }
+        .btn-black::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bg); opacity: 0; width: 0; transition: opacity .2s, width .2s; }
+        .btn-black:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+        .btn-black:hover::before { opacity: 1; width: 6px; background: #fff; }
         .ticker-wrapper { overflow: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; cursor: grab; user-select: none; }
         .ticker-wrapper.dragging { cursor: grabbing; }
         .ticker-track { display: flex; gap: 16px; width: max-content; }
@@ -246,20 +251,21 @@ function Index() {
         .phase-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
         .phase-list li { font-size: 14px; display: flex; align-items: center; gap: 10px; }
         .phase-list li::before { content: '→'; font-weight: 700; }
-        .phase-card-bottom { background: #000; color: #fff; padding: 20px; }
+        .phase-card-bottom { background: var(--text); color: var(--bg); padding: 20px; }
         .phase-card-bottom .tagline { font-weight: 700; font-size: 14px; line-height: 1.35; margin-bottom: 8px; }
         .phase-card-bottom p { font-size: 14px; line-height: 1.6; }
-        .project-card { background: #f2f2f2; border-radius: 4px; overflow: hidden; cursor: pointer; transition: background .25s; }
-        .project-card.is-active { background: var(--blue); }
-        .project-card.is-active .project-name, .project-card.is-active .project-type { color: #fff; }
+        .project-card { background: var(--surface); border-radius: 4px; overflow: hidden; cursor: pointer; transition: background .25s; }
+        .project-card:hover, .project-card:active, .project-card.is-active { background: var(--blue); }
+        .project-card:hover .project-info, .project-card:active .project-info, .project-card.is-active .project-info { background: var(--blue); }
+        .project-card:hover .project-name, .project-card:hover .project-type, .project-card:active .project-name, .project-card:active .project-type, .project-card.is-active .project-name, .project-card.is-active .project-type { color: #fff; }
         .project-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
-        .project-info { padding: 20px; }
+        .project-info { padding: 20px; transition: background .25s; }
         .project-name { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; transition: color .25s; }
         .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color .25s; }
         .process-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
         .process-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: left; padding: 30px 0; }
-        .process-step { padding: var(--g) 0; border-top: 1px solid #000; }
-        .process-step:last-child { border-bottom: 1px solid #000; }
+        .process-step { padding: var(--g) 0; border-top: 1px solid var(--text); }
+        .process-step:last-child { border-bottom: 1px solid var(--text); }
         .process-num { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 1px; margin-bottom: 4px; }
         .process-name { font-weight: 700; font-size: 14px; letter-spacing: .3px; margin-bottom: 8px; }
         .process-step p { font-size: 15px; line-height: 1.6; }
@@ -285,48 +291,69 @@ function Index() {
         .faq-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
         .faq-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; padding: 30px 0; }
         .faq-list { display: flex; flex-direction: column; gap: var(--g); }
-        .faq-item { background: #f2f2f2; border-radius: 4px; overflow: hidden; transition: background .2s; }
+        .faq-item { background: var(--surface); border-radius: 4px; overflow: hidden; transition: background .2s; }
         .faq-item.open { background: var(--blue); }
         .faq-question { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 20px; text-align: left; }
-        .faq-question span.faq-q-text { font-size: 14px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; line-height: 1.4; flex: 1; color: #000; transition: color .2s; }
+        .faq-question span.faq-q-text { font-size: 14px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; line-height: 1.4; flex: 1; color: var(--text); transition: color .2s; }
         .faq-item.open .faq-question span.faq-q-text { color: #fff; }
         .faq-icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
-        .faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: #000; transition: transform .25s, opacity .25s, background .2s; }
+        .faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: var(--text); transition: transform .25s, opacity .25s, background .2s; }
         .faq-icon::before { width: 14px; height: 1px; }
         .faq-icon::after { width: 1px; height: 14px; }
         .faq-item.open .faq-icon::before, .faq-item.open .faq-icon::after { background: #fff; }
         .faq-item.open .faq-icon::after { opacity: 0; transform: rotate(90deg); }
          .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; padding: 0 20px; }
          .faq-answer > div { overflow: hidden; min-height: 0; }
-         .faq-answer p { font-size: 15px; line-height: 1.6; padding-bottom: 20px; color: #000; transition: color .2s; }
+         .faq-answer p { font-size: 15px; line-height: 1.6; padding-bottom: 20px; color: var(--text); transition: color .2s; }
          .faq-item.open .faq-answer { grid-template-rows: 1fr; }
          .faq-item.open .faq-answer p { color: #fff; }
-        .about-section { background: #000; margin-top: 30px; padding: 30px var(--p); }
+        .about-section { background: var(--text); margin-top: 30px; padding: 30px var(--p); transition: background .3s; }
         .about-inner { max-width: 480px; margin: 0 auto; }
-        .about-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: center; color: #fff; margin-bottom: 28px; }
+        .about-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: center; color: var(--bg); margin-bottom: 28px; }
         .about-photo { width: 100%; border-radius: 4px; display: block; margin-bottom: 28px; aspect-ratio: 4/3; object-fit: cover; object-position: top; filter: grayscale(100%); }
-        .about-headline { font-weight: 700; font-size: 16px; line-height: 1.5; text-align: center; text-transform: uppercase; color: #fff; margin-bottom: 20px; letter-spacing: .3px; }
-        .about-body { font-size: 16px; color: #fff; line-height: 1.6; text-align: center; margin-bottom: 32px; }
-        .btn-white-outline { display: block; background: #fff; color: #000; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px var(--p); border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid #fff; transition: background .18s, color .18s, border-color .18s; }
+        .about-headline { font-weight: 700; font-size: 16px; line-height: 1.5; text-align: center; text-transform: uppercase; color: var(--bg); margin-bottom: 20px; letter-spacing: .3px; }
+        .about-body { font-size: 16px; color: var(--bg); line-height: 1.6; text-align: center; margin-bottom: 32px; }
+        .btn-white-outline { display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--bg); color: var(--text); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px var(--p); border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid var(--bg); transition: background .18s, color .18s, border-color .18s; }
+        .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: var(--text); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-white-outline:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+        .btn-white-outline:hover::before { opacity: 1; width: 6px; background: #fff; }
         .contact-section { max-width: 480px; margin: 0 auto; padding: 30px var(--p) 0; }
         .contact-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; margin-bottom: 30px; }
         .contact-form { background: var(--blue); border-radius: 4px; padding: var(--p); display: flex; flex-direction: column; gap: 16px; max-width: 460px; margin: 0 auto; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
-        .form-group input, .form-group textarea { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); border-radius: 4px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 15px; color: #fff; width: 100%; outline: none; resize: none; }
+        .form-group input, .form-group textarea { background: rgba(255,255,255,.12); border: none; border-radius: 4px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 15px; color: #fff; width: 100%; outline: none; resize: none; }
         .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.4); }
-        .form-group input:focus, .form-group textarea:focus { border-color: #fff; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; }
         .form-group textarea { min-height: 110px; }
-        .btn-form-submit { display: block; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px var(--p); border-radius: 4px; text-align: center; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s; }
+        .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px var(--p); border-radius: 4px; text-align: center; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s; }
+        .btn-form-submit::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-form-submit:hover { background: #000; color: #fff; border-color: #000; }
+        .btn-form-submit:hover::before { opacity: 1; width: 6px; background: #fff; }
+        .btn-form-submit:disabled { opacity: .6; cursor: not-allowed; }
+        .form-success { background: var(--blue); border-radius: 4px; padding: 60px var(--p); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; max-width: 460px; margin: 0 auto; text-align: center; animation: formFadeIn .5s ease; }
+        .form-success-icon { width: 64px; height: 64px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; animation: formPop .4s cubic-bezier(.175,.885,.32,1.275) .1s both; }
+        .form-success-icon svg { width: 28px; height: 28px; }
+        .form-success-icon svg path { stroke-dasharray: 30; stroke-dashoffset: 30; animation: checkDraw .4s ease .4s forwards; }
+        .form-success h3 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 24px; color: #fff; letter-spacing: -0.5px; animation: formFadeUp .4s ease .2s both; }
+        .form-success p { font-size: 15px; color: rgba(255,255,255,.85); line-height: 1.6; max-width: 340px; animation: formFadeUp .4s ease .3s both; }
+        .form-success .btn-form-reset { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: #fff; font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 24px; border-radius: 4px; border: 1px solid rgba(255,255,255,.4); cursor: pointer; margin-top: 8px; transition: background .18s, border-color .18s; animation: formFadeUp .4s ease .4s both; font-family: 'Inter', sans-serif; }
+        .form-success .btn-form-reset:hover { background: rgba(255,255,255,.15); border-color: #fff; }
+        .form-error-msg { background: rgba(255,0,0,.15); color: #fff; font-size: 13px; font-weight: 600; padding: 12px 16px; border-radius: 4px; text-align: center; }
+        @keyframes formFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes formFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes formPop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+        @keyframes checkDraw { to { stroke-dashoffset: 0; } }
         .z-footer { padding: 30px 0 40px; }
-        .footer-logo-row { overflow: hidden; width: 100%; }
-        .footer-logo { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(72px, 20vw, 160px); letter-spacing: -4px; line-height: 1; display: block; padding: 8px var(--p); white-space: nowrap; }
-        .footer-links { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
-        .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #000; display: flex; align-items: center; gap: 6px; }
-        .footer-desc { max-width: 50%; margin: 30px auto 0; padding: 24px var(--p) 0; }
-        .footer-desc p { font-size: 13px; font-weight: 700; text-transform: uppercase; text-align: left; letter-spacing: .5px; line-height: 1.65; }
+        .footer-logo-row { overflow: hidden; width: 100%; text-align: center; }
+        .footer-logo { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(72px, 20vw, 160px); letter-spacing: -4px; line-height: 1; display: block; padding: 8px var(--p); white-space: nowrap; text-align: center; }
+        .footer-links { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
+        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
+        .footer-links a:hover { color: var(--blue); }
+        .footer-links a:hover::before { opacity: 1; transform: scale(1); }
+        .footer-desc { width: 50%; margin: 30px auto 0; padding: 24px 0 0; text-align: center; }
+        .footer-desc p { font-size: 13px; font-weight: 700; text-transform: uppercase; text-align: center; letter-spacing: .5px; line-height: 1.65; margin: 0 auto; }
 
         @media (min-width: 900px) {
           .z-root { --p: 40px; }
@@ -394,16 +421,17 @@ function Index() {
           .about-right { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
           .about-headline { text-align: center; font-size: 18px; margin-bottom: 0; }
           .about-body { text-align: center; margin-bottom: 0; font-size: 16px; }
-          .btn-white-outline { display: inline-block; width: auto; padding: 16px 32px; }
+          .btn-white-outline { display: inline-flex; width: auto; padding: 16px 32px; }
 
           .contact-section { padding: 60px 40px 0; text-align: center; }
           .contact-title { text-align: center; }
           .contact-form { max-width: 560px; margin: 0 auto; padding: 24px; text-align: left; }
+          .form-success { max-width: 560px; }
 
           .footer-logo-row { text-align: center; }
           .footer-logo { text-align: center; }
           .footer-links { flex-direction: row; flex-wrap: wrap; gap: 32px; justify-content: center; align-items: center; }
-          .footer-desc { text-align: center; }
+          .footer-desc { text-align: center; margin: 0 auto; width: 50%; }
           .footer-desc p { text-align: center; }
           .ticker-item { width: 360px; height: 220px; }
         }
@@ -411,13 +439,14 @@ function Index() {
 
       <div ref={cursorRef} className="z-cursor" aria-hidden />
       <div ref={cursorLabelRef} className="z-cursor-label" aria-hidden>View</div>
-      <div className="z-root">
+      <div className={`z-root ${isDark ? "dark" : ""}`}>
         <nav>
-          <div className="nav-logo">(z)</div>
+          <div className="nav-logo"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="50%" dominantBaseline="central" textAnchor="middle" fill="currentColor" fontFamily="Inter" fontWeight="800" fontSize="18">(z)</text></svg></div>
           <ul className="nav-links">
             <li><a href="#work">Work</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#contact">DM</a></li>
+            <li><button className="theme-toggle" onClick={() => setIsDark(prev => !prev)}>{isDark ? "Light" : "Dark"}</button></li>
           </ul>
         </nav>
 
@@ -588,41 +617,51 @@ function Index() {
 
         <section className="contact-section" id="contact">
           <h2 className="contact-title">LET'S BUILD IT<br />— TOGETHER</h2>
-          <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
-            <div className="form-group">
-              <label>Name</label>
-              <input type="text" placeholder="Your name" maxLength={100} />
+          {formStatus === 'sent' ? (
+            <div className="form-success">
+              <div className="form-success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+              </div>
+              <h3>MESSAGE SENT!</h3>
+              <p>Thank you for reaching out. I'll review your project details and get back to you within 24–48 hours.</p>
+              <button className="btn-form-reset" onClick={() => setFormStatus('idle')}>Send another message</button>
             </div>
-            <div className="form-group">
-              <label>Email</label>
-              <input type="email" placeholder="email@company.com" maxLength={255} />
-            </div>
-            <div className="form-group">
-              <label>What is your company name?</label>
-              <input type="text" placeholder="Company name" maxLength={100} />
-            </div>
-            <div className="form-group">
-              <label>What services does your company provide?</label>
-              <input type="text" placeholder="e.g. SaaS, e-commerce, agency" maxLength={200} />
-            </div>
-            <div className="form-group">
-              <label>Message</label>
-              <textarea placeholder="Tell me about your project..." maxLength={1000} />
-            </div>
-            <button type="submit" className="btn-form-submit">Start a project</button>
-          </form>
+          ) : (
+            <form className="contact-form" onSubmit={async (e) => {
+              e.preventDefault();
+              setFormStatus('sending');
+              const form = e.currentTarget;
+              const formData = new FormData(form);
+              formData.append('access_key', 'YOUR_WEB3FORMS_KEY');
+              formData.append('subject', `New project inquiry from ${formData.get('name')}`);
+              formData.append('from_name', 'Zantana Studio Website');
+              try {
+                const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.success) { setFormStatus('sent'); form.reset(); } else { setFormStatus('error'); }
+              } catch { setFormStatus('error'); }
+            }}>
+              <div className="form-group"><label>Name</label><input name="name" type="text" placeholder="Your name" maxLength={100} required /></div>
+              <div className="form-group"><label>Email</label><input name="email" type="email" placeholder="email@company.com" maxLength={255} required /></div>
+              <div className="form-group"><label>What is your company name?</label><input name="company" type="text" placeholder="Company name" maxLength={100} /></div>
+              <div className="form-group"><label>What services does your company provide?</label><input name="services" type="text" placeholder="e.g. SaaS, e-commerce, agency" maxLength={200} /></div>
+              <div className="form-group"><label>Message</label><textarea name="message" placeholder="Tell me about your project..." maxLength={1000} /></div>
+              {formStatus === 'error' && <div className="form-error-msg">Something went wrong. Please try again or email directly at zantanadesign@gmail.com</div>}
+              <button type="submit" className="btn-form-submit" disabled={formStatus === 'sending'}>{formStatus === 'sending' ? 'Sending...' : 'Start a project'}</button>
+            </form>
+          )}
         </section>
 
         <footer className="z-footer">
           <div className="footer-logo-row">
-            <div className="footer-logo">zantana</div>
+            <div className="footer-logo"><svg width="100%" height="100%" viewBox="0 0 400 80" fill="none" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="50%" dominantBaseline="central" textAnchor="middle" fill="currentColor" fontFamily="Inter" fontWeight="800" fontSize="72">zantana</text></svg></div>
           </div>
           <div className="footer-links">
-            <a href="#">Instagram ↗</a>
-            <a href="#">Contra ↗</a>
-            <a href="#">X ↗</a>
-            <a href="#">Email ↗</a>
-            <a href="#">WhatsApp ↗</a>
+            <a href="https://instagram.com/zantana.co" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+            <a href="https://contra.com/zantanastudio" target="_blank" rel="noopener noreferrer">Contra ↗</a>
+            <a href="https://x.com/zantanastudio" target="_blank" rel="noopener noreferrer">X ↗</a>
+            <a href="mailto:zantanadesign@gmail.com">Email ↗</a>
+            <a href="https://wa.link/l9pzfv" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
           </div>
           <div className="footer-desc">
             <p>An independent design studio specializing visual identity and web design. I transform ideas into high-impact design and development solutions by combining strategy, aesthetics, and functionality to create memorable and results-driven brand experiences.</p>
