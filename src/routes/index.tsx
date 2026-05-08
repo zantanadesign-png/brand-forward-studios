@@ -486,7 +486,7 @@ function Index() {
                   <span className="faq-q-text">{f.q}</span>
                   <span className="faq-icon" />
                 </button>
-                <div className="faq-answer"><p>{f.a}</p></div>
+                <div className="faq-answer"><div><p>{f.a}</p></div></div>
               </div>
             ))}
           </div>
