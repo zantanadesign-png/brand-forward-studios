@@ -40,17 +40,15 @@ export function Loader() {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] transition-all duration-500 flex flex-col ${
-        progress >= 100 ? "bg-black" : "bg-[#2B2BFF]"
-      } ${visible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      className={`fixed inset-0 z-[100] transition-all duration-500 flex flex-col ${progress >= 100 ? "bg-black" : "bg-[#2B2BFF]"
+        } ${visible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
     >
       {/* Logo no bottom inferior esquerdo com animação de fade in */}
       <img
         src="/logo.png"
         alt="Zantana Logo"
-        className={`absolute bottom-8 left-8 w-32 h-auto transition-opacity duration-1000 ${
-          mounted ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute bottom-8 left-8 w-32 h-auto transition-opacity duration-1000 ${mounted ? "opacity-100" : "opacity-0"
+          }`}
       />
 
       {/* Porcentagem no bottom inferior direito */}

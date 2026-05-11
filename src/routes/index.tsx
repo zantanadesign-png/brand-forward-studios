@@ -207,6 +207,9 @@ function Index() {
 
   return (
     <>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;800&display=swap" rel="stylesheet" />
       <style>{`
         :root { --blue: #2B2BFF; --black: #000; --white: #fff; --p: 20px; --g: 20px; --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; }
         .z-root.dark { --bg: #000; --text: #fff; --surface: #1a1a1a; --muted: #aaa; }
@@ -218,7 +221,8 @@ function Index() {
           .z-cursor-label { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px; border-radius: 4px; opacity: 0; transform: translate(0%, 0%) scale(.6); transition: opacity .2s, transform .2s; }
         }
         .z-root p { font-size: 20px; line-height: 1.55; }
-        .z-root h1, .z-root h2, .z-root h3, .z-root h4 { font-family: 'Inter', sans-serif; }
+        .z-root h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; }
+        .z-root h2, .z-root h3, .z-root h4 { font-family: 'Inter', sans-serif; }
         .z-root nav { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 24px var(--p) 0; }
         .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
         .nav-links { display: flex; gap: var(--g); list-style: none; align-items: center; }
@@ -227,11 +231,11 @@ function Index() {
         .nav-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
         .nav-links a:hover, .theme-toggle:hover { color: var(--blue); }
         .nav-links a:hover::before { opacity: 1; transform: scale(1); }
-        .hero { max-width: 480px; margin: 0 auto; padding: 24px var(--p) 40px; min-height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box; }
+        .hero { max-width: 480px; margin: 0 auto; padding: var(--p) var(--p) 40px; min-height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box; }
         .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: var(--g); }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
-         .hero h1 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 40px; line-height: 1; letter-spacing: -1.5px; margin-bottom: var(--g); }
+         .hero h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 40px; line-height: 1; letter-spacing: 0; margin-bottom: var(--g); }
          .hero-sub { font-size: 20px; line-height: 1.5; color: var(--muted); margin-bottom: 28px; max-width: 460px; transition: color .3s; }
         .btn-black { display: inline-flex; align-items: center; gap: 8px; background: var(--text); color: var(--bg); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--text); cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s, color .18s; width: auto; align-self: flex-start; }
         .btn-black::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bg); opacity: 0; width: 0; transition: opacity .2s, width .2s; }
@@ -242,8 +246,8 @@ function Index() {
         .ticker-track { display: flex; gap: 16px; width: max-content; }
         .ticker-item { width: 280px; height: 180px; border-radius: 4px; overflow: hidden; flex-shrink: 0; pointer-events: none; }
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .section-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: left; padding: 30px var(--p); max-width: 480px; margin: 0 auto; }
-        .phases, .projects { max-width: 480px; margin: 0 auto; padding: 0 var(--p); display: flex; flex-direction: column; gap: var(--g); }
+        .section-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1; text-align: left; padding: var(--p); max-width: 480px; margin: 0 auto; }
+        .phases, .projects { max-width: 480px; margin: 0 auto; padding: var(--p); display: flex; flex-direction: column; gap: var(--g); }
         .see-all-wrap { max-width: 480px; margin: 0 auto; padding: 30px var(--p) 0; display: flex; justify-content: center; }
         .phase-card { border-radius: 4px; overflow: hidden; }
         .phase-card-top { background: var(--blue); color: #fff; padding: 20px; }
@@ -262,21 +266,21 @@ function Index() {
         .project-info { padding: 20px; transition: background .25s; }
         .project-name { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; transition: color .25s; }
         .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color .25s; }
-        .process-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
-        .process-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: left; padding: 30px 0; }
+        .process-section { max-width: 480px; margin: 0 auto; padding: var(--p); }
+        .process-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1; text-align: left; padding: var(--g) 0; }
         .process-step { padding: var(--g) 0; border-top: 1px solid var(--text); }
         .process-step:last-child { border-bottom: 1px solid var(--text); }
         .process-num { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 1px; margin-bottom: 4px; }
         .process-name { font-weight: 700; font-size: 14px; letter-spacing: .3px; margin-bottom: 8px; }
         .process-step p { font-size: 15px; line-height: 1.6; }
-        .pricing-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
-        .pricing-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1.05; color: var(--blue); padding: 30px 0; }
+        .pricing-section { max-width: 480px; margin: 0 auto; padding: var(--p); }
+        .pricing-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1.05; color: var(--blue); padding: var(--g) 0; }
         .pricing-grid { display: flex; flex-direction: column; gap: var(--g); }
         .price-card { background: var(--blue); border-radius: 4px; color: #fff; overflow: hidden; }
         .price-card-header { padding: 20px; border-bottom: 2px solid rgba(255,255,255,.5); }
         .plan-name { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
         .price-card-body { padding: 20px; }
-        .price-amount { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; }
+        .price-amount { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1; margin-bottom: 6px; }
         .price-delivery { font-size: 13px; font-weight: 700; margin-bottom: var(--g); }
         .price-divider { height: 2px; background: rgba(255,255,255,.5); margin-bottom: var(--g); }
         .price-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
@@ -288,8 +292,8 @@ function Index() {
         .btn-white::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: #fff; opacity: 0; transition: opacity .2s, width .2s; }
         .btn-white:hover { background: #000; color: #fff; border-color: #000; }
         .btn-white:hover::before { opacity: 1; width: 6px; }
-        .faq-section { max-width: 480px; margin: 0 auto; padding: 0 var(--p); }
-        .faq-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; padding: 30px 0; }
+        .faq-section { max-width: 480px; margin: 0 auto; padding: var(--p); }
+        .faq-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; padding: var(--g) 0; }
         .faq-list { display: flex; flex-direction: column; gap: var(--g); }
         .faq-item { background: var(--surface); border-radius: 4px; overflow: hidden; transition: background .2s; }
         .faq-item.open { background: var(--blue); }
@@ -307,9 +311,9 @@ function Index() {
          .faq-answer p { font-size: 15px; line-height: 1.6; padding-bottom: 20px; color: var(--text); transition: color .2s; }
          .faq-item.open .faq-answer { grid-template-rows: 1fr; }
          .faq-item.open .faq-answer p { color: #fff; }
-        .about-section { background: var(--text); margin-top: 30px; padding: 30px var(--p); transition: background .3s; }
+        .about-section { background: var(--text); margin-top: 30px; padding: var(--p); transition: background .3s; }
         .about-inner { max-width: 480px; margin: 0 auto; }
-        .about-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; text-align: center; color: var(--bg); margin-bottom: 28px; }
+        .about-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1; text-align: center; color: var(--bg); margin-bottom: 28px; }
         .about-photo { width: 100%; border-radius: 4px; display: block; margin-bottom: 28px; aspect-ratio: 4/3; object-fit: cover; object-position: top; filter: grayscale(100%); }
         .about-headline { font-weight: 700; font-size: 16px; line-height: 1.5; text-align: center; text-transform: uppercase; color: var(--bg); margin-bottom: 20px; letter-spacing: .3px; }
         .about-body { font-size: 16px; color: var(--bg); line-height: 1.6; text-align: center; margin-bottom: 32px; }
@@ -317,8 +321,9 @@ function Index() {
         .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: var(--text); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-white-outline:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
         .btn-white-outline:hover::before { opacity: 1; width: 6px; background: #fff; }
-        .contact-section { max-width: 480px; margin: 0 auto; padding: 30px var(--p) 0; }
-        .contact-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 60px; letter-spacing: -2px; line-height: 1; margin-bottom: 30px; }
+        .contact-section { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: #0047FF; color: #fff; padding: var(--p); box-sizing: border-box; }
+        .contact-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 40px; letter-spacing: 0; line-height: 1; margin-bottom: 20px; color: #fff; }
+        .contact-subtitle { font-size: 20px; line-height: 1.5; color: rgba(255,255,255,.8); margin-bottom: 40px; max-width: 460px; }
         .contact-form { background: var(--blue); border-radius: 4px; padding: var(--p); display: flex; flex-direction: column; gap: 16px; max-width: 460px; margin: 0 auto; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
@@ -348,27 +353,25 @@ function Index() {
         .footer-logo-row { overflow: hidden; width: 100%; text-align: center; }
         .footer-logo { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(72px, 20vw, 160px); letter-spacing: -4px; line-height: 1; display: block; padding: 8px var(--p); white-space: nowrap; text-align: center; }
         .footer-links { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); display: flex; flex-direction: column; align-items: center; gap: 14px; }
-        .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
-        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
+        .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 8px; position: relative; }
+        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 1; transform: scale(1); transition: opacity .2s, transform .2s; }
         .footer-links a:hover { color: var(--blue); }
-        .footer-links a:hover::before { opacity: 1; transform: scale(1); }
         .footer-desc { width: 50%; margin: 30px auto 0; padding: 24px 0 0; text-align: center; }
         .footer-desc p { font-size: 13px; font-weight: 700; text-transform: uppercase; text-align: center; letter-spacing: .5px; line-height: 1.65; margin: 0 auto; }
 
         @media (min-width: 900px) {
-          .z-root { --p: 40px; }
+          :root { --p: 40px; }
           .z-root nav,
-          .hero,
           .section-title,
           .phases,
           .projects,
+          .see-all-wrap,
           .process-section,
           .pricing-section,
           .faq-section,
           .about-inner,
-          .contact-section,
-          .footer-links,
-          .footer-desc { max-width: none !important; margin-left: 0; margin-right: 0; padding-left: 40px; padding-right: 40px; }
+          .footer-links { max-width: none !important; margin-left: 0; margin-right: 0; padding: var(--p) !important; }
+          .hero { max-width: none !important; margin-left: 0; margin-right: 0; padding: var(--p) var(--p) 40px !important; }
 
           .z-root nav { padding-top: 32px; }
           .nav-links { gap: 32px; }
@@ -380,8 +383,8 @@ function Index() {
           .btn-black { margin-bottom: 0; padding: 18px 36px; }
 
           .section-title, .process-title, .pricing-title, .faq-title, .about-title, .contact-title, .price-amount { font-size: 60px; }
-          .section-title { padding: 60px 40px; }
-          .process-title, .pricing-title, .faq-title { padding: 60px 0; }
+          .section-title { padding: var(--p); }
+          .process-title, .pricing-title, .faq-title { padding: var(--p) 0; }
 
           .phases { display: grid; grid-template-columns: repeat(3, 1fr); align-items: stretch; }
           .phase-card { display: flex; flex-direction: column; }
@@ -423,16 +426,18 @@ function Index() {
           .about-body { text-align: center; margin-bottom: 0; font-size: 16px; }
           .btn-white-outline { display: inline-flex; width: auto; padding: 16px 32px; }
 
-          .contact-section { padding: 60px 40px 0; text-align: center; }
-          .contact-title { text-align: center; }
-          .contact-form { max-width: 560px; margin: 0 auto; padding: 24px; text-align: left; }
-          .form-success { max-width: 560px; }
+          .contact-section { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; text-align: left; }
+          .contact-title { text-align: left; font-size: 80px; margin-bottom: 30px; }
+          .contact-form { max-width: 560px; margin: 0; padding: 24px; text-align: left; background: transparent; border: 1px solid rgba(255,255,255,.2); }
+          .contact-left { display: flex; flex-direction: column; justify-content: center; }
+          .form-success { max-width: 560px; background: rgba(255,255,255,.1); }
 
-          .footer-logo-row { text-align: center; }
-          .footer-logo { text-align: center; }
-          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 32px; justify-content: center; align-items: center; }
-          .footer-desc { text-align: center; margin: 0 auto; width: 50%; }
-          .footer-desc p { text-align: center; }
+          .footer-logo-row { text-align: center; margin-bottom: 40px; }
+          .footer-logo { text-align: center; font-size: clamp(80px, 15vw, 180px); }
+          .footer-desc { text-align: center; margin: 0 auto 40px; width: 100%; max-width: 900px; padding: 0 40px; }
+          .footer-desc p { font-size: 18px; font-weight: 500; line-height: 1.4; text-transform: uppercase; color: var(--text); }
+          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; max-width: none; margin-top: 0; }
+          .footer-links a { font-size: 14px; }
           .ticker-item { width: 360px; height: 220px; }
         }
       `}</style>
@@ -480,7 +485,7 @@ function Index() {
           </div>
         </div>
 
-        <h2 className="section-title">HOW I SOLVE<br />YOUR PROBLEMS</h2>
+        <h1 className="section-title">HOW I SOLVE<br />YOUR PROBLEMS</h1>
         <div className="phases">
           {phases.map((p) => (
             <div key={p.label} className="phase-card">
@@ -496,7 +501,7 @@ function Index() {
           ))}
         </div>
 
-        <h2 className="section-title" id="work">WEBSITE<br />PROJECTS</h2>
+        <h1 className="section-title" id="work">WEBSITE<br />PROJECTS</h1>
         <div className="projects">
           {websiteProjects.map((pr) => (
             <div key={pr.name} className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
@@ -509,7 +514,7 @@ function Index() {
           ))}
         </div>
 
-        <h2 className="section-title">VISUAL BRAND<br />PROJECTS</h2>
+        <h1 className="section-title">VISUAL BRAND<br />PROJECTS</h1>
         <div className="projects">
           {brandProjects.map((pr) => (
             <div key={pr.name} className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
@@ -527,7 +532,7 @@ function Index() {
         </div>
 
         <section className="process-section">
-          <h2 className="process-title">CREATIVE<br />PROCESS</h2>
+          <h1 className="process-title">CREATIVE<br />PROCESS</h1>
           <div className="process-steps-col">
             {processSteps.map((s) => (
               <div key={s.num} className="process-step">
@@ -542,7 +547,7 @@ function Index() {
         </section>
 
         <section className="pricing-section" id="pricing">
-          <h2 className="pricing-title">PICK THE PLAN<br />THAT FITS.</h2>
+          <h1 className="pricing-title">PICK THE PLAN<br />THAT FITS.</h1>
           <div className="pricing-grid">
             <div className="price-card">
               <div className="price-card-header">
@@ -554,7 +559,7 @@ function Index() {
                 <div className="price-divider" />
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
-                  {["Figma wireframe & visual design","Landing page built in Framer","Fully responsive (mobile + desktop)","Animation & scroll effects","Copywriting assistance","Basic SEO optimization"].map(f => (
+                  {["Figma wireframe & visual design", "Landing page built in Framer", "Fully responsive (mobile + desktop)", "Animation & scroll effects", "Copywriting assistance", "Basic SEO optimization"].map(f => (
                     <li key={f}><span className="check">✓</span><span>{f}</span></li>
                   ))}
                   <li className="add-on"><span className="check">+</span><span>Visual Identity Add-on available ($1k)</span></li>
@@ -573,7 +578,7 @@ function Index() {
                 <div className="price-divider" />
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
-                  {["Everything in Landing Page","Up to 8 custom pages","CMS setup & training","Custom imagery & art direction","Brand alignment workshop","Advanced SEO & analytics"].map(f => (
+                  {["Everything in Landing Page", "Up to 8 custom pages", "CMS setup & training", "Custom imagery & art direction", "Brand alignment workshop", "Advanced SEO & analytics"].map(f => (
                     <li key={f}><span className="check">✓</span><span>{f}</span></li>
                   ))}
                   <li className="add-on"><span className="check">+</span><span>Visual Identity Add-on available ($1k)</span></li>
@@ -585,7 +590,7 @@ function Index() {
         </section>
 
         <section className="faq-section">
-          <h2 className="faq-title">F.A.Q</h2>
+          <h1 className="faq-title">F.A.Q</h1>
           <div className="faq-list">
             {faqs.map((f, i) => (
               <div key={i} className={`faq-item ${openFaqs.has(i) ? "open" : ""}`}>
@@ -601,7 +606,7 @@ function Index() {
 
         <section className="about-section">
           <div className="about-inner">
-            <h2 className="about-title">MORE ABOUT<br />ZANTANA STUDIO</h2>
+            <h1 className="about-title">MORE ABOUT<br />ZANTANA STUDIO</h1>
             <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" />
             <div className="about-right">
               <div className="about-headline">
@@ -616,55 +621,78 @@ function Index() {
         </section>
 
         <section className="contact-section" id="contact">
-          <h2 className="contact-title">LET'S BUILD IT<br />— TOGETHER</h2>
-          {formStatus === 'sent' ? (
-            <div className="form-success">
-              <div className="form-success-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+          <div className="contact-left">
+            <h1 className="contact-title">LET'S FIGURE IT OUT<br />— TOGETHER.</h1>
+            <p className="contact-subtitle">
+              On our call, I'll help you map the next step — no pressure, just clarity.
+            </p>
+          </div>
+          <div className="contact-right">
+            {formStatus === 'sent' ? (
+              <div className="form-success">
+                <div className="form-success-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <h3>MESSAGE SENT!</h3>
+                <p>Thank you for reaching out. I'll review your project details and get back to you within 24–48 hours.</p>
+                <button className="btn-form-reset" onClick={() => setFormStatus('idle')}>Send another message</button>
               </div>
-              <h3>MESSAGE SENT!</h3>
-              <p>Thank you for reaching out. I'll review your project details and get back to you within 24–48 hours.</p>
-              <button className="btn-form-reset" onClick={() => setFormStatus('idle')}>Send another message</button>
-            </div>
-          ) : (
-            <form className="contact-form" onSubmit={async (e) => {
-              e.preventDefault();
-              setFormStatus('sending');
-              const form = e.currentTarget;
-              const formData = new FormData(form);
-              formData.append('access_key', 'ff788bc1-0eed-4d8a-b7db-fd1ad8c08a54');
-              formData.append('subject', `New project inquiry from ${formData.get('name')}`);
-              formData.append('from_name', 'Zantana Studio Website');
-              try {
-                const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
-                const data = await res.json();
-                if (data.success) { setFormStatus('sent'); form.reset(); } else { setFormStatus('error'); }
-              } catch { setFormStatus('error'); }
-            }}>
-              <div className="form-group"><label>Name</label><input name="name" type="text" placeholder="Your name" maxLength={100} required /></div>
-              <div className="form-group"><label>Email</label><input name="email" type="email" placeholder="email@company.com" maxLength={255} required /></div>
-              <div className="form-group"><label>What is your company name?</label><input name="company" type="text" placeholder="Company name" maxLength={100} /></div>
-              <div className="form-group"><label>What services does your company provide?</label><input name="services" type="text" placeholder="e.g. SaaS, e-commerce, agency" maxLength={200} /></div>
-              <div className="form-group"><label>Message</label><textarea name="message" placeholder="Tell me about your project..." maxLength={1000} /></div>
-              {formStatus === 'error' && <div className="form-error-msg">Something went wrong. Please try again or email directly at zantanadesign@gmail.com</div>}
-              <button type="submit" className="btn-form-submit" disabled={formStatus === 'sending'}>{formStatus === 'sending' ? 'Sending...' : 'Start a project'}</button>
-            </form>
-          )}
+            ) : (
+              <form className="contact-form" onSubmit={async (e) => {
+                e.preventDefault();
+                setFormStatus('sending');
+                const form = e.currentTarget;
+                const formData = new FormData(form);
+                formData.append('access_key', 'ff788bc1-0eed-4d8a-b7db-fd1ad8c08a54');
+                formData.append('subject', `New project inquiry from ${formData.get('name')}`);
+                formData.append('from_name', 'Zantana Studio Website');
+                try {
+                  const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+                  const data = await res.json();
+                  if (data.success) { setFormStatus('sent'); form.reset(); } else { setFormStatus('error'); }
+                } catch { setFormStatus('error'); }
+              }}>
+                <div className="form-group"><label>Name</label><input name="name" type="text" placeholder="Your name" maxLength={100} required /></div>
+                <div className="form-group"><label>Email</label><input name="email" type="email" placeholder="email@company.com" maxLength={255} required /></div>
+                <div className="form-group"><label>What is your company name?</label><input name="company" type="text" placeholder="Company name" maxLength={100} /></div>
+                <div className="form-group"><label>What services does your company provide?</label><input name="services" type="text" placeholder="e.g. SaaS, e-commerce, agency" maxLength={200} /></div>
+                <div className="form-group"><label>Message</label><textarea name="message" placeholder="Tell me about your project..." maxLength={1000} /></div>
+                {formStatus === 'error' && <div className="form-error-msg">Something went wrong. Please try again or email directly at zantanadesign@gmail.com</div>}
+                <button type="submit" className="btn-form-submit" disabled={formStatus === 'sending'}>{formStatus === 'sending' ? 'Sending...' : 'Start a project'}</button>
+              </form>
+            )}
+          </div>
         </section>
 
-        <footer className="z-footer">
-          <div className="footer-logo-row">
-            <div className="footer-logo"><svg width="100%" height="100%" viewBox="0 0 400 80" fill="none" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="50%" dominantBaseline="central" textAnchor="middle" fill="currentColor" fontFamily="Inter" fontWeight="800" fontSize="72">zantana</text></svg></div>
+        <footer className="z-footer" style={{ borderTop: '1px solid var(--surface)', marginTop: '80px', padding: '80px 40px' }}>
+          <div className="footer-logo-row" style={{ marginBottom: '60px' }}>
+            <div className="footer-logo" style={{ fontSize: 'clamp(60px, 12vw, 140px)', fontWeight: 900, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px' }}>
+              <span>zantana</span>
+              <span style={{ width: '0.15em', height: '0.15em', background: 'currentColor', borderRadius: '50%', marginTop: '0.2em' }}></span>
+            </div>
           </div>
-          <div className="footer-links">
-            <a href="https://instagram.com/zantana.co" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
-            <a href="https://contra.com/zantanastudio" target="_blank" rel="noopener noreferrer">Contra ↗</a>
-            <a href="https://x.com/zantanastudio" target="_blank" rel="noopener noreferrer">X ↗</a>
-            <a href="mailto:zantanadesign@gmail.com">Email ↗</a>
-            <a href="https://wa.link/l9pzfv" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+          
+          <div className="footer-desc" style={{ maxWidth: '780px', margin: '0 auto 60px', textAlign: 'center' }}>
+            <p style={{ fontSize: '15px', fontWeight: 700, textTransform: 'uppercase', lineHeight: '1.4', letterSpacing: '0.02em', color: 'var(--text)' }}>
+              An independent design studio specializing in visual identity and web design.<br />
+              I transform ideas into high-impact design and development solutions by<br />
+              combining strategy, aesthetics, and functionality to create memorable<br />
+              and results-driven brand experiences.
+            </p>
           </div>
-          <div className="footer-desc">
-            <p>An independent design studio specializing visual identity and web design. I transform ideas into high-impact design and development solutions by combining strategy, aesthetics, and functionality to create memorable and results-driven brand experiences.</p>
+
+          <div className="footer-links" style={{ display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
+            {['INSTAGRAM ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
+              <a 
+                key={label} 
+                href={['https://instagram.com/zantana.co', 'https://contra.com/zantanastudio', 'https://x.com/zantanastudio', 'mailto:zantanadesign@gmail.com', 'https://wa.link/l9pzfv'][i]}
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: '13px', fontWeight: 800, textDecoration: 'none', color: 'var(--text)', letterSpacing: '0.05em' }}
+              >
+                {label}
+              </a>
+            ))}
           </div>
         </footer>
       </div>
