@@ -243,7 +243,7 @@ function Index() {
         :root { --blue: #2B2BFF; --black: #000; --white: #fff; --p: 40px; --pv: 60px; --g: 40px; --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; }
         .z-root.dark { --bg: #000; --text: #fff; --surface: #1a1a1a; --muted: #aaa; }
         .z-root *, .z-root *::before, .z-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        .z-root { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 18px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; transition: background .5s ease, color .5s ease; }
+        .z-root { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 18px; line-height: 1.6; overflow-x: clip; min-height: 100vh; transition: background .5s ease, color .5s ease; }
         .z-root section, .z-root .section-bg { transition: background .5s ease, color .5s ease; }
 
         @media (hover: hover) and (pointer: fine) {
@@ -254,7 +254,7 @@ function Index() {
 
         /* Typography */
         .z-root h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; }
-        .z-root h2 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 80px; }
+        .z-root h2 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 75px; }
         .z-root p { font-size: 18px; line-height: 1.55; }
         .z-section-sub { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; }
 
@@ -281,12 +281,15 @@ function Index() {
         @keyframes zNavIn { to { opacity: 1; transform: translateY(0); } }
         @keyframes zHeroIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Hero viewport wrapper */
+        .hero-viewport { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
         /* Hero */
-        .hero { padding: 40px; height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; gap: var(--g); padding-bottom: 40px; box-sizing: border-box; }
+        .hero { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; gap: 30px; padding-bottom: 40px; box-sizing: border-box; }
         .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0; animation: zHeroIn .6s ease 2.4s forwards; }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
-        .hero h1 { font-size: 40px; opacity: 0; animation: zHeroIn .7s ease 2.5s forwards; }
+        .hero h1 { font-size: 90px; opacity: 0; animation: zHeroIn .7s ease 2.5s forwards; }
         .hero-sub { font-size: 20px; line-height: 1.5; color: var(--muted); max-width: 600px; opacity: 0; animation: zHeroIn .6s ease 2.8s forwards; }
         .btn-black { display: inline-flex; align-items: center; gap: 8px; background: var(--text); color: var(--bg); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--text); cursor: pointer; transition: background .18s, border-color .18s, color .18s; align-self: flex-start; opacity: 0; animation: zHeroIn .6s ease 3.0s forwards; }
         .btn-black::before { content: ''; height: 6px; border-radius: 50%; background: var(--bg); opacity: 0; width: 0; transition: opacity .2s, width .2s; }
@@ -302,7 +305,7 @@ function Index() {
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         /* Section title block */
-        .section-title { font-size: 80px; }
+        .section-title { font-size: 75px; }
         .phases { display: flex; flex-direction: column; gap: 20px; }
         .projects { display: flex; flex-direction: column; gap: 20px; }
         .see-all-wrap { display: flex; justify-content: center; padding: 0 var(--p) var(--pv); }
@@ -327,11 +330,13 @@ function Index() {
         .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color .25s; }
 
         /* Process */
-        .process-step { padding: 20px 0; border-top: 1px solid var(--text); }
-        .process-step:last-child { border-bottom: 1px solid var(--text); }
-        .process-num { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 1px; margin-bottom: 4px; }
-        .process-name { font-weight: 700; font-size: 14px; letter-spacing: .3px; margin-bottom: 8px; }
-        .process-step p { font-size: 15px; line-height: 1.6; }
+        .process-steps-col { display: flex; flex-direction: column; gap: 16px; }
+        .process-step { height: 280px; background: var(--blue); border-radius: 8px; padding: 28px; color: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+        .process-step-top { display: flex; justify-content: flex-end; align-items: flex-start; }
+        .process-step-bottom { display: flex; flex-direction: column; gap: 8px; }
+        .process-num { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.5); letter-spacing: 2px; }
+        .process-name { font-weight: 700; font-size: 18px; letter-spacing: .3px; color: #fff; margin-bottom: 4px; }
+        .process-step p { font-size: 14px; line-height: 1.65; color: rgba(255,255,255,.82); }
 
         /* Pricing */
         .pricing-grid { display: flex; flex-direction: column; gap: 20px; }
@@ -373,10 +378,11 @@ function Index() {
 
         /* About */
         .about-section { background: var(--text); color: var(--bg); }
-        .about-photo { width: 200px; border-radius: 4px; display: block; aspect-ratio: 4/3; object-fit: cover; object-position: top; filter: grayscale(100%); }
+        .about-inner { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; }
+        .about-photo { width: 300px; border-radius: 4px; display: block; aspect-ratio: 3/4; object-fit: cover; object-position: top; filter: grayscale(100%); }
         .about-headline { font-weight: 700; font-size: 16px; line-height: 1.5; text-transform: uppercase; color: var(--bg); letter-spacing: .3px; }
         .about-body { font-size: 16px; color: var(--bg); line-height: 1.6; }
-        .btn-white-outline { display: inline-flex; align-items: center; gap: 8px; background: var(--bg); color: var(--text); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--bg); transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
+        .btn-white-outline { display: inline-flex; align-items: center; gap: 8px; background: var(--bg); color: var(--text); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--bg); transition: background .18s, color .18s, border-color .18s; align-self: center; }
         .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: var(--text); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-white-outline:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
         .btn-white-outline:hover::before { opacity: 1; width: 6px; background: #fff; }
@@ -386,6 +392,7 @@ function Index() {
         .contact-section h2 { color: #fff; }
         .contact-section .z-section-sub { color: rgba(255,255,255,.7); }
         .contact-subtitle { font-size: 18px; line-height: 1.5; color: rgba(255,255,255,.8); max-width: 600px; }
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
         .contact-form { background: transparent; border: none; padding: 0; display: flex; flex-direction: column; gap: 16px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
@@ -407,42 +414,41 @@ function Index() {
         @keyframes formFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* Footer */
-        .z-footer { padding: var(--pv) var(--p); display: flex; flex-direction: column; gap: var(--g); align-items: center; border-top: 1px solid var(--surface); }
+        .z-footer { background: var(--bg); padding: 40px; }
+        .footer-blue-box { background: var(--blue); border-radius: 8px; padding: 40px; display: flex; flex-direction: column; gap: 40px; align-items: center; }
         .footer-logo-row { width: 100%; text-align: center; }
-        .footer-logo-row svg { width: 100%; max-width: 1200px; height: auto; color: var(--text); margin: 0 auto; display: block; }
+        .footer-logo-row svg { width: 100%; max-width: 1200px; height: auto; color: #fff; margin: 0 auto; display: block; }
         .footer-desc { width: 100%; max-width: 50%; margin: 0 auto; text-align: center; }
-        .footer-desc p { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; line-height: 1.6; color: var(--text); }
-        .footer-links { display: flex; flex-direction: column; gap: 40px; align-items: center; }
-        .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
-        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
-        .footer-links a:hover { color: var(--blue); }
+        .footer-desc p { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; line-height: 1.6; color: #fff; }
+        .footer-links { display: flex; flex-direction: column; gap: 24px; align-items: center; }
+        .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
+        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #000; opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
+        .footer-links a:hover { color: #000; }
         .footer-links a:hover::before { opacity: 1; transform: scale(1); }
 
         /* Desktop */
         @media (min-width: 900px) {
-          .hero h1 { font-size: 90px; max-width: 1100px; }
+          .hero h1 { font-size: 90px; max-width: 1100px; line-height: 0.95; }
           .hero-sub { font-size: 22px; }
           .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
           .phase-card { display: flex; flex-direction: column; }
           .phase-card-bottom { flex: 1; }
           .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
           .project-card img { height: 280px; }
-          .process-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-          .process-section .process-title-col { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 40px; align-self: start; }
-          .process-steps-col { display: flex; flex-direction: column; }
-          .process-step { display: grid; grid-template-columns: 60px 1fr; gap: 24px; align-items: start; padding: 24px 0; }
-          .process-num { margin-bottom: 0; font-size: 13px; }
-          .process-name { margin-bottom: 6px; font-size: 16px; }
-          .process-step p { font-size: 16px; }
-          .pricing-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+          .process-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
+          .process-section .process-title-col { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 80px; align-self: start; }
+          .process-steps-col { display: flex; flex-direction: column; gap: 0; }
+          .process-step { height: 300px; padding: 32px; }
+          .process-name { font-size: 20px; }
+          .process-step p { font-size: 15px; }
+          .pricing-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
           .pricing-title-col { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
-          .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-          .faq-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+          .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+          .faq-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
           .faq-title-col { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
-          .about-section { display: flex; flex-direction: column; gap: 40px; align-items: flex-start; }
-          .about-photo { aspect-ratio: 3/4; width: 200px; }
-          .contact-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 40px; justify-content: center; }
+          .about-section { display: flex; flex-direction: column; align-items: center; }
+          .contact-grid { grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
+          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 32px; justify-content: center; }
           .footer-desc p { font-size: 16px; }
 
         }
@@ -450,8 +456,8 @@ function Index() {
         /* Mobile */
         @media (max-width: 899px) {
           :root { --p: 24px; --pv: 48px; --g: 32px; }
-          .hero { padding: 24px; padding-bottom: 40px; }
-          .hero h1 { font-size: 40px; }
+          .hero { padding: 24px; padding-bottom: 40px; gap: 30px; }
+          .hero h1 { font-size: 48px; line-height: 1; }
           .hero-sub { font-size: 18px; }
           .z-root h2, .section-title { font-size: 44px; }
           .price-amount { font-size: 48px; }
@@ -461,36 +467,38 @@ function Index() {
       <div ref={cursorRef} className="z-cursor" aria-hidden />
       <div ref={cursorLabelRef} className="z-cursor-label" aria-hidden>View</div>
       <div className={`z-root ${isDark ? "dark" : ""}`}>
-        <nav>
-          <div className="nav-logo"><ZLogo /></div>
-          <ul className="nav-links">
-            <li><a href="#work">Work</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#contact">DM</a></li>
-            <li><button className="theme-toggle" onClick={() => setIsDark(prev => !prev)}>{isDark ? "Light" : "Dark"}</button></li>
-          </ul>
-        </nav>
+        <div className="hero-viewport">
+          <nav>
+            <div className="nav-logo"><ZLogo /></div>
+            <ul className="nav-links">
+              <li><a href="#work">Work</a></li>
+              <li><a href="#pricing">Pricing</a></li>
+              <li><a href="#contact">DM</a></li>
+              <li><button className="theme-toggle" onClick={() => setIsDark(prev => !prev)}>{isDark ? "Light" : "Dark"}</button></li>
+            </ul>
+          </nav>
 
-        <section className="hero">
-          <div className="hero-available">
-            <span className="hero-dot" />
-            <span>Available for new projects</span>
-          </div>
-          <h1>WEBSITES BUILT</h1>
-          <p className="hero-sub">
-            Whether you're raising, launching, or scaling — we ship sites fast, so you can seize the moment.
-          </p>
-          <a href="#contact" className="btn-black">Start a project</a>
-        </section>
+          <section className="hero">
+            <div className="hero-available">
+              <span className="hero-dot" />
+              <span>Available for new projects</span>
+            </div>
+            <h1>WEBSITES BUILT</h1>
+            <p className="hero-sub">
+              Whether you're raising, launching, or scaling — we ship sites fast, so you can seize the moment.
+            </p>
+            <a href="#contact" className="btn-black">Start a project</a>
+          </section>
+        </div>
 
-        <section className="z-section reveal" data-cursor-label="Drag">
+        <section className="z-section reveal">
           <div className="reveal-title">
-            <div className="z-section-sub">Selected work in motion</div>
             <h2>FEATURED VISUALS</h2>
           </div>
           <div className="reveal-content">
             <div
               className="ticker-wrapper"
+              data-cursor-label="Drag"
               ref={tickerRef}
               onMouseDown={onDown}
               onMouseMove={onMove}
@@ -511,7 +519,6 @@ function Index() {
 
         <section className="z-section reveal">
           <div className="reveal-title">
-            <div className="z-section-sub">A clear path forward</div>
             <h2 className="section-title">HOW I SOLVE<br />YOUR PROBLEMS</h2>
           </div>
           <div className="phases reveal-content">
@@ -532,7 +539,6 @@ function Index() {
 
         <section className="z-section reveal" id="work">
           <div className="reveal-title">
-            <div className="z-section-sub">Live websites we shipped</div>
             <h2 className="section-title">WEBSITE<br />PROJECTS</h2>
           </div>
           <div className="projects reveal-content">
@@ -550,7 +556,6 @@ function Index() {
 
         <section className="z-section reveal">
           <div className="reveal-title">
-            <div className="z-section-sub">Identities crafted with care</div>
             <h2 className="section-title">VISUAL BRAND<br />PROJECTS</h2>
           </div>
           <div className="projects reveal-content">
@@ -564,21 +569,22 @@ function Index() {
               </div>
             ))}
           </div>
-          <div className="see-all-wrap reveal-content" style={{ padding: 0 }}>
-            <a href="#contact" className="btn-black no-anim">See all visual ID projects</a>
-          </div>
         </section>
 
         <section className="z-section process-section reveal">
           <div className="process-title-col reveal-title">
-            <div className="z-section-sub">Five steps to launch</div>
             <h2>CREATIVE<br />PROCESS</h2>
           </div>
           <div className="process-steps-col reveal-content">
-            {processSteps.map((s) => (
-              <div key={s.num} className="process-step">
-                <div className="process-num">{s.num}</div>
-                <div>
+            {processSteps.map((s, i) => (
+              <div
+                key={s.num}
+                className="process-step"
+              >
+                <div className="process-step-top">
+                  <span className="process-num">{s.num}</span>
+                </div>
+                <div className="process-step-bottom">
                   <div className="process-name">{s.name}</div>
                   <p>{s.body}</p>
                 </div>
@@ -589,7 +595,6 @@ function Index() {
 
         <section className="z-section pricing-section reveal" id="pricing">
           <div className="pricing-title-col reveal-title">
-            <div className="z-section-sub">Simple plans, real outcomes</div>
             <h2>PICK THE PLAN<br />THAT FITS.</h2>
           </div>
           <div className="pricing-grid reveal-content">
@@ -635,7 +640,6 @@ function Index() {
 
         <section className="z-section faq-section reveal">
           <div className="faq-title-col reveal-title">
-            <div className="z-section-sub">Things people ask first</div>
             <h2>F.A.Q</h2>
           </div>
           <div className="faq-list reveal-content">
@@ -652,12 +656,9 @@ function Index() {
         </section>
 
         <section className="z-section about-section reveal">
-          <div className="reveal-title">
-            <div className="z-section-sub" style={{ color: 'rgba(255,255,255,.6)' }}>The person behind it</div>
+          <div className="about-inner reveal-title">
             <h2>MORE ABOUT<br />ZANTANA STUDIO</h2>
-            <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" style={{ marginTop: 24 }} />
-          </div>
-          <div className="reveal-content" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" />
             <div className="about-headline">
               HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT CREATES STANDOUT BRANDS WITH LASTING IMPACT.
             </div>
@@ -669,8 +670,8 @@ function Index() {
         </section>
 
         <section className="z-section contact-section reveal" id="contact">
+          <div className="contact-grid">
           <div className="reveal-title">
-            <div className="z-section-sub">Let's start the conversation</div>
             <h2>LET'S FIGURE IT OUT<br />— TOGETHER.</h2>
             <p className="contact-subtitle" style={{ marginTop: 16 }}>
               On our call, I'll help you map the next step — no pressure, just clarity.
@@ -711,40 +712,41 @@ function Index() {
               </form>
             )}
           </div>
+          </div>
         </section>
 
         <footer className="z-footer">
-          <div className="footer-logo-row">
-            <ZWordmark />
-          </div>
-
-          <div className="footer-desc">
-            <p>
-              An independent design studio specializing in visual identity and web design.
-              I transform ideas into high-impact design and development solutions by
-              combining strategy, aesthetics, and functionality to create memorable
-              and results-driven brand experiences.
-            </p>
-          </div>
-
-          <div className="footer-links">
-            {['INSTAGRAM ↗', 'LINKEDIN ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
-              <a
-                key={label}
-                href={[
-                  'https://instagram.com/zantana.co',
-                  'https://linkedin.com/in/ivozantana',
-                  'https://contra.com/zantanastudio',
-                  'https://x.com/zantanastudio',
-                  'mailto:zantanadesign@gmail.com',
-                  'https://wa.link/l9pzfv'
-                ][i]}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {label}
-              </a>
-            ))}
+          <div className="footer-blue-box">
+            <div className="footer-logo-row">
+              <ZWordmark />
+            </div>
+            <div className="footer-desc">
+              <p>
+                An independent design studio specializing in visual identity and web design.
+                I transform ideas into high-impact design and development solutions by
+                combining strategy, aesthetics, and functionality to create memorable
+                and results-driven brand experiences.
+              </p>
+            </div>
+            <div className="footer-links">
+              {['INSTAGRAM ↗', 'LINKEDIN ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
+                <a
+                  key={label}
+                  href={[
+                    'https://instagram.com/zantana.co',
+                    'https://linkedin.com/in/ivozantana',
+                    'https://contra.com/zantanastudio',
+                    'https://x.com/zantanastudio',
+                    'mailto:zantanadesign@gmail.com',
+                    'https://wa.link/l9pzfv'
+                  ][i]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
           </div>
         </footer>
       </div>
