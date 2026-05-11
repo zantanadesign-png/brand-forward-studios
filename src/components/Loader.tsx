@@ -40,7 +40,7 @@ export function Loader() {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] transition-all duration-500 flex flex-col ${progress >= 100 ? "bg-black" : "bg-[#2B2BFF]"
+      className={`fixed inset-0 z-[100] transition-all duration-500 flex flex-col ${progress >= 100 ? "bg-black" : "bg-[#1041D7]"
         } ${visible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
     >
       {/* Logo no bottom inferior esquerdo com animação de fade in */}
