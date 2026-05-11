@@ -114,6 +114,9 @@ const ZWordmark = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const CheckIcon = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>;
+const PlusIcon = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>;
+
 function Index() {
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
@@ -278,9 +281,9 @@ function Index() {
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
         .hero h1 { font-size: 100px; opacity: 0; animation: zHeroIn .7s ease 2.5s forwards; }
         .hero-sub { font-size: 18px; line-height: 1.5; color: var(--muted); max-width: 600px; opacity: 0; animation: zHeroIn .6s ease 2.8s forwards; }
-        .btn-black { display: inline-flex; align-items: center; gap: 8px; background: var(--text); color: var(--bg); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--text); cursor: pointer; transition: background .18s, border-color .18s, color .18s; align-self: flex-start; opacity: 0; animation: zHeroIn .6s ease 3.0s forwards; }
+        .btn-black { display: inline-flex; align-items: center; gap: 0; background: var(--text); color: var(--bg); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 4px; text-decoration: none; border: 1px solid var(--text); cursor: pointer; transition: background .18s, border-color .18s, color .18s, gap .2s; align-self: flex-start; opacity: 0; animation: zHeroIn .6s ease 3.0s forwards; }
         .btn-black::before { content: ''; height: 6px; border-radius: 2px; background: var(--bg); opacity: 0; width: 0; transition: opacity .2s, width .2s; }
-        .btn-black:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+        .btn-black:hover { background: var(--blue); border-color: var(--blue); color: #fff; gap: 8px; }
         .btn-black:hover::before { opacity: 1; width: 6px; background: #fff; }
         .btn-black.no-anim { opacity: 1; animation: none; }
 
@@ -325,7 +328,7 @@ function Index() {
         /* Pricing */
         .pricing-grid { display: flex; flex-direction: column; gap: 20px; }
         .price-card { background: var(--blue); border-radius: 5px; color: #fff; overflow: hidden; }
-        .price-card-header { padding: 20px; border-bottom: 2px solid rgba(255,255,255,.5); }
+        .price-card-header { padding: 20px; border-bottom: 2px solid #fff; }
         .plan-name { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
         .price-card-body { padding: 20px; }
         .price-amount { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; line-height: 1; margin-bottom: 20px; }
@@ -334,10 +337,11 @@ function Index() {
         .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
         .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 18px; font-weight: 500; line-height: 1.45; }
         .price-features li.add-on { opacity: .6; }
-        .check { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
-        .btn-white { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 18px; letter-spacing: 1px; text-transform: uppercase; padding: 16px 28px; border-radius: 5px; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
+        .check { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 3px; }
+        .check svg { width: 18px; height: 18px; }
+        .btn-white { display: inline-flex; align-items: center; gap: 0; background: #fff; color: var(--blue); font-weight: 700; font-size: 18px; letter-spacing: 1px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: flex-start; }
         .btn-white::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #fff; opacity: 0; transition: opacity .2s, width .2s; }
-        .btn-white:hover { background: #000; color: #fff; border-color: #000; }
+        .btn-white:hover { background: #000; color: #fff; border-color: #000; gap: 8px; }
         .btn-white:hover::before { opacity: 1; width: 6px; }
 
         /* FAQ */
@@ -349,8 +353,8 @@ function Index() {
         .faq-item.open .faq-question span.faq-q-text { color: #fff; }
         .faq-icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
         .faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: var(--text); transition: transform .25s, opacity .25s, background .2s; }
-        .faq-icon::before { width: 14px; height: 1px; }
-        .faq-icon::after { width: 1px; height: 14px; }
+        .faq-icon::before { width: 14px; height: 2px; }
+        .faq-icon::after { width: 2px; height: 14px; }
         .faq-item.open .faq-icon::before, .faq-item.open .faq-icon::after { background: #fff; }
         .faq-item.open .faq-icon::after { opacity: 0; transform: rotate(90deg); }
         .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; padding: 0 20px; }
@@ -365,9 +369,9 @@ function Index() {
         .about-photo { width: 300px; border-radius: 5px; display: block; aspect-ratio: 3/4; object-fit: cover; object-position: top; filter: grayscale(100%); }
         .about-headline { font-weight: 700; font-size: 18px; line-height: 1.5; text-transform: uppercase; color: var(--bg); letter-spacing: .3px; }
         .about-body { font-size: 18px; font-weight: 500; color: var(--bg); line-height: 1.6; }
-        .btn-white-outline { display: inline-flex; align-items: center; gap: 8px; background: var(--bg); color: var(--text); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 5px; text-decoration: none; border: 1px solid var(--bg); transition: background .18s, color .18s, border-color .18s; align-self: center; }
+        .btn-white-outline { display: inline-flex; align-items: center; gap: 0; background: var(--bg); color: var(--text); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid var(--bg); transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: center; }
         .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--text); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
-        .btn-white-outline:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+        .btn-white-outline:hover { background: var(--blue); color: #fff; border-color: var(--blue); gap: 8px; }
         .btn-white-outline:hover::before { opacity: 1; width: 6px; background: #fff; }
 
         /* Contact */
@@ -382,9 +386,9 @@ function Index() {
         .form-group input, .form-group textarea { background: rgba(255,255,255,.12); border: none; border-radius: 5px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 18px; color: #fff; width: 100%; outline: none; resize: none; }
         .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.4); }
         .form-group textarea { min-height: 110px; }
-        .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 24px; border-radius: 5px; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s; }
+        .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 0; background: #fff; color: var(--blue); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s, gap .2s; }
         .btn-form-submit::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--blue); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
-        .btn-form-submit:hover { background: #000; color: #fff; border-color: #000; }
+        .btn-form-submit:hover { background: #000; color: #fff; border-color: #000; gap: 8px; }
         .btn-form-submit:hover::before { opacity: 1; width: 6px; background: #fff; }
         .btn-form-submit:disabled { opacity: .6; cursor: not-allowed; }
         .form-success { background: rgba(255,255,255,.1); border-radius: 5px; padding: 60px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; text-align: center; animation: formFadeIn .5s ease; }
@@ -586,11 +590,11 @@ function Index() {
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
                   {["15 days delivery", "Figma wireframe & visual design", "Landing page built in Framer", "Fully responsive (mobile + desktop)", "Animation & scroll effects", "Copywriting assistance", "Basic SEO optimization"].map(f => (
-                    <li key={f}><span className="check">✓</span><span>{f}</span></li>
+                    <li key={f}><span className="check"><CheckIcon /></span><span>{f}</span></li>
                   ))}
-                  <li className="add-on"><span className="check">+</span><span>Visual Identity Add-on available ($1k)</span></li>
+                  <li className="add-on"><span className="check"><PlusIcon /></span><span>Visual Identity Add-on available ($1k)</span></li>
                 </ul>
-                <a href="#contact" className="btn-white">Start with Landing Page</a>
+                <a href="#contact" className="btn-white">Start Landing Page</a>
               </div>
             </div>
 
@@ -603,9 +607,9 @@ function Index() {
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
                   {["30 days delivery", "Everything in Landing Page", "Up to 8 custom pages", "CMS setup & training", "Custom imagery & art direction", "Brand alignment workshop", "Advanced SEO & analytics"].map(f => (
-                    <li key={f}><span className="check">✓</span><span>{f}</span></li>
+                    <li key={f}><span className="check"><CheckIcon /></span><span>{f}</span></li>
                   ))}
-                  <li className="add-on"><span className="check">+</span><span>Visual Identity Add-on available ($1k)</span></li>
+                  <li className="add-on"><span className="check"><PlusIcon /></span><span>Visual Identity Add-on available ($1k)</span></li>
                 </ul>
                 <a href="#contact" className="btn-white">Start Full Website</a>
               </div>
