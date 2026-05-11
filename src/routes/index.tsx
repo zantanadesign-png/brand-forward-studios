@@ -101,8 +101,7 @@ const ZLogo = ({ className }: { className?: string }) => (
 
 const ZWordmark = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Zantana wordmark" preserveAspectRatio="xMidYMid meet">
-    <text x="0" y="100" fill="currentColor" fontFamily="Inter, sans-serif" fontWeight="900" fontSize="120" letterSpacing="-6">zantana</text>
-    <circle cx="555" cy="100" r="10" fill="currentColor" />
+    <text x="300" y="100" textAnchor="middle" fill="currentColor" fontFamily="Inter, sans-serif" fontWeight="900" fontSize="120" letterSpacing="-6">zantana</text>
   </svg>
 );
 
@@ -295,11 +294,11 @@ function Index() {
         .btn-black:hover::before { opacity: 1; width: 6px; background: #fff; }
         .btn-black.no-anim { opacity: 1; animation: none; }
 
-        /* Ticker — fixed 600px */
-        .ticker-wrapper { overflow: hidden; width: 600px; max-width: 100%; margin: 0 auto; padding: 20px 0; cursor: grab; user-select: none; }
+        /* Ticker */
+        .ticker-wrapper { overflow: hidden; width: 100%; padding: 20px 0; cursor: grab; user-select: none; }
         .ticker-wrapper.dragging { cursor: grabbing; }
         .ticker-track { display: flex; gap: 16px; width: max-content; }
-        .ticker-item { width: 280px; height: 180px; border-radius: 4px; overflow: hidden; flex-shrink: 0; pointer-events: none; }
+        .ticker-item { width: 400px; height: 260px; border-radius: 4px; overflow: hidden; flex-shrink: 0; pointer-events: none; }
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         /* Section title block */
@@ -374,7 +373,7 @@ function Index() {
 
         /* About */
         .about-section { background: var(--text); color: var(--bg); }
-        .about-photo { width: 100%; border-radius: 4px; display: block; aspect-ratio: 4/3; object-fit: cover; object-position: top; filter: grayscale(100%); }
+        .about-photo { width: 200px; border-radius: 4px; display: block; aspect-ratio: 4/3; object-fit: cover; object-position: top; filter: grayscale(100%); }
         .about-headline { font-weight: 700; font-size: 16px; line-height: 1.5; text-transform: uppercase; color: var(--bg); letter-spacing: .3px; }
         .about-body { font-size: 16px; color: var(--bg); line-height: 1.6; }
         .btn-white-outline { display: inline-flex; align-items: center; gap: 8px; background: var(--bg); color: var(--text); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--bg); transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
@@ -410,7 +409,7 @@ function Index() {
         /* Footer */
         .z-footer { padding: var(--pv) var(--p); display: flex; flex-direction: column; gap: var(--g); align-items: center; border-top: 1px solid var(--surface); }
         .footer-logo-row { width: 100%; text-align: center; }
-        .footer-logo-row svg { width: 100%; max-width: 1200px; height: auto; color: var(--text); }
+        .footer-logo-row svg { width: 100%; max-width: 1200px; height: auto; color: var(--text); margin: 0 auto; display: block; }
         .footer-desc { width: 100%; max-width: 50%; margin: 0 auto; text-align: center; }
         .footer-desc p { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; line-height: 1.6; color: var(--text); }
         .footer-links { display: flex; flex-direction: column; gap: 40px; align-items: center; }
@@ -440,12 +439,12 @@ function Index() {
           .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
           .faq-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
           .faq-title-col { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
-          .about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-          .about-photo { aspect-ratio: 3/4; }
+          .about-section { display: flex; flex-direction: column; gap: 40px; align-items: flex-start; }
+          .about-photo { aspect-ratio: 3/4; width: 200px; }
           .contact-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
           .footer-links { flex-direction: row; flex-wrap: wrap; gap: 40px; justify-content: center; }
           .footer-desc p { font-size: 16px; }
-          .ticker-item { width: 360px; height: 220px; }
+
         }
 
         /* Mobile */
@@ -729,10 +728,17 @@ function Index() {
           </div>
 
           <div className="footer-links">
-            {['INSTAGRAM ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
+            {['INSTAGRAM ↗', 'LINKEDIN ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
               <a
                 key={label}
-                href={['https://instagram.com/zantana.co', 'https://contra.com/zantanastudio', 'https://x.com/zantanastudio', 'mailto:zantanadesign@gmail.com', 'https://wa.link/l9pzfv'][i]}
+                href={[
+                  'https://instagram.com/zantana.co',
+                  'https://linkedin.com/in/ivozantana',
+                  'https://contra.com/zantanastudio',
+                  'https://x.com/zantanastudio',
+                  'mailto:zantanadesign@gmail.com',
+                  'https://wa.link/l9pzfv'
+                ][i]}
                 target="_blank"
                 rel="noopener noreferrer"
               >
