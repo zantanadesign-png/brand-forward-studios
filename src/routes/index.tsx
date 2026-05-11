@@ -115,7 +115,6 @@ const ZWordmark = ({ className }: { className?: string }) => (
 );
 
 function Index() {
-  const [isDark, setIsDark] = useState(false);
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [activeProjects, setActiveProjects] = useState<Set<string>>(new Set());
@@ -180,22 +179,7 @@ function Index() {
     return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
   }, []);
 
-  // Scroll reveal observer (reversible)
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const els = document.querySelectorAll<HTMLElement>(".reveal");
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("in-view");
-          else entry.target.classList.remove("in-view");
-        });
-      },
-      { threshold: 0.15 }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
+
 
   const toggleFaq = (i: number) => setOpenFaqs(prev => {
     const next = new Set(prev);
@@ -256,36 +240,30 @@ function Index() {
         .z-root section, .z-root .section-bg { transition: background .5s ease, color .5s ease; }
 
         @media (hover: hover) and (pointer: fine) {
-          .z-cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: #fff; mix-blend-mode: difference; pointer-events: none; z-index: 9999; transition: width .2s, height .2s, opacity .2s; will-change: transform; }
+          .z-cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 2px; background: #fff; mix-blend-mode: difference; pointer-events: none; z-index: 9999; transition: width .2s, height .2s, opacity .2s; will-change: transform; }
           .z-cursor.is-magnetic { width: 36px; height: 36px; }
           .z-cursor-label { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px; border-radius: 4px; opacity: 0; transform: translate(0%, 0%) scale(.6); transition: opacity .2s, transform .2s; }
         }
 
         /* Typography */
-        .z-root h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; }
-        .z-root h2 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 100px; }
+        .z-root h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 100px; }
+        .z-root h2 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 75px; }
         .z-root p { font-size: 18px; font-weight: 500; line-height: 1.55; }
         .z-section-sub { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; }
 
         /* Section base — 40px lateral, 60px vertical */
         .z-section { padding: var(--pv) var(--p); display: flex; flex-direction: column; gap: var(--g); }
 
-        /* Reveal animations */
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-        .reveal.in-view { opacity: 1; transform: translateY(0); }
-        .reveal-title { transition-delay: 0s; }
-        .reveal-content { transition-delay: .25s; }
 
         /* Navbar */
         .z-root nav { display: flex; justify-content: space-between; align-items: center; padding: 24px var(--p); opacity: 0; transform: translateY(-12px); animation: zNavIn .6s ease 3.1s forwards; }
         .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; display: flex; align-items: center; }
         .nav-logo svg { width: 50px; height: 28px; }
         .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
-        .nav-links a, .theme-toggle { text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; cursor: pointer; }
-        .theme-toggle { background: none; border: none; padding: 0; font-family: 'Inter', sans-serif; }
-        .nav-links a::before, .theme-toggle::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
-        .nav-links a:hover, .theme-toggle:hover { color: var(--blue); }
-        .nav-links a:hover::before, .theme-toggle:hover::before { opacity: 1; transform: scale(1); }
+        .nav-links a { text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; cursor: pointer; }
+        .nav-links a::before { content: ''; width: 6px; height: 6px; border-radius: 2px; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
+        .nav-links a:hover { color: var(--blue); }
+        .nav-links a:hover::before { opacity: 1; transform: scale(1); }
 
         @keyframes zNavIn { to { opacity: 1; transform: translateY(0); } }
         @keyframes zHeroIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -298,10 +276,10 @@ function Index() {
         .hero-available { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0; animation: zHeroIn .6s ease 2.4s forwards; }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
-        .hero h1 { font-size: 90px; opacity: 0; animation: zHeroIn .7s ease 2.5s forwards; }
+        .hero h1 { font-size: 100px; opacity: 0; animation: zHeroIn .7s ease 2.5s forwards; }
         .hero-sub { font-size: 18px; line-height: 1.5; color: var(--muted); max-width: 600px; opacity: 0; animation: zHeroIn .6s ease 2.8s forwards; }
         .btn-black { display: inline-flex; align-items: center; gap: 8px; background: var(--text); color: var(--bg); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--text); cursor: pointer; transition: background .18s, border-color .18s, color .18s; align-self: flex-start; opacity: 0; animation: zHeroIn .6s ease 3.0s forwards; }
-        .btn-black::before { content: ''; height: 6px; border-radius: 50%; background: var(--bg); opacity: 0; width: 0; transition: opacity .2s, width .2s; }
+        .btn-black::before { content: ''; height: 6px; border-radius: 2px; background: var(--bg); opacity: 0; width: 0; transition: opacity .2s, width .2s; }
         .btn-black:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
         .btn-black:hover::before { opacity: 1; width: 6px; background: #fff; }
         .btn-black.no-anim { opacity: 1; animation: none; }
@@ -314,7 +292,7 @@ function Index() {
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         /* Section title block */
-        .section-title { font-size: 100px; }
+        .section-title { font-size: 75px; }
         .phases { display: flex; flex-direction: column; gap: 20px; }
         .projects { display: flex; flex-direction: column; gap: 20px; }
         .see-all-wrap { display: flex; justify-content: center; padding: 0 var(--p) var(--pv); }
@@ -325,7 +303,7 @@ function Index() {
         .phase-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
         .phase-list li { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
         .phase-list li::before { content: '↗'; font-weight: 700; }
-        .phase-card-bottom { background: var(--text); color: var(--bg); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .phase-card-bottom { background: var(--text); color: var(--bg); padding: 20px; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
         .phase-card-bottom .tagline { font-weight: 600; font-size: 18px; text-transform: uppercase; line-height: 1.35; }
         .phase-card-bottom p { font-size: 18px; font-weight: 500; line-height: 1.6; }
 
@@ -336,16 +314,13 @@ function Index() {
         .project-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
         .project-info { padding: 20px; transition: background .25s; }
         .project-name { font-weight: 600; font-size: 18px; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px; transition: color .25s; }
-        .project-type { font-size: 18px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; transition: color .25s; }
+        .project-type { font-size: 18px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.8; transition: color .25s, opacity .25s; }
 
         /* Process */
         .process-steps-col { display: flex; flex-direction: column; gap: 20px; }
-        .process-step { height: 200px; background: var(--blue); border-radius: 5px; padding: 20px; color: #fff; display: flex; flex-direction: column; justify-content: space-between; }
-        .process-step-top { display: flex; justify-content: flex-end; align-items: flex-start; }
-        .process-step-bottom { display: flex; flex-direction: column; gap: 8px; }
-        .process-num { font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 2px; }
-        .process-name { font-weight: 600; font-size: 18px; text-transform: uppercase; letter-spacing: .3px; color: #fff; margin-bottom: 4px; }
-        .process-step p { font-size: 18px; font-weight: 500; line-height: 1.65; color: #fff; }
+        .process-step { background: var(--blue); border-radius: 5px; padding: 20px; color: #fff; display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+        .process-name { font-weight: 600; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; color: #fff; }
+        .process-step p { font-size: 18px; font-weight: 500; line-height: 1.6; color: #fff; }
 
         /* Pricing */
         .pricing-grid { display: flex; flex-direction: column; gap: 20px; }
@@ -353,16 +328,15 @@ function Index() {
         .price-card-header { padding: 20px; border-bottom: 2px solid rgba(255,255,255,.5); }
         .plan-name { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
         .price-card-body { padding: 20px; }
-        .price-amount { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; line-height: 1; margin-bottom: 6px; }
+        .price-amount { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; line-height: 1; margin-bottom: 20px; }
         .price-delivery { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
-        .price-divider { height: 2px; background: rgba(255,255,255,.5); margin-bottom: 20px; }
         .price-label { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
         .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
         .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 18px; font-weight: 500; line-height: 1.45; }
         .price-features li.add-on { opacity: .6; }
         .check { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
         .btn-white { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 18px; letter-spacing: 1px; text-transform: uppercase; padding: 16px 28px; border-radius: 5px; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
-        .btn-white::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: #fff; opacity: 0; transition: opacity .2s, width .2s; }
+        .btn-white::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #fff; opacity: 0; transition: opacity .2s, width .2s; }
         .btn-white:hover { background: #000; color: #fff; border-color: #000; }
         .btn-white:hover::before { opacity: 1; width: 6px; }
 
@@ -392,7 +366,7 @@ function Index() {
         .about-headline { font-weight: 700; font-size: 18px; line-height: 1.5; text-transform: uppercase; color: var(--bg); letter-spacing: .3px; }
         .about-body { font-size: 18px; font-weight: 500; color: var(--bg); line-height: 1.6; }
         .btn-white-outline { display: inline-flex; align-items: center; gap: 8px; background: var(--bg); color: var(--text); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 5px; text-decoration: none; border: 1px solid var(--bg); transition: background .18s, color .18s, border-color .18s; align-self: center; }
-        .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: var(--text); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
+        .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--text); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-white-outline:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
         .btn-white-outline:hover::before { opacity: 1; width: 6px; background: #fff; }
 
@@ -409,7 +383,7 @@ function Index() {
         .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.4); }
         .form-group textarea { min-height: 110px; }
         .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 24px; border-radius: 5px; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s; }
-        .btn-form-submit::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
+        .btn-form-submit::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--blue); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-form-submit:hover { background: #000; color: #fff; border-color: #000; }
         .btn-form-submit:hover::before { opacity: 1; width: 6px; background: #fff; }
         .btn-form-submit:disabled { opacity: .6; cursor: not-allowed; }
@@ -431,13 +405,13 @@ function Index() {
         .footer-desc p { font-size: 18px; font-weight: 500; text-transform: none; letter-spacing: .5px; line-height: 1.6; color: #fff; }
         .footer-links { display: flex; flex-direction: column; gap: 24px; align-items: center; }
         .footer-links a { text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
-        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #000; opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
+        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 2px; background: #000; opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
         .footer-links a:hover { color: #000; }
         .footer-links a:hover::before { opacity: 1; transform: scale(1); }
 
         /* Desktop */
         @media (min-width: 900px) {
-          .hero h1 { font-size: 90px; max-width: 1100px; line-height: 0.95; }
+          .hero h1 { font-size: 100px; max-width: 1100px; line-height: 0.95; }
           .hero-sub { font-size: 22px; }
           .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
           .phase-card { display: flex; flex-direction: column; border-radius: 5px; overflow: hidden; }
@@ -447,9 +421,7 @@ function Index() {
           .process-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
           .process-section .process-title-col { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 80px; align-self: start; }
           .process-steps-col { display: flex; flex-direction: column; gap: 20px; }
-          .process-step { height: 220px; padding: 20px; }
-          .process-name { font-size: 18px; }
-          .process-step p { font-size: 18px; }
+          .process-step { height: auto; padding: 20px; }
           .pricing-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
           .pricing-title-col { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
           .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -475,7 +447,7 @@ function Index() {
 
       <div ref={cursorRef} className="z-cursor" aria-hidden />
       <div ref={cursorLabelRef} className="z-cursor-label" aria-hidden>View</div>
-      <div className={`z-root ${isDark ? "dark" : ""}`}>
+      <div className="z-root">
         <div className="hero-viewport">
           <nav>
             <div className="nav-logo"><ZLogo /></div>
@@ -483,7 +455,6 @@ function Index() {
               <li><a href="#work">Work</a></li>
               <li><a href="#pricing">Pricing</a></li>
               <li><a href="#contact">DM</a></li>
-              <li><button className="theme-toggle" onClick={() => setIsDark(prev => !prev)}>{isDark ? "Light" : "Dark"}</button></li>
             </ul>
           </nav>
 
@@ -592,13 +563,10 @@ function Index() {
                 key={s.num}
                 className="process-step"
               >
-                <div className="process-step-top">
-                  <span className="process-num">{s.num}</span>
+                <div className="process-header">
+                  <div className="process-name">STEP {s.num}: {s.name}</div>
                 </div>
-                <div className="process-step-bottom">
-                  <div className="process-name">{s.name}</div>
-                  <p>{s.body}</p>
-                </div>
+                <p>{s.body}</p>
               </div>
             ))}
           </div>
@@ -615,7 +583,6 @@ function Index() {
               </div>
               <div className="price-card-body">
                 <div className="price-amount">$1000</div>
-                <div className="price-divider" />
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
                   {["15 days delivery", "Figma wireframe & visual design", "Landing page built in Framer", "Fully responsive (mobile + desktop)", "Animation & scroll effects", "Copywriting assistance", "Basic SEO optimization"].map(f => (
@@ -633,7 +600,6 @@ function Index() {
               </div>
               <div className="price-card-body">
                 <div className="price-amount">$2800</div>
-                <div className="price-divider" />
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
                   {["30 days delivery", "Everything in Landing Page", "Up to 8 custom pages", "CMS setup & training", "Custom imagery & art direction", "Brand alignment workshop", "Advanced SEO & analytics"].map(f => (
