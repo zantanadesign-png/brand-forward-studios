@@ -93,6 +93,19 @@ const faqs = [
   { q: "Do you offer post-launch support?", a: "Yes. Every project includes 30 days of post-launch support. After that, we can arrange an ongoing maintenance plan if needed." },
 ];
 
+const ZLogo = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 60 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Zantana logo">
+    <text x="0" y="24" fill="currentColor" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="22" letterSpacing="-0.5">(z)</text>
+  </svg>
+);
+
+const ZWordmark = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Zantana wordmark" preserveAspectRatio="xMidYMid meet">
+    <text x="0" y="100" fill="currentColor" fontFamily="Inter, sans-serif" fontWeight="900" fontSize="120" letterSpacing="-6">zantana</text>
+    <circle cx="555" cy="100" r="10" fill="currentColor" />
+  </svg>
+);
+
 function Index() {
   const [isDark, setIsDark] = useState(false);
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
@@ -123,8 +136,9 @@ function Index() {
       mx = e.clientX; my = e.clientY;
       const t = (e.target as HTMLElement)?.closest<HTMLElement>("[data-magnetic]");
       targetEl = t;
-      const viewT = (e.target as HTMLElement)?.closest<HTMLElement>(".project-card");
-      if (viewT) {
+      const labelTarget = (e.target as HTMLElement)?.closest<HTMLElement>("[data-cursor-label]");
+      if (labelTarget) {
+        label.textContent = labelTarget.getAttribute("data-cursor-label") || "View";
         label.style.opacity = "1";
         label.style.transform = "translate(0%, 0%) scale(1)";
         cursor.style.opacity = "0";
@@ -158,6 +172,23 @@ function Index() {
     return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
   }, []);
 
+  // Scroll reveal observer (reversible)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const els = document.querySelectorAll<HTMLElement>(".reveal");
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("in-view");
+          else entry.target.classList.remove("in-view");
+        });
+      },
+      { threshold: 0.15 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   const toggleFaq = (i: number) => setOpenFaqs(prev => {
     const next = new Set(prev);
     if (next.has(i)) next.delete(i); else next.add(i);
@@ -166,7 +197,6 @@ function Index() {
   const tickerRef = useRef<HTMLDivElement>(null);
   const drag = useRef({ down: false, startX: 0, scrollLeft: 0, moved: false });
 
-  // Auto-scroll loop
   useEffect(() => {
     const el = tickerRef.current;
     if (!el) return;
@@ -209,46 +239,75 @@ function Index() {
     <>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;800&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet" />
       <style>{`
-        :root { --blue: #2B2BFF; --black: #000; --white: #fff; --p: 20px; --g: 20px; --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; }
+        :root { --blue: #2B2BFF; --black: #000; --white: #fff; --p: 40px; --pv: 60px; --g: 40px; --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; }
         .z-root.dark { --bg: #000; --text: #fff; --surface: #1a1a1a; --muted: #aaa; }
         .z-root *, .z-root *::before, .z-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        .z-root { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 20px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; transition: background .3s, color .3s; }
+        .z-root { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 18px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; transition: background .5s ease, color .5s ease; }
+        .z-root section, .z-root .section-bg { transition: background .5s ease, color .5s ease; }
+
         @media (hover: hover) and (pointer: fine) {
           .z-cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: #fff; mix-blend-mode: difference; pointer-events: none; z-index: 9999; transition: width .2s, height .2s, opacity .2s; will-change: transform; }
-          .z-cursor.is-magnetic { width: 36px; height: 36px; background: #fff; }
-          .z-cursor-label { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px; border-radius: 4px; opacity: 0; transform: translate(0%, 0%) scale(.6); transition: opacity .2s, transform .2s; }
+          .z-cursor.is-magnetic { width: 36px; height: 36px; }
+          .z-cursor-label { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px; border-radius: 4px; opacity: 0; transform: translate(0%, 0%) scale(.6); transition: opacity .2s, transform .2s; }
         }
-        .z-root p { font-size: 20px; line-height: 1.55; }
-        .z-root h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; }
-        .z-root h2, .z-root h3, .z-root h4 { font-family: 'Inter', sans-serif; }
-        .z-root nav { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 24px var(--p) 0; }
-        .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; }
-        .nav-links { display: flex; gap: var(--g); list-style: none; align-items: center; }
-        .nav-links a, .theme-toggle { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
-        .theme-toggle { background: none; border: none; cursor: pointer; padding: 0; font-family: 'Inter', sans-serif; }
-        .nav-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
+
+        /* Typography */
+        .z-root h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; }
+        .z-root h2 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 80px; }
+        .z-root p { font-size: 18px; line-height: 1.55; }
+        .z-section-sub { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; }
+
+        /* Section base — 40px lateral, 60px vertical */
+        .z-section { padding: var(--pv) var(--p); display: flex; flex-direction: column; gap: var(--g); }
+
+        /* Reveal animations */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal.in-view { opacity: 1; transform: translateY(0); }
+        .reveal-title { transition-delay: 0s; }
+        .reveal-content { transition-delay: .25s; }
+
+        /* Navbar */
+        .z-root nav { display: flex; justify-content: space-between; align-items: center; padding: 24px var(--p); opacity: 0; transform: translateY(-12px); animation: zNavIn .6s ease 3.1s forwards; }
+        .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; display: flex; align-items: center; }
+        .nav-logo svg { width: 50px; height: 28px; }
+        .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+        .nav-links a, .theme-toggle { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; cursor: pointer; }
+        .theme-toggle { background: none; border: none; padding: 0; font-family: 'Inter', sans-serif; }
+        .nav-links a::before, .theme-toggle::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
         .nav-links a:hover, .theme-toggle:hover { color: var(--blue); }
-        .nav-links a:hover::before { opacity: 1; transform: scale(1); }
-        .hero { max-width: 480px; margin: 0 auto; padding: 20px 20px 40px; height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box; }
-        .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: var(--g); }
+        .nav-links a:hover::before, .theme-toggle:hover::before { opacity: 1; transform: scale(1); }
+
+        @keyframes zNavIn { to { opacity: 1; transform: translateY(0); } }
+        @keyframes zHeroIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Hero */
+        .hero { padding: 40px; height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; gap: var(--g); padding-bottom: 40px; box-sizing: border-box; }
+        .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0; animation: zHeroIn .6s ease 2.4s forwards; }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
-         .hero h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 40px; line-height: 1; letter-spacing: 0; margin-bottom: var(--g); }
-         .hero-sub { font-size: 20px; line-height: 1.5; color: var(--muted); margin-bottom: 28px; max-width: 460px; transition: color .3s; }
-        .btn-black { display: inline-flex; align-items: center; gap: 8px; background: var(--text); color: var(--bg); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--text); cursor: pointer; margin-bottom: 44px; transition: background .18s, border-color .18s, color .18s; width: auto; align-self: flex-start; }
-        .btn-black::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bg); opacity: 0; width: 0; transition: opacity .2s, width .2s; }
+        .hero h1 { font-size: 40px; opacity: 0; animation: zHeroIn .7s ease 2.5s forwards; }
+        .hero-sub { font-size: 20px; line-height: 1.5; color: var(--muted); max-width: 600px; opacity: 0; animation: zHeroIn .6s ease 2.8s forwards; }
+        .btn-black { display: inline-flex; align-items: center; gap: 8px; background: var(--text); color: var(--bg); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--text); cursor: pointer; transition: background .18s, border-color .18s, color .18s; align-self: flex-start; opacity: 0; animation: zHeroIn .6s ease 3.0s forwards; }
+        .btn-black::before { content: ''; height: 6px; border-radius: 50%; background: var(--bg); opacity: 0; width: 0; transition: opacity .2s, width .2s; }
         .btn-black:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
         .btn-black:hover::before { opacity: 1; width: 6px; background: #fff; }
-        .ticker-wrapper { overflow: hidden; width: 100vw; position: relative; left: 50%; margin-left: -50vw; padding: 20px 0; cursor: grab; user-select: none; }
+        .btn-black.no-anim { opacity: 1; animation: none; }
+
+        /* Ticker — fixed 600px */
+        .ticker-wrapper { overflow: hidden; width: 600px; max-width: 100%; margin: 0 auto; padding: 20px 0; cursor: grab; user-select: none; }
         .ticker-wrapper.dragging { cursor: grabbing; }
         .ticker-track { display: flex; gap: 16px; width: max-content; }
         .ticker-item { width: 280px; height: 180px; border-radius: 4px; overflow: hidden; flex-shrink: 0; pointer-events: none; }
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .section-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 40px; letter-spacing: 0; line-height: 1.1; text-align: left; padding: 60px 20px 20px; max-width: 480px; margin: 0 auto; }
-        .phases, .projects { max-width: 480px; margin: 0 auto; padding: 0 20px 60px; display: flex; flex-direction: column; gap: var(--g); }
-        .see-all-wrap { max-width: 480px; margin: 0 auto; padding: 0 20px 60px; display: flex; justify-content: center; }
+
+        /* Section title block */
+        .section-title { font-size: 80px; }
+        .phases { display: flex; flex-direction: column; gap: 20px; }
+        .projects { display: flex; flex-direction: column; gap: 20px; }
+        .see-all-wrap { display: flex; justify-content: center; padding: 0 var(--p) var(--pv); }
+
         .phase-card { border-radius: 4px; overflow: hidden; }
         .phase-card-top { background: var(--blue); color: #fff; padding: 20px; }
         .phase-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
@@ -258,43 +317,44 @@ function Index() {
         .phase-card-bottom { background: var(--text); color: var(--bg); padding: 20px; }
         .phase-card-bottom .tagline { font-weight: 700; font-size: 14px; line-height: 1.35; margin-bottom: 8px; }
         .phase-card-bottom p { font-size: 14px; line-height: 1.6; }
+
         .project-card { background: var(--surface); border-radius: 4px; overflow: hidden; cursor: pointer; transition: background .25s; }
-        .project-card:hover, .project-card:active, .project-card.is-active { background: var(--blue); }
-        .project-card:hover .project-info, .project-card:active .project-info, .project-card.is-active .project-info { background: var(--blue); }
-        .project-card:hover .project-name, .project-card:hover .project-type, .project-card:active .project-name, .project-card:active .project-type, .project-card.is-active .project-name, .project-card.is-active .project-type { color: #fff; }
+        .project-card:hover, .project-card.is-active { background: var(--blue); }
+        .project-card:hover .project-info, .project-card.is-active .project-info { background: var(--blue); }
+        .project-card:hover .project-name, .project-card:hover .project-type, .project-card.is-active .project-name, .project-card.is-active .project-type { color: #fff; }
         .project-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
         .project-info { padding: 20px; transition: background .25s; }
         .project-name { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; margin-bottom: 2px; transition: color .25s; }
         .project-type { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color .25s; }
-        .process-section { max-width: 480px; margin: 0 auto; padding: var(--p); }
-        .process-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1; text-align: left; padding: var(--g) 0; }
-        .process-step { padding: var(--g) 0; border-top: 1px solid var(--text); }
+
+        /* Process */
+        .process-step { padding: 20px 0; border-top: 1px solid var(--text); }
         .process-step:last-child { border-bottom: 1px solid var(--text); }
         .process-num { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 1px; margin-bottom: 4px; }
         .process-name { font-weight: 700; font-size: 14px; letter-spacing: .3px; margin-bottom: 8px; }
         .process-step p { font-size: 15px; line-height: 1.6; }
-        .pricing-section { max-width: 480px; margin: 0 auto; padding: var(--p); }
-        .pricing-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1.05; color: var(--blue); margin-bottom: var(--g); }
-        .pricing-grid { display: flex; flex-direction: column; gap: var(--g); }
+
+        /* Pricing */
+        .pricing-grid { display: flex; flex-direction: column; gap: 20px; }
         .price-card { background: var(--blue); border-radius: 4px; color: #fff; overflow: hidden; }
         .price-card-header { padding: 20px; border-bottom: 2px solid rgba(255,255,255,.5); }
         .plan-name { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
         .price-card-body { padding: 20px; }
-        .price-amount { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1; margin-bottom: 6px; }
-        .price-delivery { font-size: 13px; font-weight: 700; margin-bottom: var(--g); }
-        .price-divider { height: 2px; background: rgba(255,255,255,.5); margin-bottom: var(--g); }
+        .price-amount { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; line-height: 1; margin-bottom: 6px; }
+        .price-delivery { font-size: 13px; font-weight: 700; margin-bottom: 20px; }
+        .price-divider { height: 2px; background: rgba(255,255,255,.5); margin-bottom: 20px; }
         .price-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
-        .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: var(--g); }
+        .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
         .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.45; }
         .price-features li.add-on { opacity: .6; }
         .check { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
-        .btn-white { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 16px 28px; border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
+        .btn-white { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 16px 28px; border-radius: 4px; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
         .btn-white::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: #fff; opacity: 0; transition: opacity .2s, width .2s; }
         .btn-white:hover { background: #000; color: #fff; border-color: #000; }
         .btn-white:hover::before { opacity: 1; width: 6px; }
-        .faq-section { max-width: 480px; margin: 0 auto; padding: var(--p); }
-        .faq-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; padding: var(--g) 0; }
-        .faq-list { display: flex; flex-direction: column; gap: var(--g); }
+
+        /* FAQ */
+        .faq-list { display: flex; flex-direction: column; gap: 12px; }
         .faq-item { background: var(--surface); border-radius: 4px; overflow: hidden; transition: background .2s; }
         .faq-item.open { background: var(--blue); }
         .faq-question { width: 100%; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 20px; text-align: left; }
@@ -306,141 +366,96 @@ function Index() {
         .faq-icon::after { width: 1px; height: 14px; }
         .faq-item.open .faq-icon::before, .faq-item.open .faq-icon::after { background: #fff; }
         .faq-item.open .faq-icon::after { opacity: 0; transform: rotate(90deg); }
-         .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; padding: 0 20px; }
-         .faq-answer > div { overflow: hidden; min-height: 0; }
-         .faq-answer p { font-size: 15px; line-height: 1.6; padding-bottom: 20px; color: var(--text); transition: color .2s; }
-         .faq-item.open .faq-answer { grid-template-rows: 1fr; }
-         .faq-item.open .faq-answer p { color: #fff; }
-        .about-section { background: var(--text); margin-top: 30px; padding: var(--p); transition: background .3s; }
-        .about-inner { max-width: 480px; margin: 0 auto; }
-        .about-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1; text-align: center; color: var(--bg); margin-bottom: 28px; }
-        .about-photo { width: 100%; border-radius: 4px; display: block; margin-bottom: 28px; aspect-ratio: 4/3; object-fit: cover; object-position: top; filter: grayscale(100%); }
-        .about-headline { font-weight: 700; font-size: 16px; line-height: 1.5; text-align: center; text-transform: uppercase; color: var(--bg); margin-bottom: 20px; letter-spacing: .3px; }
-        .about-body { font-size: 16px; color: var(--bg); line-height: 1.6; text-align: center; margin-bottom: 32px; }
-        .btn-white-outline { display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--bg); color: var(--text); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px var(--p); border-radius: 4px; text-align: center; text-decoration: none; border: 1px solid var(--bg); transition: background .18s, color .18s, border-color .18s; }
+        .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; padding: 0 20px; }
+        .faq-answer > div { overflow: hidden; min-height: 0; }
+        .faq-answer p { font-size: 15px; line-height: 1.6; padding-bottom: 20px; color: var(--text); transition: color .2s; }
+        .faq-item.open .faq-answer { grid-template-rows: 1fr; }
+        .faq-item.open .faq-answer p { color: #fff; }
+
+        /* About */
+        .about-section { background: var(--text); color: var(--bg); }
+        .about-photo { width: 100%; border-radius: 4px; display: block; aspect-ratio: 4/3; object-fit: cover; object-position: top; filter: grayscale(100%); }
+        .about-headline { font-weight: 700; font-size: 16px; line-height: 1.5; text-transform: uppercase; color: var(--bg); letter-spacing: .3px; }
+        .about-body { font-size: 16px; color: var(--bg); line-height: 1.6; }
+        .btn-white-outline { display: inline-flex; align-items: center; gap: 8px; background: var(--bg); color: var(--text); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 32px; border-radius: 4px; text-decoration: none; border: 1px solid var(--bg); transition: background .18s, color .18s, border-color .18s; align-self: flex-start; }
         .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: var(--text); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-white-outline:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
         .btn-white-outline:hover::before { opacity: 1; width: 6px; background: #fff; }
-        .contact-section { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: #0047FF; color: #fff; padding: var(--p); box-sizing: border-box; }
-        .contact-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 40px; letter-spacing: 0; line-height: 1; margin-bottom: 20px; color: #fff; }
-        .contact-subtitle { font-size: 20px; line-height: 1.5; color: rgba(255,255,255,.8); margin-bottom: 40px; max-width: 460px; }
-        .contact-form { background: var(--blue); border-radius: 4px; padding: var(--p); display: flex; flex-direction: column; gap: 16px; max-width: 460px; margin: 0 auto; }
+
+        /* Contact */
+        .contact-section { background: #0047FF; color: #fff; }
+        .contact-section h2 { color: #fff; }
+        .contact-section .z-section-sub { color: rgba(255,255,255,.7); }
+        .contact-subtitle { font-size: 18px; line-height: 1.5; color: rgba(255,255,255,.8); max-width: 600px; }
+        .contact-form { background: transparent; border: none; padding: 0; display: flex; flex-direction: column; gap: 16px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
         .form-group input, .form-group textarea { background: rgba(255,255,255,.12); border: none; border-radius: 4px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 15px; color: #fff; width: 100%; outline: none; resize: none; }
         .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.4); }
-        .form-group input:focus, .form-group textarea:focus { outline: none; }
         .form-group textarea { min-height: 110px; }
-        .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px var(--p); border-radius: 4px; text-align: center; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s; }
+        .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 24px; border-radius: 4px; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s; }
         .btn-form-submit::before { content: ''; width: 0; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-form-submit:hover { background: #000; color: #fff; border-color: #000; }
         .btn-form-submit:hover::before { opacity: 1; width: 6px; background: #fff; }
         .btn-form-submit:disabled { opacity: .6; cursor: not-allowed; }
-        .form-success { background: var(--blue); border-radius: 4px; padding: 60px var(--p); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; max-width: 460px; margin: 0 auto; text-align: center; animation: formFadeIn .5s ease; }
-        .form-success-icon { width: 64px; height: 64px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; animation: formPop .4s cubic-bezier(.175,.885,.32,1.275) .1s both; }
+        .form-success { background: rgba(255,255,255,.1); border-radius: 4px; padding: 60px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; text-align: center; animation: formFadeIn .5s ease; }
+        .form-success-icon { width: 64px; height: 64px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; }
         .form-success-icon svg { width: 28px; height: 28px; }
-        .form-success-icon svg path { stroke-dasharray: 30; stroke-dashoffset: 30; animation: checkDraw .4s ease .4s forwards; }
-        .form-success h3 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 24px; color: #fff; letter-spacing: -0.5px; animation: formFadeUp .4s ease .2s both; }
-        .form-success p { font-size: 15px; color: rgba(255,255,255,.85); line-height: 1.6; max-width: 340px; animation: formFadeUp .4s ease .3s both; }
-        .form-success .btn-form-reset { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: #fff; font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 24px; border-radius: 4px; border: 1px solid rgba(255,255,255,.4); cursor: pointer; margin-top: 8px; transition: background .18s, border-color .18s; animation: formFadeUp .4s ease .4s both; font-family: 'Inter', sans-serif; }
-        .form-success .btn-form-reset:hover { background: rgba(255,255,255,.15); border-color: #fff; }
+        .form-success h3 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 24px; color: #fff; }
+        .form-success p { font-size: 15px; color: rgba(255,255,255,.85); line-height: 1.6; max-width: 340px; }
+        .form-success .btn-form-reset { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: #fff; font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 24px; border-radius: 4px; border: 1px solid rgba(255,255,255,.4); cursor: pointer; }
         .form-error-msg { background: rgba(255,0,0,.15); color: #fff; font-size: 13px; font-weight: 600; padding: 12px 16px; border-radius: 4px; text-align: center; }
         @keyframes formFadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes formFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes formPop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
-        @keyframes checkDraw { to { stroke-dashoffset: 0; } }
-        .z-footer { padding: 30px 0 40px; }
-        .footer-logo-row { overflow: hidden; width: 100%; text-align: center; }
-        .footer-logo { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(72px, 20vw, 160px); letter-spacing: -4px; line-height: 1; display: block; padding: 8px var(--p); white-space: nowrap; text-align: center; }
-        .footer-links { max-width: 480px; margin: 30px auto 0; padding: 0 var(--p); display: flex; flex-direction: column; align-items: center; gap: 14px; }
-        .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 8px; position: relative; }
-        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 1; transform: scale(1); transition: opacity .2s, transform .2s; }
+
+        /* Footer */
+        .z-footer { padding: var(--pv) var(--p); display: flex; flex-direction: column; gap: var(--g); align-items: center; border-top: 1px solid var(--surface); }
+        .footer-logo-row { width: 100%; text-align: center; }
+        .footer-logo-row svg { width: 100%; max-width: 1200px; height: auto; color: var(--text); }
+        .footer-desc { width: 100%; max-width: 50%; margin: 0 auto; text-align: center; }
+        .footer-desc p { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; line-height: 1.6; color: var(--text); }
+        .footer-links { display: flex; flex-direction: column; gap: 40px; align-items: center; }
+        .footer-links a { text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
+        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
         .footer-links a:hover { color: var(--blue); }
-        .footer-desc { width: 50%; margin: 30px auto 0; padding: 24px 0 0; text-align: center; }
-        .footer-desc p { font-size: 13px; font-weight: 700; text-transform: uppercase; text-align: center; letter-spacing: .5px; line-height: 1.65; margin: 0 auto; }
+        .footer-links a:hover::before { opacity: 1; transform: scale(1); }
 
+        /* Desktop */
         @media (min-width: 900px) {
-          :root { --p: 40px; }
-          .z-root nav,
-          .section-title,
-          .phases,
-          .projects,
-          .see-all-wrap,
-          .process-section,
-          .pricing-section,
-          .faq-section,
-          .about-section,
-          .contact-section,
-          .footer-links { max-width: none !important; margin-left: 0; margin-right: 0; padding: 60px 40px !important; width: auto !important; left: auto !important; right: auto !important; position: static !important; }
-          .hero { max-width: none !important; margin-left: 0; margin-right: 0; padding: var(--p) var(--p) 40px !important; height: 100vh !important; }
-
-          .z-root nav { padding-top: 32px; }
-          .nav-links { gap: 32px; }
-          .nav-links a { font-size: 12px; }
-
-          .hero { padding: 40px var(--p); min-height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-end; }
-          .hero h1 { font-size: 60px; max-width: 1100px; }
-          .hero-sub { font-size: 20px; max-width: 540px; }
-          .btn-black { margin-bottom: 0; padding: 18px 36px; }
-
-          .section-title, .process-title, .pricing-title, .faq-title, .about-title, .contact-title { font-size: 48px; line-height: 1.1; }
-          .price-amount { font-size: 60px; }
-          .section-title { padding: 60px 40px 20px; }
-          .process-title, .pricing-title, .faq-title { padding: 0; }
-
-          .phases { display: grid; grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+          .hero h1 { font-size: 90px; max-width: 1100px; }
+          .hero-sub { font-size: 22px; }
+          .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
           .phase-card { display: flex; flex-direction: column; }
           .phase-card-bottom { flex: 1; }
-
-          .projects { display: grid; grid-template-columns: repeat(3, 1fr); }
+          .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
           .project-card img { height: 280px; }
-
-          .see-all-wrap { max-width: none; padding: 30px 40px 0; display: flex; justify-content: center; }
-
           .process-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-          .process-title { padding: 60px 0 0; position: sticky; top: 40px; }
-          .process-steps-col { display: flex; flex-direction: column; padding-top: 60px; }
+          .process-section .process-title-col { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 40px; align-self: start; }
+          .process-steps-col { display: flex; flex-direction: column; }
           .process-step { display: grid; grid-template-columns: 60px 1fr; gap: 24px; align-items: start; padding: 24px 0; }
           .process-num { margin-bottom: 0; font-size: 13px; }
           .process-name { margin-bottom: 6px; font-size: 16px; }
           .process-step p { font-size: 16px; }
-
-          .pricing-section { display: block; padding: 100px var(--p); }
-          .pricing-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 40px; align-items: stretch; }
-          .pricing-title { font-size: clamp(40px, 5vw, 80px); line-height: 1; margin-bottom: 0; padding: 0; position: sticky; top: 100px; }
-          .price-card { display: flex; flex-direction: column; }
-          .price-card-body { flex: 1; display: flex; flex-direction: column; }
-          .price-features { flex: 1; }
-
+          .pricing-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+          .pricing-title-col { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
+          .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
           .faq-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-          .faq-title { padding: 60px 0 0; position: sticky; top: 40px; }
-          .faq-list { padding-top: 60px; }
-          .faq-question { padding: 24px; }
-          .faq-answer { padding: 0 24px; }
-          .faq-answer p { padding-bottom: 24px; }
-
-          .about-section { padding: 60px 0; }
-          .about-inner { max-width: 60% !important; margin: 0 auto !important; padding-left: 0 !important; padding-right: 0 !important; display: flex; flex-direction: column; align-items: center; gap: 28px; }
-          .about-title { margin-bottom: 0; }
-          .about-photo { width: 450px; max-width: 100%; margin-bottom: 0; aspect-ratio: 3/4; }
-          .about-right { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
-          .about-headline { text-align: center; font-size: 18px; margin-bottom: 0; }
-          .about-body { text-align: center; margin-bottom: 0; font-size: 16px; }
-          .btn-white-outline { display: inline-flex; width: auto; padding: 16px 32px; }
-
-          .contact-section { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; text-align: left; }
-          .contact-title { text-align: left; font-size: 80px; margin-bottom: 30px; line-height: 1.1; }
-          .contact-form { max-width: none; width: 100%; margin: 0; padding: 24px; text-align: left; background: transparent; border: 1px solid rgba(255,255,255,.2); }
-          .contact-left { display: flex; flex-direction: column; justify-content: flex-start; }
-          .form-success { max-width: none; width: 100%; background: rgba(255,255,255,.1); }
-
-          .footer-logo-row { text-align: center; margin-bottom: 40px; }
-          .footer-logo { text-align: center; font-size: clamp(80px, 15vw, 180px); }
-          .footer-desc { text-align: center; margin: 0 auto 40px; width: 100%; max-width: 900px; padding: 0 40px; }
-          .footer-desc p { font-size: 18px; font-weight: 500; line-height: 1.4; text-transform: uppercase; color: var(--text); }
-          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; max-width: none; margin-top: 0; }
-          .footer-links a { font-size: 14px; }
+          .faq-title-col { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
+          .about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+          .about-photo { aspect-ratio: 3/4; }
+          .contact-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 40px; justify-content: center; }
+          .footer-desc p { font-size: 16px; }
           .ticker-item { width: 360px; height: 220px; }
+        }
+
+        /* Mobile */
+        @media (max-width: 899px) {
+          :root { --p: 24px; --pv: 48px; --g: 32px; }
+          .hero { padding: 24px; padding-bottom: 40px; }
+          .hero h1 { font-size: 40px; }
+          .hero-sub { font-size: 18px; }
+          .z-root h2, .section-title { font-size: 44px; }
+          .price-amount { font-size: 48px; }
         }
       `}</style>
 
@@ -448,7 +463,7 @@ function Index() {
       <div ref={cursorLabelRef} className="z-cursor-label" aria-hidden>View</div>
       <div className={`z-root ${isDark ? "dark" : ""}`}>
         <nav>
-          <div className="nav-logo"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="50%" dominantBaseline="central" textAnchor="middle" fill="currentColor" fontFamily="Inter" fontWeight="800" fontSize="18">(z)</text></svg></div>
+          <div className="nav-logo"><ZLogo /></div>
           <ul className="nav-links">
             <li><a href="#work">Work</a></li>
             <li><a href="#pricing">Pricing</a></li>
@@ -469,73 +484,98 @@ function Index() {
           <a href="#contact" className="btn-black">Start a project</a>
         </section>
 
-        <div
-          className="ticker-wrapper"
-          ref={tickerRef}
-          onMouseDown={onDown}
-          onMouseMove={onMove}
-          onMouseUp={onUp}
-          onMouseLeave={onUp}
-          onTouchStart={onDown}
-          onTouchMove={onMove}
-          onTouchEnd={onUp}
-        >
-          <div className="ticker-track">
-            {[...tickerImages, ...tickerImages].map((src, i) => (
-              <div key={i} className="ticker-item"><img src={src} alt="" /></div>
+        <section className="z-section reveal" data-cursor-label="Drag">
+          <div className="reveal-title">
+            <div className="z-section-sub">Selected work in motion</div>
+            <h2>FEATURED VISUALS</h2>
+          </div>
+          <div className="reveal-content">
+            <div
+              className="ticker-wrapper"
+              ref={tickerRef}
+              onMouseDown={onDown}
+              onMouseMove={onMove}
+              onMouseUp={onUp}
+              onMouseLeave={onUp}
+              onTouchStart={onDown}
+              onTouchMove={onMove}
+              onTouchEnd={onUp}
+            >
+              <div className="ticker-track">
+                {[...tickerImages, ...tickerImages].map((src, i) => (
+                  <div key={i} className="ticker-item"><img src={src} alt="" /></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="z-section reveal">
+          <div className="reveal-title">
+            <div className="z-section-sub">A clear path forward</div>
+            <h2 className="section-title">HOW I SOLVE<br />YOUR PROBLEMS</h2>
+          </div>
+          <div className="phases reveal-content">
+            {phases.map((p) => (
+              <div key={p.label} className="phase-card">
+                <div className="phase-card-top">
+                  <div className="phase-label">{p.label}</div>
+                  <ul className="phase-list">{p.items.map((it) => <li key={it}>{it}</li>)}</ul>
+                </div>
+                <div className="phase-card-bottom">
+                  <div className="tagline">{p.tagline}</div>
+                  <p>{p.body}</p>
+                </div>
+              </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        <h1 className="section-title">HOW I SOLVE<br />YOUR PROBLEMS</h1>
-        <div className="phases">
-          {phases.map((p) => (
-            <div key={p.label} className="phase-card">
-              <div className="phase-card-top">
-                <div className="phase-label">{p.label}</div>
-                <ul className="phase-list">{p.items.map((it) => <li key={it}>{it}</li>)}</ul>
+        <section className="z-section reveal" id="work">
+          <div className="reveal-title">
+            <div className="z-section-sub">Live websites we shipped</div>
+            <h2 className="section-title">WEBSITE<br />PROJECTS</h2>
+          </div>
+          <div className="projects reveal-content">
+            {websiteProjects.map((pr) => (
+              <div key={pr.name} data-cursor-label="View" className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
+                <img src={pr.img} alt={pr.name} />
+                <div className="project-info">
+                  <div className="project-name">{pr.name}</div>
+                  <div className="project-type">{pr.type}</div>
+                </div>
               </div>
-              <div className="phase-card-bottom">
-                <div className="tagline">{p.tagline}</div>
-                <p>{p.body}</p>
+            ))}
+          </div>
+        </section>
+
+        <section className="z-section reveal">
+          <div className="reveal-title">
+            <div className="z-section-sub">Identities crafted with care</div>
+            <h2 className="section-title">VISUAL BRAND<br />PROJECTS</h2>
+          </div>
+          <div className="projects reveal-content">
+            {brandProjects.map((pr) => (
+              <div key={pr.name} data-cursor-label="View" className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
+                <img src={pr.img} alt={pr.name} />
+                <div className="project-info">
+                  <div className="project-name">{pr.name}</div>
+                  <div className="project-type">{pr.type}</div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+          <div className="see-all-wrap reveal-content" style={{ padding: 0 }}>
+            <a href="#contact" className="btn-black no-anim">See all visual ID projects</a>
+          </div>
+        </section>
 
-        <h1 className="section-title" id="work">WEBSITE<br />PROJECTS</h1>
-        <div className="projects">
-          {websiteProjects.map((pr) => (
-            <div key={pr.name} className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
-              <img src={pr.img} alt={pr.name} />
-              <div className="project-info">
-                <div className="project-name">{pr.name}</div>
-                <div className="project-type">{pr.type}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <h1 className="section-title">VISUAL BRAND<br />PROJECTS</h1>
-        <div className="projects">
-          {brandProjects.map((pr) => (
-            <div key={pr.name} className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
-              <img src={pr.img} alt={pr.name} />
-              <div className="project-info">
-                <div className="project-name">{pr.name}</div>
-                <div className="project-type">{pr.type}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="see-all-wrap">
-          <a href="#contact" className="btn-black">See all visual ID projects</a>
-        </div>
-
-        <section className="process-section">
-          <h1 className="process-title">CREATIVE<br />PROCESS</h1>
-          <div className="process-steps-col">
+        <section className="z-section process-section reveal">
+          <div className="process-title-col reveal-title">
+            <div className="z-section-sub">Five steps to launch</div>
+            <h2>CREATIVE<br />PROCESS</h2>
+          </div>
+          <div className="process-steps-col reveal-content">
             {processSteps.map((s) => (
               <div key={s.num} className="process-step">
                 <div className="process-num">{s.num}</div>
@@ -548,9 +588,12 @@ function Index() {
           </div>
         </section>
 
-        <section className="pricing-section" id="pricing">
-          <div className="pricing-grid">
-            <h1 className="pricing-title">PICK THE PLAN<br />THAT FITS.</h1>
+        <section className="z-section pricing-section reveal" id="pricing">
+          <div className="pricing-title-col reveal-title">
+            <div className="z-section-sub">Simple plans, real outcomes</div>
+            <h2>PICK THE PLAN<br />THAT FITS.</h2>
+          </div>
+          <div className="pricing-grid reveal-content">
             <div className="price-card">
               <div className="price-card-header">
                 <span className="plan-name">Landing Page</span>
@@ -591,9 +634,12 @@ function Index() {
           </div>
         </section>
 
-        <section className="faq-section">
-          <h1 className="faq-title">F.A.Q</h1>
-          <div className="faq-list">
+        <section className="z-section faq-section reveal">
+          <div className="faq-title-col reveal-title">
+            <div className="z-section-sub">Things people ask first</div>
+            <h2>F.A.Q</h2>
+          </div>
+          <div className="faq-list reveal-content">
             {faqs.map((f, i) => (
               <div key={i} className={`faq-item ${openFaqs.has(i) ? "open" : ""}`}>
                 <button className="faq-question" onClick={() => toggleFaq(i)}>
@@ -606,30 +652,32 @@ function Index() {
           </div>
         </section>
 
-        <section className="about-section">
-          <div className="about-inner">
-            <h1 className="about-title">MORE ABOUT<br />ZANTANA STUDIO</h1>
-            <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" />
-            <div className="about-right">
-              <div className="about-headline">
-                HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT CREATES STANDOUT BRANDS WITH LASTING IMPACT. I BLEND DESIGN, STRATEGY, AND SMART SOLUTIONS TO CREATE UNIQUE DIGITAL EXPERIENCES.
-              </div>
-              <p className="about-body">
-                Building strategic brand identities and high-performing websites that connect deeply with your target audience. Every project is crafted with precision to help your business grow online.
-              </p>
-              <a href="#contact" className="btn-white-outline">Start a project</a>
+        <section className="z-section about-section reveal">
+          <div className="reveal-title">
+            <div className="z-section-sub" style={{ color: 'rgba(255,255,255,.6)' }}>The person behind it</div>
+            <h2>MORE ABOUT<br />ZANTANA STUDIO</h2>
+            <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" style={{ marginTop: 24 }} />
+          </div>
+          <div className="reveal-content" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <div className="about-headline">
+              HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT CREATES STANDOUT BRANDS WITH LASTING IMPACT.
             </div>
+            <p className="about-body">
+              Building strategic brand identities and high-performing websites that connect deeply with your target audience. Every project is crafted with precision to help your business grow online.
+            </p>
+            <a href="#contact" className="btn-white-outline">Start a project</a>
           </div>
         </section>
 
-        <section className="contact-section" id="contact">
-          <div className="contact-left">
-            <h1 className="contact-title">LET'S FIGURE IT OUT<br />— TOGETHER.</h1>
-            <p className="contact-subtitle">
+        <section className="z-section contact-section reveal" id="contact">
+          <div className="reveal-title">
+            <div className="z-section-sub">Let's start the conversation</div>
+            <h2>LET'S FIGURE IT OUT<br />— TOGETHER.</h2>
+            <p className="contact-subtitle" style={{ marginTop: 16 }}>
               On our call, I'll help you map the next step — no pressure, just clarity.
             </p>
           </div>
-          <div className="contact-right">
+          <div className="reveal-content">
             {formStatus === 'sent' ? (
               <div className="form-success">
                 <div className="form-success-icon">
@@ -666,31 +714,27 @@ function Index() {
           </div>
         </section>
 
-        <footer className="z-footer" style={{ borderTop: '1px solid var(--surface)', marginTop: '80px', padding: '80px 40px' }}>
-          <div className="footer-logo-row" style={{ marginBottom: '60px' }}>
-            <div className="footer-logo" style={{ fontSize: 'clamp(60px, 12vw, 140px)', fontWeight: 900, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px' }}>
-              <span>zantana</span>
-              <span style={{ width: '0.15em', height: '0.15em', background: 'currentColor', borderRadius: '50%', marginTop: '0.2em' }}></span>
-            </div>
+        <footer className="z-footer">
+          <div className="footer-logo-row">
+            <ZWordmark />
           </div>
-          
-          <div className="footer-desc" style={{ maxWidth: '780px', margin: '0 auto 60px', textAlign: 'center' }}>
-            <p style={{ fontSize: '15px', fontWeight: 700, textTransform: 'uppercase', lineHeight: '1.4', letterSpacing: '0.02em', color: 'var(--text)' }}>
-              An independent design studio specializing in visual identity and web design.<br />
-              I transform ideas into high-impact design and development solutions by<br />
-              combining strategy, aesthetics, and functionality to create memorable<br />
+
+          <div className="footer-desc">
+            <p>
+              An independent design studio specializing in visual identity and web design.
+              I transform ideas into high-impact design and development solutions by
+              combining strategy, aesthetics, and functionality to create memorable
               and results-driven brand experiences.
             </p>
           </div>
 
-          <div className="footer-links" style={{ display: 'flex', justifyContent: 'center', gap: '40px', flexWrap: 'wrap' }}>
+          <div className="footer-links">
             {['INSTAGRAM ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
-              <a 
-                key={label} 
+              <a
+                key={label}
                 href={['https://instagram.com/zantana.co', 'https://contra.com/zantanastudio', 'https://x.com/zantanastudio', 'mailto:zantanadesign@gmail.com', 'https://wa.link/l9pzfv'][i]}
-                target="_blank" 
+                target="_blank"
                 rel="noopener noreferrer"
-                style={{ fontSize: '13px', fontWeight: 800, textDecoration: 'none', color: 'var(--text)', letterSpacing: '0.05em' }}
               >
                 {label}
               </a>
