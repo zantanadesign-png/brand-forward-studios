@@ -52,7 +52,10 @@ export function Loader() {
       />
 
       {/* Porcentagem no bottom inferior direito */}
-      <div className="absolute bottom-8 right-8 text-[60px] font-bold text-white leading-none">
+      <div 
+        className="absolute bottom-8 right-8 text-[120px] text-white leading-none"
+        style={{ fontFamily: "'Anton', sans-serif" }}
+      >
         {Math.round(progress)}%
       </div>
     </div>

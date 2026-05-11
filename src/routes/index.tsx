@@ -298,7 +298,7 @@ function Index() {
         .btn-black.no-anim { opacity: 1; animation: none; }
 
         /* Ticker */
-        .ticker-wrapper { overflow: hidden; width: 100%; padding: 20px 0; cursor: grab; user-select: none; }
+        .ticker-wrapper { overflow: hidden; padding: 20px 0; cursor: grab; user-select: none; margin-left: calc(var(--p) * -1); margin-right: calc(var(--p) * -1); width: calc(100% + (var(--p) * 2)); }
         .ticker-wrapper.dragging { cursor: grabbing; }
         .ticker-track { display: flex; gap: 16px; width: max-content; }
         .ticker-item { width: 400px; height: 260px; border-radius: 5px; overflow: hidden; flex-shrink: 0; pointer-events: none; }
@@ -334,9 +334,9 @@ function Index() {
         .process-step { height: 200px; background: var(--blue); border-radius: 5px; padding: 20px; color: #fff; display: flex; flex-direction: column; justify-content: space-between; }
         .process-step-top { display: flex; justify-content: flex-end; align-items: flex-start; }
         .process-step-bottom { display: flex; flex-direction: column; gap: 8px; }
-        .process-num { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.5); letter-spacing: 2px; }
+        .process-num { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 2px; }
         .process-name { font-weight: 700; font-size: 18px; letter-spacing: .3px; color: #fff; margin-bottom: 4px; }
-        .process-step p { font-size: 14px; line-height: 1.65; color: rgba(255,255,255,.82); }
+        .process-step p { font-size: 14px; line-height: 1.65; color: #fff; }
 
         /* Pricing */
         .pricing-grid { display: flex; flex-direction: column; gap: 20px; }
@@ -604,7 +604,7 @@ function Index() {
               </div>
               <div className="price-card-body">
                 <div className="price-amount">$1000</div>
-                <div className="price-delivery">⏱  15 days delivery</div>
+                <div className="price-delivery">15 days delivery</div>
                 <div className="price-divider" />
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
@@ -623,7 +623,7 @@ function Index() {
               </div>
               <div className="price-card-body">
                 <div className="price-amount">$2800</div>
-                <div className="price-delivery">⏱  30 days delivery</div>
+                <div className="price-delivery">30 days delivery</div>
                 <div className="price-divider" />
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
@@ -671,47 +671,47 @@ function Index() {
 
         <section className="z-section contact-section reveal" id="contact">
           <div className="contact-grid">
-          <div className="reveal-title">
-            <h2>LET'S FIGURE IT OUT<br />— TOGETHER.</h2>
-            <p className="contact-subtitle" style={{ marginTop: 16 }}>
-              On our call, I'll help you map the next step — no pressure, just clarity.
-            </p>
-          </div>
-          <div className="reveal-content">
-            {formStatus === 'sent' ? (
-              <div className="form-success">
-                <div className="form-success-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+            <div className="reveal-title">
+              <h2>LET'S FIGURE IT OUT<br />— TOGETHER.</h2>
+              <p className="contact-subtitle" style={{ marginTop: 16 }}>
+                On our call, I'll help you map the next step — no pressure, just clarity.
+              </p>
+            </div>
+            <div className="reveal-content">
+              {formStatus === 'sent' ? (
+                <div className="form-success">
+                  <div className="form-success-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  <h3>MESSAGE SENT!</h3>
+                  <p>Thank you for reaching out. I'll review your project details and get back to you within 24–48 hours.</p>
+                  <button className="btn-form-reset" onClick={() => setFormStatus('idle')}>Send another message</button>
                 </div>
-                <h3>MESSAGE SENT!</h3>
-                <p>Thank you for reaching out. I'll review your project details and get back to you within 24–48 hours.</p>
-                <button className="btn-form-reset" onClick={() => setFormStatus('idle')}>Send another message</button>
-              </div>
-            ) : (
-              <form className="contact-form" onSubmit={async (e) => {
-                e.preventDefault();
-                setFormStatus('sending');
-                const form = e.currentTarget;
-                const formData = new FormData(form);
-                formData.append('access_key', 'ff788bc1-0eed-4d8a-b7db-fd1ad8c08a54');
-                formData.append('subject', `New project inquiry from ${formData.get('name')}`);
-                formData.append('from_name', 'Zantana Studio Website');
-                try {
-                  const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
-                  const data = await res.json();
-                  if (data.success) { setFormStatus('sent'); form.reset(); } else { setFormStatus('error'); }
-                } catch { setFormStatus('error'); }
-              }}>
-                <div className="form-group"><label>Name</label><input name="name" type="text" placeholder="Your name" maxLength={100} required /></div>
-                <div className="form-group"><label>Email</label><input name="email" type="email" placeholder="email@company.com" maxLength={255} required /></div>
-                <div className="form-group"><label>What is your company name?</label><input name="company" type="text" placeholder="Company name" maxLength={100} /></div>
-                <div className="form-group"><label>What services does your company provide?</label><input name="services" type="text" placeholder="e.g. SaaS, e-commerce, agency" maxLength={200} /></div>
-                <div className="form-group"><label>Message</label><textarea name="message" placeholder="Tell me about your project..." maxLength={1000} /></div>
-                {formStatus === 'error' && <div className="form-error-msg">Something went wrong. Please try again or email directly at zantanadesign@gmail.com</div>}
-                <button type="submit" className="btn-form-submit" disabled={formStatus === 'sending'}>{formStatus === 'sending' ? 'Sending...' : 'Start a project'}</button>
-              </form>
-            )}
-          </div>
+              ) : (
+                <form className="contact-form" onSubmit={async (e) => {
+                  e.preventDefault();
+                  setFormStatus('sending');
+                  const form = e.currentTarget;
+                  const formData = new FormData(form);
+                  formData.append('access_key', 'ff788bc1-0eed-4d8a-b7db-fd1ad8c08a54');
+                  formData.append('subject', `New project inquiry from ${formData.get('name')}`);
+                  formData.append('from_name', 'Zantana Studio Website');
+                  try {
+                    const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+                    const data = await res.json();
+                    if (data.success) { setFormStatus('sent'); form.reset(); } else { setFormStatus('error'); }
+                  } catch { setFormStatus('error'); }
+                }}>
+                  <div className="form-group"><label>Name</label><input name="name" type="text" placeholder="Your name" maxLength={100} required /></div>
+                  <div className="form-group"><label>Email</label><input name="email" type="email" placeholder="email@company.com" maxLength={255} required /></div>
+                  <div className="form-group"><label>What is your company name?</label><input name="company" type="text" placeholder="Company name" maxLength={100} /></div>
+                  <div className="form-group"><label>What services does your company provide?</label><input name="services" type="text" placeholder="e.g. SaaS, e-commerce, agency" maxLength={200} /></div>
+                  <div className="form-group"><label>Message</label><textarea name="message" placeholder="Tell me about your project..." maxLength={1000} /></div>
+                  {formStatus === 'error' && <div className="form-error-msg">Something went wrong. Please try again or email directly at zantanadesign@gmail.com</div>}
+                  <button type="submit" className="btn-form-submit" disabled={formStatus === 'sending'}>{formStatus === 'sending' ? 'Sending...' : 'Start a project'}</button>
+                </form>
+              )}
+            </div>
           </div>
         </section>
 
