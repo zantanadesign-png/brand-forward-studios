@@ -231,7 +231,7 @@ function Index() {
         .nav-links a::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
         .nav-links a:hover, .theme-toggle:hover { color: var(--blue); }
         .nav-links a:hover::before { opacity: 1; transform: scale(1); }
-        .hero { max-width: 480px; margin: 0 auto; padding: var(--p) var(--p) 40px; min-height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box; }
+        .hero { max-width: 480px; margin: 0 auto; padding: 20px 20px 40px; height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box; }
         .hero-available { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: var(--g); }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
@@ -246,9 +246,9 @@ function Index() {
         .ticker-track { display: flex; gap: 16px; width: max-content; }
         .ticker-item { width: 280px; height: 180px; border-radius: 4px; overflow: hidden; flex-shrink: 0; pointer-events: none; }
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .section-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1; text-align: left; padding: var(--p); max-width: 480px; margin: 0 auto; }
-        .phases, .projects { max-width: 480px; margin: 0 auto; padding: var(--p); display: flex; flex-direction: column; gap: var(--g); }
-        .see-all-wrap { max-width: 480px; margin: 0 auto; padding: 30px var(--p) 0; display: flex; justify-content: center; }
+        .section-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 40px; letter-spacing: 0; line-height: 1.1; text-align: left; padding: 60px 20px 20px; max-width: 480px; margin: 0 auto; }
+        .phases, .projects { max-width: 480px; margin: 0 auto; padding: 0 20px 60px; display: flex; flex-direction: column; gap: var(--g); }
+        .see-all-wrap { max-width: 480px; margin: 0 auto; padding: 0 20px 60px; display: flex; justify-content: center; }
         .phase-card { border-radius: 4px; overflow: hidden; }
         .phase-card-top { background: var(--blue); color: #fff; padding: 20px; }
         .phase-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
@@ -274,7 +274,7 @@ function Index() {
         .process-name { font-weight: 700; font-size: 14px; letter-spacing: .3px; margin-bottom: 8px; }
         .process-step p { font-size: 15px; line-height: 1.6; }
         .pricing-section { max-width: 480px; margin: 0 auto; padding: var(--p); }
-        .pricing-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1.05; color: var(--blue); padding: var(--g) 0; }
+        .pricing-title { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; letter-spacing: 0; line-height: 1.05; color: var(--blue); margin-bottom: var(--g); }
         .pricing-grid { display: flex; flex-direction: column; gap: var(--g); }
         .price-card { background: var(--blue); border-radius: 4px; color: #fff; overflow: hidden; }
         .price-card-header { padding: 20px; border-bottom: 2px solid rgba(255,255,255,.5); }
@@ -369,9 +369,10 @@ function Index() {
           .process-section,
           .pricing-section,
           .faq-section,
-          .about-inner,
-          .footer-links { max-width: none !important; margin-left: 0; margin-right: 0; padding: var(--p) !important; }
-          .hero { max-width: none !important; margin-left: 0; margin-right: 0; padding: var(--p) var(--p) 40px !important; }
+          .about-section,
+          .contact-section,
+          .footer-links { max-width: none !important; margin-left: 0; margin-right: 0; padding: 60px 40px !important; width: auto !important; left: auto !important; right: auto !important; position: static !important; }
+          .hero { max-width: none !important; margin-left: 0; margin-right: 0; padding: var(--p) var(--p) 40px !important; height: 100vh !important; }
 
           .z-root nav { padding-top: 32px; }
           .nav-links { gap: 32px; }
@@ -382,9 +383,10 @@ function Index() {
           .hero-sub { font-size: 20px; max-width: 540px; }
           .btn-black { margin-bottom: 0; padding: 18px 36px; }
 
-          .section-title, .process-title, .pricing-title, .faq-title, .about-title, .contact-title, .price-amount { font-size: 60px; }
-          .section-title { padding: var(--p); }
-          .process-title, .pricing-title, .faq-title { padding: var(--p) 0; }
+          .section-title, .process-title, .pricing-title, .faq-title, .about-title, .contact-title { font-size: 48px; line-height: 1.1; }
+          .price-amount { font-size: 60px; }
+          .section-title { padding: 60px 40px 20px; }
+          .process-title, .pricing-title, .faq-title { padding: 0; }
 
           .phases { display: grid; grid-template-columns: repeat(3, 1fr); align-items: stretch; }
           .phase-card { display: flex; flex-direction: column; }
@@ -403,11 +405,11 @@ function Index() {
           .process-name { margin-bottom: 6px; font-size: 16px; }
           .process-step p { font-size: 16px; }
 
-          .pricing-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-          .pricing-title { padding: 60px 0 0; position: sticky; top: 40px; }
-          .pricing-grid { display: flex; flex-direction: column; gap: var(--g); padding-top: 60px; }
+          .pricing-section { display: block; padding: 100px var(--p); }
+          .pricing-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 40px; align-items: stretch; }
+          .pricing-title { font-size: clamp(40px, 5vw, 80px); line-height: 1; margin-bottom: 0; padding: 0; position: sticky; top: 100px; }
           .price-card { display: flex; flex-direction: column; }
-          .price-card-body { flex: 1; display: flex; flex-direction: column; padding: 20px; }
+          .price-card-body { flex: 1; display: flex; flex-direction: column; }
           .price-features { flex: 1; }
 
           .faq-section { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
@@ -426,11 +428,11 @@ function Index() {
           .about-body { text-align: center; margin-bottom: 0; font-size: 16px; }
           .btn-white-outline { display: inline-flex; width: auto; padding: 16px 32px; }
 
-          .contact-section { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; text-align: left; }
-          .contact-title { text-align: left; font-size: 80px; margin-bottom: 30px; }
-          .contact-form { max-width: 560px; margin: 0; padding: 24px; text-align: left; background: transparent; border: 1px solid rgba(255,255,255,.2); }
-          .contact-left { display: flex; flex-direction: column; justify-content: center; }
-          .form-success { max-width: 560px; background: rgba(255,255,255,.1); }
+          .contact-section { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; text-align: left; }
+          .contact-title { text-align: left; font-size: 80px; margin-bottom: 30px; line-height: 1.1; }
+          .contact-form { max-width: none; width: 100%; margin: 0; padding: 24px; text-align: left; background: transparent; border: 1px solid rgba(255,255,255,.2); }
+          .contact-left { display: flex; flex-direction: column; justify-content: flex-start; }
+          .form-success { max-width: none; width: 100%; background: rgba(255,255,255,.1); }
 
           .footer-logo-row { text-align: center; margin-bottom: 40px; }
           .footer-logo { text-align: center; font-size: clamp(80px, 15vw, 180px); }
@@ -547,8 +549,8 @@ function Index() {
         </section>
 
         <section className="pricing-section" id="pricing">
-          <h1 className="pricing-title">PICK THE PLAN<br />THAT FITS.</h1>
           <div className="pricing-grid">
+            <h1 className="pricing-title">PICK THE PLAN<br />THAT FITS.</h1>
             <div className="price-card">
               <div className="price-card-header">
                 <span className="plan-name">Landing Page</span>
