@@ -13,8 +13,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "(z) — WEBSITES BUILT" },
       {
         property: "og:description",
-        content:
-          "Strategic websites and visual identity. Live in weeks, not months.",
+        content: "Strategic websites and visual identity. Live in weeks, not months.",
       },
     ],
     links: [
@@ -43,7 +42,12 @@ const tickerImages = [
 const phases = [
   {
     label: "Phase 1: Art Direction",
-    items: ["Wireframe workshop", "Visual direction concepts", "Design approval", "Brand alignment"],
+    items: [
+      "Wireframe workshop",
+      "Visual direction concepts",
+      "Design approval",
+      "Brand alignment",
+    ],
   },
   {
     label: "Phase 2: Design",
@@ -71,61 +75,194 @@ const benefits = [
 ];
 
 const websiteProjects = [
-  { name: "LATE", type: "Catering Services", img: "https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80" },
-  { name: "BLOOM", type: "Restaurant & Bar", img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" },
-  { name: "ORBIT", type: "SaaS Platform", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" },
-  { name: "PULSE", type: "Fitness Studio", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" },
-  { name: "VERA", type: "Skincare Brand", img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80" },
-  { name: "NORTH", type: "Travel Agency", img: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80" },
+  {
+    name: "LATE",
+    type: "Catering Services",
+    img: "https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80",
+  },
+  {
+    name: "BLOOM",
+    type: "Restaurant & Bar",
+    img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
+  },
+  {
+    name: "ORBIT",
+    type: "SaaS Platform",
+    img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+  },
+  {
+    name: "PULSE",
+    type: "Fitness Studio",
+    img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80",
+  },
+  {
+    name: "VERA",
+    type: "Skincare Brand",
+    img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80",
+  },
+  {
+    name: "NORTH",
+    type: "Travel Agency",
+    img: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80",
+  },
 ];
 
 const brandProjects = [
-  { name: "SKIP", type: "Events Ticketing", img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80" },
-  { name: "NOVA", type: "Brand Identity", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80" },
-  { name: "FERN", type: "Botanical Studio", img: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800&q=80" },
+  {
+    name: "SKIP",
+    type: "Events Ticketing",
+    img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80",
+  },
+  {
+    name: "NOVA",
+    type: "Brand Identity",
+    img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80",
+  },
+  {
+    name: "FERN",
+    type: "Botanical Studio",
+    img: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800&q=80",
+  },
 ];
 
 const processSteps = [
-  { num: "01", name: "DISCOVERY", body: "We dig deep into your brand, goals, and audience. Every great site starts with the right questions — and the honesty to answer them." },
-  { num: "02", name: "CONCEPT", body: "Ideas take shape. I craft visual directions based on brand values and business goals, and together, we refine them into a concept that feels right — and true to you." },
-  { num: "03", name: "DESIGN", body: "With the concept locked in, the magic happens. I bring everything to life with bold visuals, refined typography, color, layout, and user experience thinking." },
-  { num: "04", name: "DEVELOPMENT", body: "I transform designs into high-performing, fully responsive websites — built in Framer for seamless performance. Revisions? As many as it takes." },
-  { num: "05", name: "DELIVERY & SUPPORT", body: "You get everything you need: final files, documentation, and post-launch support to ensure things run smoothly — and keep evolving." },
+  {
+    num: "01",
+    name: "DISCOVERY",
+    body: "We dig deep into your brand, goals, and audience. Every great site starts with the right questions — and the honesty to answer them.",
+  },
+  {
+    num: "02",
+    name: "CONCEPT",
+    body: "Ideas take shape. I craft visual directions based on brand values and business goals, and together, we refine them into a concept that feels right — and true to you.",
+  },
+  {
+    num: "03",
+    name: "DESIGN",
+    body: "With the concept locked in, the magic happens. I bring everything to life with bold visuals, refined typography, color, layout, and user experience thinking.",
+  },
+  {
+    num: "04",
+    name: "DEVELOPMENT",
+    body: "I transform designs into high-performing, fully responsive websites — built in Framer for seamless performance. Revisions? As many as it takes.",
+  },
+  {
+    num: "05",
+    name: "DELIVERY & SUPPORT",
+    body: "You get everything you need: final files, documentation, and post-launch support to ensure things run smoothly — and keep evolving.",
+  },
 ];
 
 const faqs = [
-  { q: "Do I need to have a brand identity before we start?", a: "Not at all. I can work with what you have, or we can build your visual identity from scratch as part of the project. Just mention it when you reach out." },
-  { q: "What's your workflow like?", a: "We start with a discovery call, move to concept and wireframes, then design, then development. You'll have clear checkpoints to review and give feedback at every stage." },
-  { q: "What if I'm not happy with the design?", a: "I offer unlimited revisions until you're satisfied. My goal is for you to love the result — and I won't stop until we get there together." },
-  { q: "Can I request more pages in the future?", a: "Yes. Post-launch pages and updates are available as add-ons. Just reach out and we'll figure out the best way to grow your site together." },
-  { q: "What tools do you use?", a: "I design in Figma and build in Framer. This combo gives you a fast, animated, fully responsive website with a CMS you can manage yourself." },
-  { q: "Do you offer post-launch support?", a: "Yes. Every project includes 30 days of post-launch support. After that, we can arrange an ongoing maintenance plan if needed." },
+  {
+    q: "Do I need to have a brand identity before we start?",
+    a: "Not at all. I can work with what you have, or we can build your visual identity from scratch as part of the project. Just mention it when you reach out.",
+  },
+  {
+    q: "What's your workflow like?",
+    a: "We start with a discovery call, move to concept and wireframes, then design, then development. You'll have clear checkpoints to review and give feedback at every stage.",
+  },
+  {
+    q: "What if I'm not happy with the design?",
+    a: "I offer unlimited revisions until you're satisfied. My goal is for you to love the result — and I won't stop until we get there together.",
+  },
+  {
+    q: "Can I request more pages in the future?",
+    a: "Yes. Post-launch pages and updates are available as add-ons. Just reach out and we'll figure out the best way to grow your site together.",
+  },
+  {
+    q: "What tools do you use?",
+    a: "I design in Figma and build in Framer. This combo gives you a fast, animated, fully responsive website with a CMS you can manage yourself.",
+  },
+  {
+    q: "Do you offer post-launch support?",
+    a: "Yes. Every project includes 30 days of post-launch support. After that, we can arrange an ongoing maintenance plan if needed.",
+  },
 ];
 
 const ZLogo = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 60 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Zantana logo">
-    <text x="0" y="24" fill="currentColor" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="22" letterSpacing="-0.5">(z)</text>
+  <svg
+    className={className}
+    viewBox="0 0 60 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-label="Zantana logo"
+  >
+    <text
+      x="0"
+      y="24"
+      fill="currentColor"
+      fontFamily="Inter, sans-serif"
+      fontWeight="800"
+      fontSize="22"
+      letterSpacing="-0.5"
+    >
+      (z)
+    </text>
   </svg>
 );
 
 const ZWordmark = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 600 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Zantana wordmark" preserveAspectRatio="xMidYMid meet">
-    <text x="300" y="100" textAnchor="middle" fill="currentColor" fontFamily="Inter, sans-serif" fontWeight="900" fontSize="120" letterSpacing="-6">zantana</text>
+  <svg
+    className={className}
+    viewBox="0 0 600 120"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-label="Zantana wordmark"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <text
+      x="300"
+      y="100"
+      textAnchor="middle"
+      fill="currentColor"
+      fontFamily="Inter, sans-serif"
+      fontWeight="900"
+      fontSize="120"
+      letterSpacing="-6"
+    >
+      zantana
+    </text>
   </svg>
 );
 
-const CheckIcon = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>;
-const PlusIcon = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>;
+const CheckIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </svg>
+);
+const PlusIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+  </svg>
+);
 
 function Index() {
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [activeProjects, setActiveProjects] = useState<Set<string>>(new Set());
-  const toggleProject = (name: string) => setActiveProjects(prev => {
-    const next = new Set(prev);
-    if (next.has(name)) next.delete(name); else next.add(name);
-    return next;
-  });
+  const toggleProject = (name: string) =>
+    setActiveProjects((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
 
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorLabelRef = useRef<HTMLDivElement>(null);
@@ -137,13 +274,16 @@ function Index() {
     const label = cursorLabelRef.current;
     if (!cursor || !label) return;
 
-    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-    let cx = mx, cy = my;
+    let mx = window.innerWidth / 2,
+      my = window.innerHeight / 2;
+    let cx = mx,
+      cy = my;
     let targetEl: HTMLElement | null = null;
     let raf = 0;
 
     const onMove = (e: MouseEvent) => {
-      mx = e.clientX; my = e.clientY;
+      mx = e.clientX;
+      my = e.clientY;
       const t = (e.target as HTMLElement)?.closest<HTMLElement>("[data-magnetic]");
       targetEl = t;
       const labelTarget = (e.target as HTMLElement)?.closest<HTMLElement>("[data-cursor-label]");
@@ -159,7 +299,8 @@ function Index() {
       }
     };
     const tick = () => {
-      let tx = mx, ty = my;
+      let tx = mx,
+        ty = my;
       if (targetEl) {
         const r = targetEl.getBoundingClientRect();
         const ex = r.left + r.width / 2;
@@ -179,26 +320,34 @@ function Index() {
     };
     window.addEventListener("mousemove", onMove);
     raf = requestAnimationFrame(tick);
-    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-        }
-      });
-    }, { rootMargin: "-10% 0px -10% 0px" });
-    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      },
+      { rootMargin: "-10% 0px -10% 0px" },
+    );
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
-  const toggleFaq = (i: number) => setOpenFaqs(prev => {
-    const next = new Set(prev);
-    if (next.has(i)) next.delete(i); else next.add(i);
-    return next;
-  });
+  const toggleFaq = (i: number) =>
+    setOpenFaqs((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
   const tickerRef = useRef<HTMLDivElement>(null);
   const drag = useRef({ down: false, startX: 0, scrollLeft: 0, moved: false });
 
@@ -264,7 +413,10 @@ function Index() {
     <>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;800;900&display=swap"
+        rel="stylesheet"
+      />
       <style>{`
         :root { --blue: #1041D7; --black: #000; --white: #fff; --p: 40px; --pv: 40px; --g: 20px; }
 
@@ -560,15 +712,25 @@ function Index() {
       `}</style>
 
       <div ref={cursorRef} className="z-cursor" aria-hidden />
-      <div ref={cursorLabelRef} className="z-cursor-label" aria-hidden>View</div>
+      <div ref={cursorLabelRef} className="z-cursor-label" aria-hidden>
+        View
+      </div>
       <div className="z-root">
         <div className="hero-viewport" data-theme="light">
           <nav>
-            <div className="nav-logo"><ZLogo /></div>
+            <div className="nav-logo">
+              <ZLogo />
+            </div>
             <ul className="nav-links">
-              <li><a href="#work">Work</a></li>
-              <li><a href="#pricing">Pricing</a></li>
-              <li><a href="#contact">DM</a></li>
+              <li>
+                <a href="#work">Work</a>
+              </li>
+              <li>
+                <a href="#pricing">Pricing</a>
+              </li>
+              <li>
+                <a href="#contact">DM</a>
+              </li>
             </ul>
           </nav>
 
@@ -579,14 +741,16 @@ function Index() {
             </div>
             <h1>WEBSITES BUILT</h1>
             <p className="hero-sub">
-              Whether you're raising, launching, or scaling — we ship sites fast, so you can seize the moment.
+              Whether you're raising, launching, or scaling — we ship sites fast, so you can seize
+              the moment.
             </p>
-            <a href="#contact" className="btn-black">Start a project</a>
+            <a href="#contact" className="btn-black">
+              Start a project
+            </a>
           </section>
         </div>
 
         <section className="z-section reveal" data-theme="light">
-
           <div className="reveal-content">
             <div
               className="ticker-wrapper"
@@ -602,7 +766,9 @@ function Index() {
             >
               <div className="ticker-track">
                 {[...tickerImages, ...tickerImages].map((src, i) => (
-                  <div key={i} className="ticker-item"><img src={src} alt="" /></div>
+                  <div key={i} className="ticker-item">
+                    <img src={src} alt="" />
+                  </div>
                 ))}
               </div>
             </div>
@@ -612,11 +778,18 @@ function Index() {
         <section ref={problemRef} className="problem-section" data-theme="blue">
           <div className="problem-sticky">
             <div className="problem-texts">
-              <h2 className={`problem-item ${problemProgress > 0.2 ? "is-active" : ""}`}>YOUR COMPANY GREW.</h2>
-              <h2 className={`problem-item ${problemProgress > 0.4 ? "is-active" : ""}`}>YOUR SERVICE GOT BETTER.</h2>
-              <h2 className={`problem-item ${problemProgress > 0.6 ? "is-active" : ""}`}>YOUR TEAM HAS SCALED.</h2>
+              <h2 className={`problem-item ${problemProgress > 0.2 ? "is-active" : ""}`}>
+                YOUR COMPANY GREW.
+              </h2>
+              <h2 className={`problem-item ${problemProgress > 0.4 ? "is-active" : ""}`}>
+                YOUR SERVICE GOT BETTER.
+              </h2>
+              <h2 className={`problem-item ${problemProgress > 0.6 ? "is-active" : ""}`}>
+                YOUR TEAM HAS SCALED.
+              </h2>
               <p className={`problem-item ${problemProgress > 0.8 ? "is-active" : ""}`}>
-                But your brand look still feels like a side project.<br />
+                But your brand look still feels like a side project.
+                <br />
                 It doesn't match who you are or where you're headed.
               </p>
             </div>
@@ -625,14 +798,22 @@ function Index() {
 
         <section className="z-section reveal solve-section" data-theme="light">
           <div className="solve-title-col reveal-title">
-            <h2 className="section-title">HOW I SOLVE<br />YOUR PROBLEMS</h2>
+            <h2 className="section-title">
+              HOW I SOLVE
+              <br />
+              YOUR PROBLEMS
+            </h2>
           </div>
           <div className="phases reveal-content">
             {phases.map((p) => (
               <div key={p.label} className="phase-card">
                 <div className="phase-card-top">
                   <div className="phase-label">{p.label}</div>
-                  <ul className="phase-list">{p.items.map((it) => <li key={it}>{it}</li>)}</ul>
+                  <ul className="phase-list">
+                    {p.items.map((it) => (
+                      <li key={it}>{it}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ))}
@@ -649,14 +830,23 @@ function Index() {
 
         <section className="z-section reveal" id="work" data-theme="light">
           <div className="reveal-title section-header">
-            <h2 className="section-title">WEBSITE<br />PROJECTS</h2>
+            <h2 className="section-title">
+              WEBSITE
+              <br />
+              PROJECTS
+            </h2>
             <div className="section-subtitle">
               I TURN BOLD IDEAS INTO WEBSITES YOU'RE PROUD TO SHARE — WITH EASE.
             </div>
           </div>
           <div className="projects reveal-content">
             {websiteProjects.map((pr) => (
-              <div key={pr.name} data-cursor-label="View" className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
+              <div
+                key={pr.name}
+                data-cursor-label="View"
+                className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`}
+                onClick={() => toggleProject(pr.name)}
+              >
                 <img src={pr.img} alt={pr.name} />
                 <div className="project-info">
                   <div className="project-name">{pr.name}</div>
@@ -669,14 +859,23 @@ function Index() {
 
         <section className="z-section reveal" data-theme="light">
           <div className="reveal-title section-header">
-            <h2 className="section-title">VISUAL BRAND<br />PROJECTS</h2>
+            <h2 className="section-title">
+              VISUAL BRAND
+              <br />
+              PROJECTS
+            </h2>
             <div className="section-subtitle">
               I CREATE ICONIC VISUAL IDENTITIES THAT DEFINE YOUR BRAND'S UNIQUE ESSENCE.
             </div>
           </div>
           <div className="projects reveal-content">
             {brandProjects.map((pr) => (
-              <div key={pr.name} data-cursor-label="View" className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`} onClick={() => toggleProject(pr.name)}>
+              <div
+                key={pr.name}
+                data-cursor-label="View"
+                className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`}
+                onClick={() => toggleProject(pr.name)}
+              >
                 <img src={pr.img} alt={pr.name} />
                 <div className="project-info">
                   <div className="project-name">{pr.name}</div>
@@ -689,16 +888,19 @@ function Index() {
 
         <section className="z-section process-section reveal" data-theme="light">
           <div className="process-title-col reveal-title">
-            <h2>CREATIVE<br />PROCESS</h2>
+            <h2>
+              CREATIVE
+              <br />
+              PROCESS
+            </h2>
           </div>
           <div className="process-steps-col reveal-content">
             {processSteps.map((s, i) => (
-              <div
-                key={s.num}
-                className="process-step"
-              >
+              <div key={s.num} className="process-step">
                 <div className="process-header">
-                  <div className="process-name">STEP {s.num}: {s.name}</div>
+                  <div className="process-name">
+                    STEP {s.num}: {s.name}
+                  </div>
                 </div>
                 <p>{s.body}</p>
               </div>
@@ -708,7 +910,11 @@ function Index() {
 
         <section className="z-section pricing-section reveal" id="pricing" data-theme="light">
           <div className="pricing-title-col reveal-title">
-            <h2>PICK THE PLAN<br />THAT FITS.</h2>
+            <h2>
+              PICK THE PLAN
+              <br />
+              THAT FITS.
+            </h2>
           </div>
           <div className="pricing-grid reveal-content">
             <div className="price-card">
@@ -719,12 +925,32 @@ function Index() {
                 <div className="price-amount">$1000</div>
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
-                  {["15 days delivery", "Figma wireframe & visual design", "Landing page built in Framer", "Fully responsive (mobile + desktop)", "Animation & scroll effects", "Copywriting assistance", "Basic SEO optimization"].map(f => (
-                    <li key={f}><span className="check"><CheckIcon /></span><span>{f}</span></li>
+                  {[
+                    "15 days delivery",
+                    "Figma wireframe & visual design",
+                    "Landing page built in Framer",
+                    "Fully responsive (mobile + desktop)",
+                    "Animation & scroll effects",
+                    "Copywriting assistance",
+                    "Basic SEO optimization",
+                  ].map((f) => (
+                    <li key={f}>
+                      <span className="check">
+                        <CheckIcon />
+                      </span>
+                      <span>{f}</span>
+                    </li>
                   ))}
-                  <li className="add-on"><span className="check"><PlusIcon /></span><span>Visual Identity Add-on available ($1k)</span></li>
+                  <li className="add-on">
+                    <span className="check">
+                      <PlusIcon />
+                    </span>
+                    <span>Visual Identity Add-on available ($1k)</span>
+                  </li>
                 </ul>
-                <a href="#contact" className="btn-white">Start Landing Page</a>
+                <a href="#contact" className="btn-white">
+                  Start Landing Page
+                </a>
               </div>
             </div>
 
@@ -736,55 +962,153 @@ function Index() {
                 <div className="price-amount">$2800</div>
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
-                  {["30 days delivery", "Everything in Landing Page", "Up to 8 custom pages", "CMS setup & training", "Custom imagery & art direction", "Brand alignment workshop", "Advanced SEO & analytics"].map(f => (
-                    <li key={f}><span className="check"><CheckIcon /></span><span>{f}</span></li>
+                  {[
+                    "30 days delivery",
+                    "Everything in Landing Page",
+                    "Up to 8 custom pages",
+                    "CMS setup & training",
+                    "Custom imagery & art direction",
+                    "Brand alignment workshop",
+                    "Advanced SEO & analytics",
+                  ].map((f) => (
+                    <li key={f}>
+                      <span className="check">
+                        <CheckIcon />
+                      </span>
+                      <span>{f}</span>
+                    </li>
                   ))}
-                  <li className="add-on"><span className="check"><PlusIcon /></span><span>Visual Identity Add-on available ($1k)</span></li>
+                  <li className="add-on">
+                    <span className="check">
+                      <PlusIcon />
+                    </span>
+                    <span>Visual Identity Add-on available ($1k)</span>
+                  </li>
                 </ul>
-                <a href="#contact" className="btn-white">Start Full Website</a>
+                <a href="#contact" className="btn-white">
+                  Start Full Website
+                </a>
               </div>
             </div>
           </div>
         </section>
 
-
         <section className="z-section contact-section reveal" id="contact" data-theme="blue">
           <div className="contact-grid">
             <div className="reveal-title">
-              <h2>LET'S FIGURE<br />IT OUT<br />— TOGETHER.</h2>
+              <h2>
+                LET'S FIGURE
+                <br />
+                IT OUT
+                <br />— TOGETHER.
+              </h2>
             </div>
             <div className="reveal-content">
-              {formStatus === 'sent' ? (
+              {formStatus === "sent" ? (
                 <div className="form-success">
                   <div className="form-success-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7" /></svg>
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="var(--blue)"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 13l4 4L19 7" />
+                    </svg>
                   </div>
                   <h3>MESSAGE SENT!</h3>
-                  <p>Thank you for reaching out. I'll review your project details and get back to you within 24–48 hours.</p>
-                  <button className="btn-form-reset" onClick={() => setFormStatus('idle')}>Send another message</button>
+                  <p>
+                    Thank you for reaching out. I'll review your project details and get back to you
+                    within 24–48 hours.
+                  </p>
+                  <button className="btn-form-reset" onClick={() => setFormStatus("idle")}>
+                    Send another message
+                  </button>
                 </div>
               ) : (
-                <form className="contact-form" onSubmit={async (e) => {
-                  e.preventDefault();
-                  setFormStatus('sending');
-                  const form = e.currentTarget;
-                  const formData = new FormData(form);
-                  formData.append('access_key', 'ff788bc1-0eed-4d8a-b7db-fd1ad8c08a54');
-                  formData.append('subject', `New project inquiry from ${formData.get('name')}`);
-                  formData.append('from_name', 'Zantana Studio Website');
-                  try {
-                    const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
-                    const data = await res.json();
-                    if (data.success) { setFormStatus('sent'); form.reset(); } else { setFormStatus('error'); }
-                  } catch { setFormStatus('error'); }
-                }}>
-                  <div className="form-group"><label>Name</label><input name="name" type="text" placeholder="Your name" maxLength={100} required /></div>
-                  <div className="form-group"><label>Email</label><input name="email" type="email" placeholder="email@company.com" maxLength={255} required /></div>
-                  <div className="form-group"><label>What is your company name?</label><input name="company" type="text" placeholder="Company name" maxLength={100} /></div>
-                  <div className="form-group"><label>What services does your company provide?</label><input name="services" type="text" placeholder="e.g. SaaS, e-commerce, agency" maxLength={200} /></div>
-                  <div className="form-group"><label>Message</label><textarea name="message" placeholder="Tell me about your project..." maxLength={1000} /></div>
-                  {formStatus === 'error' && <div className="form-error-msg">Something went wrong. Please try again or email directly at zantanadesign@gmail.com</div>}
-                  <button type="submit" className="btn-form-submit" disabled={formStatus === 'sending'}>{formStatus === 'sending' ? 'Sending...' : 'Start a project'}</button>
+                <form
+                  className="contact-form"
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setFormStatus("sending");
+                    const form = e.currentTarget;
+                    const formData = new FormData(form);
+                    formData.append("access_key", "ff788bc1-0eed-4d8a-b7db-fd1ad8c08a54");
+                    formData.append("subject", `New project inquiry from ${formData.get("name")}`);
+                    formData.append("from_name", "Zantana Studio Website");
+                    try {
+                      const res = await fetch("https://api.web3forms.com/submit", {
+                        method: "POST",
+                        body: formData,
+                      });
+                      const data = await res.json();
+                      if (data.success) {
+                        setFormStatus("sent");
+                        form.reset();
+                      } else {
+                        setFormStatus("error");
+                      }
+                    } catch {
+                      setFormStatus("error");
+                    }
+                  }}
+                >
+                  <div className="form-group">
+                    <label>Name</label>
+                    <input
+                      name="name"
+                      type="text"
+                      placeholder="Your name"
+                      maxLength={100}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Email</label>
+                    <input
+                      name="email"
+                      type="email"
+                      placeholder="email@company.com"
+                      maxLength={255}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>What is your company name?</label>
+                    <input name="company" type="text" placeholder="Company name" maxLength={100} />
+                  </div>
+                  <div className="form-group">
+                    <label>What services does your company provide?</label>
+                    <input
+                      name="services"
+                      type="text"
+                      placeholder="e.g. SaaS, e-commerce, agency"
+                      maxLength={200}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Message</label>
+                    <textarea
+                      name="message"
+                      placeholder="Tell me about your project..."
+                      maxLength={1000}
+                    />
+                  </div>
+                  {formStatus === "error" && (
+                    <div className="form-error-msg">
+                      Something went wrong. Please try again or email directly at
+                      zantanadesign@gmail.com
+                    </div>
+                  )}
+                  <button
+                    type="submit"
+                    className="btn-form-submit"
+                    disabled={formStatus === "sending"}
+                  >
+                    {formStatus === "sending" ? "Sending..." : "Start a project"}
+                  </button>
                 </form>
               )}
             </div>
@@ -793,15 +1117,28 @@ function Index() {
 
         <section className="z-section about-section reveal" data-theme="dark">
           <div className="about-inner reveal-title">
-            <h2>MORE ABOUT<br />ZANTANA STUDIO</h2>
-            <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" />
+            <h2>
+              MORE ABOUT
+              <br />
+              ZANTANA STUDIO
+            </h2>
+            <img
+              className="about-photo"
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+              alt="Ivo, founder of Zantana"
+            />
             <div className="about-headline">
-              HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT CREATES STANDOUT BRANDS WITH LASTING IMPACT.
+              HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT
+              CREATES STANDOUT BRANDS WITH LASTING IMPACT.
             </div>
             <p className="about-body">
-              Building strategic brand identities and high-performing websites that connect deeply with your target audience. Every project is crafted with precision to help your business grow online.
+              Building strategic brand identities and high-performing websites that connect deeply
+              with your target audience. Every project is crafted with precision to help your
+              business grow online.
             </p>
-            <a href="#contact" className="btn-white-outline">Start a project</a>
+            <a href="#contact" className="btn-white-outline">
+              Start a project
+            </a>
           </div>
         </section>
 
@@ -816,7 +1153,11 @@ function Index() {
                   <span className="faq-q-text">{f.q}</span>
                   <span className="faq-icon" />
                 </button>
-                <div className="faq-answer"><div><p>{f.a}</p></div></div>
+                <div className="faq-answer">
+                  <div>
+                    <p>{f.a}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -825,30 +1166,40 @@ function Index() {
         <footer className="z-footer" data-theme="light">
           <div className="footer-blue-box">
             <h2 className="footer-cta">Ready to look and feel like an established player?</h2>
-            <a href="#contact" className="btn-white" style={{ width: 'fit-content', margin: '0 auto', padding: '10px 15px' }}>Start a Project</a>
+            <a
+              href="#contact"
+              className="btn-white"
+              style={{ width: "fit-content", margin: "0 auto", padding: "10px 15px" }}
+            >
+              Start a Project
+            </a>
           </div>
           <div className="footer-bottom-nav">
             <div className="footer-logo-row">
               <ZWordmark />
             </div>
             <div className="footer-links">
-              {['INSTAGRAM ↗', 'LINKEDIN ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
-                <a
-                  key={label}
-                  href={[
-                    'https://instagram.com/zantana.co',
-                    'https://linkedin.com/in/ivozantana',
-                    'https://contra.com/zantanastudio',
-                    'https://x.com/zantanastudio',
-                    'mailto:zantanadesign@gmail.com',
-                    'https://wa.link/l9pzfv'
-                  ][i]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {label}
-                </a>
-              ))}
+              {["INSTAGRAM ↗", "LINKEDIN ↗", "CONTRA ↗", "X ↗", "EMAIL ↗", "WHATSAPP ↗"].map(
+                (label, i) => (
+                  <a
+                    key={label}
+                    href={
+                      [
+                        "https://instagram.com/zantana.co",
+                        "https://linkedin.com/in/ivozantana",
+                        "https://contra.com/zantanastudio",
+                        "https://x.com/zantanastudio",
+                        "mailto:zantanadesign@gmail.com",
+                        "https://wa.link/l9pzfv",
+                      ][i]
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {label}
+                  </a>
+                ),
+              )}
             </div>
           </div>
         </footer>
