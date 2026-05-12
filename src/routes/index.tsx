@@ -273,9 +273,9 @@ function Index() {
       <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet" />
       <style>{`
         :root { --blue: #1041D7; --black: #000; --white: #fff; --p: 40px; --pv: 45px; --g: 40px; --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; }
-        .z-root[data-theme="light"] { --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; }
-        .z-root[data-theme="dark"] { --bg: #000; --text: #fff; --surface: #1a1a1a; --muted: #aaa; }
-        .z-root[data-theme="blue"] { --bg: var(--blue); --text: #fff; --surface: rgba(255,255,255,0.1); --muted: rgba(255,255,255,0.8); }
+        .z-root[data-theme="light"] { --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; --card-bg: #1041D7; --card-text: #fff; --btn-alt-bg: #000; --btn-alt-text: #fff; }
+        .z-root[data-theme="dark"] { --bg: #000; --text: #fff; --surface: #1a1a1a; --muted: #aaa; --card-bg: #1041D7; --card-text: #fff; --btn-alt-bg: #fff; --btn-alt-text: #000; }
+        .z-root[data-theme="blue"] { --bg: var(--blue); --text: #fff; --surface: rgba(255,255,255,0.1); --muted: rgba(255,255,255,0.8); --card-bg: #fff; --card-text: #1041D7; --btn-alt-bg: #fff; --btn-alt-text: #000; }
         .z-root *, .z-root *::before, .z-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
         .z-root { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 18px; line-height: 23px; overflow-x: clip; min-height: 100vh; transition: background .8s ease, color .8s ease; }
         .z-root section, .z-root .section-bg { transition: background .8s ease, color .8s ease; }
@@ -400,8 +400,8 @@ function Index() {
 
         /* Pricing */
         .pricing-grid { display: flex; flex-direction: column; gap: 20px; }
-        .price-card { background: var(--blue); border-radius: 5px; color: #fff; overflow: hidden; }
-        .price-card-header { padding: 20px; border-bottom: 2px solid #fff; }
+        .price-card { background: var(--card-bg); border-radius: 5px; color: var(--card-text); overflow: hidden; transition: background .8s ease, color .8s ease; }
+        .price-card-header { padding: 20px; border-bottom: 2px solid var(--card-text); transition: border-color .8s ease; }
         .plan-name { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
         .price-card-body { padding: 20px; }
         .price-amount { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 60px; line-height: 1; margin-bottom: 20px; }
@@ -412,8 +412,8 @@ function Index() {
         .price-features li.add-on { opacity: .6; }
         .check { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 3px; }
         .check svg { width: 18px; height: 18px; }
-        .btn-white { display: inline-flex; align-items: center; gap: 0; background: #fff; color: #1041D7; font-weight: 700; font-size: 18px; letter-spacing: 1px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: flex-start; }
-        .btn-white::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #fff; opacity: 0; transition: opacity .2s, width .2s; }
+        .btn-white { display: inline-flex; align-items: center; gap: 0; background: var(--card-text); color: var(--card-bg); font-weight: 700; font-size: 18px; letter-spacing: 1px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid var(--card-text); cursor: pointer; transition: background .8s ease, color .8s ease, border-color .8s ease, gap .2s; align-self: flex-start; }
+        .btn-white::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--card-text); opacity: 0; transition: opacity .2s, width .2s; }
         .btn-white:hover { background: #000; color: #fff; border-color: #000; gap: 8px; }
         .btn-white:hover::before { opacity: 1; width: 6px; }
 
@@ -442,8 +442,8 @@ function Index() {
         .about-photo { width: 300px; border-radius: 5px; display: block; aspect-ratio: 3/4; object-fit: cover; object-position: top; filter: grayscale(100%); }
         .about-headline { font-weight: 700; font-size: 18px; line-height: 23px; text-transform: uppercase; letter-spacing: .3px; }
         .about-body { font-size: 18px; font-weight: 500; line-height: 23px; }
-        .btn-white-outline { display: inline-flex; align-items: center; gap: 0; background: #fff; color: #000; font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid #fff; transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: center; }
-        .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #000; opacity: 0; transition: opacity .2s, width .2s, background .18s; }
+        .btn-white-outline { display: inline-flex; align-items: center; gap: 0; background: var(--btn-alt-bg); color: var(--btn-alt-text); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid var(--btn-alt-bg); transition: background .8s ease, color .8s ease, border-color .8s ease, gap .2s; align-self: center; }
+        .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--btn-alt-text); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-white-outline:hover { background: #1041D7; color: #fff; border-color: #1041D7; gap: 8px; }
         .btn-white-outline:hover::before { opacity: 1; width: 6px; background: #fff; }
 
