@@ -534,7 +534,7 @@ function Index() {
           .footer-blue-box { padding: 20px; }
           .footer-desc { max-width: 100%; }
 
-          .process-title-col, .solve-title-col { position: sticky; top: 0; z-index: 30; background: var(--bg); padding: 60px var(--p) 20px; margin: -30px calc(var(--p) * -1) 0; text-align: left; }
+          .process-title-col, .solve-title-col { position: sticky; top: 0; z-index: 1; background: var(--bg); padding: 60px var(--p) 20px; margin: -30px calc(var(--p) * -1) 0; text-align: left; }
           .process-step { position: sticky; }
           .process-step:nth-child(1) { top: 200px; z-index: 11; }
           .process-step:nth-child(2) { top: 260px; z-index: 12; }
