@@ -454,7 +454,7 @@ function Index() {
         .contact-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
         .contact-form { background: transparent; border: none; padding: 0; display: flex; flex-direction: column; gap: 16px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
-        .form-group label { font-size: 18px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); }
+        .form-group label { font-size: 18px; font-weight: 500; letter-spacing: 0.3px; text-transform: none; color: var(--text); }
         .form-group input, .form-group textarea { background: var(--surface); border: none; border-radius: 5px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 18px; color: var(--text); width: 100%; outline: none; resize: none; }
         .form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
         .form-group textarea { min-height: 110px; }
