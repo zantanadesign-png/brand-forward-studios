@@ -454,7 +454,7 @@ function Index() {
         .contact-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
         .contact-form { background: transparent; border: none; padding: 0; display: flex; flex-direction: column; gap: 16px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
-        .form-group label { font-size: 18px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); }
+        .form-group label { font-size: 18px; font-weight: 500; letter-spacing: 0.3px; text-transform: none; color: var(--text); }
         .form-group input, .form-group textarea { background: var(--surface); border: none; border-radius: 5px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 18px; color: var(--text); width: 100%; outline: none; resize: none; }
         .form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
         .form-group textarea { min-height: 110px; }
@@ -534,7 +534,7 @@ function Index() {
           .footer-blue-box { padding: 20px; }
           .footer-desc { max-width: 100%; }
 
-          .process-title-col, .solve-title-col { position: sticky; top: 0; z-index: 30; background: var(--bg); padding: 60px var(--p) 20px; margin: -30px calc(var(--p) * -1) 0; text-align: left; }
+          .process-title-col, .solve-title-col { position: sticky; top: 0; z-index: 1; background: var(--bg); padding: 60px var(--p) 20px; margin: -30px calc(var(--p) * -1) 0; text-align: left; }
           .process-step { position: sticky; }
           .process-step:nth-child(1) { top: 200px; z-index: 11; }
           .process-step:nth-child(2) { top: 260px; z-index: 12; }
