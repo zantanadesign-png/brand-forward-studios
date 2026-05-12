@@ -39,38 +39,27 @@ const tickerImages = [
   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80",
 ];
 
-const phases = [
+const solveSteps = [
   {
-    label: "Phase 1: Art Direction",
-    items: [
-      "Wireframe workshop",
-      "Visual direction concepts",
-      "Design approval",
-      "Brand alignment",
-    ],
+    label: "01 — STRATEGIC DIRECTION",
+    items: ["Brand discovery", "Wireframe & structure", "Visual direction systems", "Brand alignment"],
+    tagline: "BUILT AROUND CLARITY.",
+    description:
+      "Every decision starts with positioning, aligning your website and visual identity with how your brand should be perceived.",
   },
   {
-    label: "Phase 2: Design",
-    items: ["Homepage design", "Custom imagery", "Additional pages", "Design refinements"],
+    label: "02 — VISUAL EXPERIENCE",
+    items: ["Homepage design", "Custom visual direction", "Supporting pages", "Design refinement"],
+    tagline: "DESIGN THAT BUILDS PERCEPTION.",
+    description:
+      "Clean layouts, strong typography, intentional imagery, and refined interactions. Crafted to make your brand feel established, and premium.",
   },
   {
-    label: "Phase 3: Development",
-    items: ["Platform build", "CMS setup", "CMS training", "Launch"],
-  },
-];
-
-const benefits = [
-  {
-    title: "I BUILD EVERYTHING IN FRAMER.",
-    body: "It's fast, scalable, and easy to update, so your team stays agile without needing a developer.",
-  },
-  {
-    title: "CLEAR DESIGN. BUILT TO CONVERT.",
-    body: "I design strategic websites that explain your value, earn trust, and scale with your business.",
-  },
-  {
-    title: "ONLINE IN WEEKS, NOT MONTHS.",
-    body: "You don't need a 3-month sprint. I deliver fast, strategic sites. Live and working in 4 weeks.",
+    label: "03 — DEVELOPMENT & LAUNCH",
+    items: ["Framer development", "CMS integration", "Responsive optimization", "Launch support"],
+    tagline: "FAST. FLEXIBLE. SCALABLE.",
+    description:
+      "Built in Framer for speed, performance, and easy updates. Allowing your brand to move fast without sacrificing quality.",
   },
 ];
 
@@ -128,28 +117,28 @@ const brandProjects = [
 const processSteps = [
   {
     num: "01",
-    name: "DISCOVERY",
-    body: "We dig deep into your brand, goals, and audience. Every great site starts with the right questions — and the honesty to answer them.",
+    name: "01 — DISCOVERY",
+    body: "We start by understanding your brand from the inside out, through strategic conversations, brand analysis, and clear alignment on where your business is today and where it wants to go next.",
   },
   {
     num: "02",
-    name: "CONCEPT",
-    body: "Ideas take shape. I craft visual directions based on brand values and business goals, and together, we refine them into a concept that feels right — and true to you.",
+    name: "02 — DIRECTION",
+    body: "With clarity in place, we define the visual direction of the project, exploring concepts, references, positioning, and the overall creative vision behind the brand experience.",
   },
   {
     num: "03",
-    name: "DESIGN",
-    body: "With the concept locked in, the magic happens. I bring everything to life with bold visuals, refined typography, color, layout, and user experience thinking.",
+    name: "03 — DESIGN",
+    body: "Ideas start taking shape through refined layouts, visual systems, early explorations, and presentation rounds focused on building a brand presence that feels clear, elevated, and intentional.",
   },
   {
     num: "04",
-    name: "DEVELOPMENT",
-    body: "I transform designs into high-performing, fully responsive websites — built in Framer for seamless performance. Revisions? As many as it takes.",
+    name: "04 — DEVELOPMENT",
+    body: "Once the direction is approved, everything is brought to life, whether through a complete visual identity system, a strategic website experience, or both working together seamlessly.",
   },
   {
     num: "05",
-    name: "DELIVERY & SUPPORT",
-    body: "You get everything you need: final files, documentation, and post-launch support to ensure things run smoothly — and keep evolving.",
+    name: "05 — DELIVERY & SUPPORT",
+    body: "Final assets, launch preparation, guidance, and ongoing support, ensuring your brand feels consistent, polished, and ready for its next stage of growth.",
   },
 ];
 
@@ -414,7 +403,7 @@ function Index() {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;800;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet"
       />
       <style>{`
@@ -463,16 +452,26 @@ function Index() {
 
         /* Hero */
         .hero { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; gap: 30px; padding-bottom: 40px; box-sizing: border-box; }
-        .hero-available { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0; animation: zHeroIn .6s ease 2.4s forwards; }
+        .hero-available { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue); opacity: 0; animation: zHeroIn .6s ease 2.4s forwards; }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
-        .hero h1 { font-size: 100px; opacity: 0; animation: zHeroIn .7s ease 2.5s forwards; }
+        .hero h1 { font-size: 90px; opacity: 0; animation: zHeroIn .7s ease 2.5s forwards; }
         .hero-sub { font-size: 18px; line-height: 23px; color: var(--muted); max-width: 600px; opacity: 0; animation: zHeroIn .6s ease 2.8s forwards; }
-        .btn-black { display: inline-flex; align-items: center; gap: 0; background: var(--text); color: var(--bg); font-weight: 600; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 4px; text-decoration: none; border: 1px solid var(--text); cursor: pointer; transition: background .18s, border-color .18s, color .18s, gap .2s; align-self: flex-start; opacity: 0; animation: zHeroIn .6s ease 3.0s forwards; }
-        .btn-black::before { content: ''; height: 6px; border-radius: 2px; background: var(--bg); opacity: 0; width: 0; transition: opacity .2s, width .2s; }
-        .btn-black:hover { background: #1041D7; border-color: #1041D7; color: #fff; gap: 8px; }
-        .btn-black:hover::before { opacity: 1; width: 6px; background: #fff; }
-        .btn-black.no-anim { opacity: 1; animation: none; }
+        .btn-black, .btn-blue, .btn-white, .btn-white-outline, .btn-form-submit, .btn-form-reset { display: inline-flex; align-items: center; gap: 0; font-weight: 600; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 4px; text-decoration: none; cursor: pointer; transition: background .18s, border-color .18s, color .18s, gap .2s; border: 1px solid transparent; position: relative; align-self: flex-start; }
+        .btn-black::before, .btn-blue::before, .btn-white::before, .btn-white-outline::before, .btn-form-submit::before, .btn-form-reset::before { content: ''; width: 0; height: 6px; border-radius: 2px; opacity: 0; transition: opacity .2s, width .2s; }
+        .btn-black:hover, .btn-blue:hover, .btn-white:hover, .btn-white-outline:hover, .btn-form-submit:hover, .btn-form-reset:hover { gap: 8px; }
+        .btn-black:hover::before, .btn-blue:hover::before, .btn-white:hover::before, .btn-white-outline:hover::before, .btn-form-submit:hover::before, .btn-form-reset:hover::before { opacity: 1; width: 6px; }
+
+        .btn-black { background: var(--text); color: var(--bg); border-color: var(--text); }
+        .btn-black::before { background: var(--bg); }
+        .btn-black:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+        .btn-black:hover::before { background: #fff; }
+        .btn-black.no-anim, .btn-blue.no-anim { opacity: 1; animation: none; }
+
+        .btn-blue { background: var(--blue); color: #fff; border-color: var(--blue); opacity: 0; animation: zHeroIn .6s ease 3.0s forwards; }
+        .btn-blue::before { background: #fff; }
+        .btn-blue:hover { background: #000; border-color: #000; }
+        .nav-links .btn-blue { color: #fff; }
 
         /* Ticker */
         .ticker-wrapper { overflow: hidden; padding: 20px 0; cursor: grab; user-select: none; margin-left: calc(var(--p) * -1); margin-right: calc(var(--p) * -1); width: calc(100% + (var(--p) * 2)); }
@@ -490,7 +489,7 @@ function Index() {
         /* Problem Section (Scrollytelling) */
         .problem-section { height: 450vh; position: relative; padding: 0; }
         .problem-sticky { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--blue); color: #fff; padding: var(--p); overflow: hidden; }
-        .problem-texts { display: flex; flex-direction: column; gap: 15px; text-align: center; align-items: center; width: 100%; max-width: 1000px; }
+        .problem-texts { display: flex; flex-direction: column; gap: 15px; text-align: center; align-items: center; width: 100%; }
         .problem-item { opacity: 0; transform: translateY(30px); transition: all .8s cubic-bezier(0.16, 1, 0.3, 1); }
         .problem-item.is-active { opacity: 1; transform: translateY(0); }
         .problem-section h2 { font-size: 75px; text-transform: uppercase; }
@@ -499,11 +498,12 @@ function Index() {
           .problem-section { height: 400vh; }
           .problem-section h2 { font-size: 42px; }
           .problem-texts { gap: 24px; }
-          .footer-cta { font-size: 42px; }
+          .footer-cta { font-size: 38px; }
           .z-footer { padding: 20px; }
-          .footer-blue-box { padding: 40px 20px; gap: 40px; }
-          .footer-bottom-nav { flex-direction: column; gap: 32px; text-align: center; }
-          .footer-links { flex-direction: column; gap: 10px; }
+          .footer-grid { grid-template-columns: 1fr; }
+          .footer-blue-box { padding: 30px 20px; min-height: auto; }
+          .footer-links { align-items: flex-start; }
+          .footer-wordmark { justify-content: flex-end; }
         }
 
         /* Solve Section */
@@ -522,13 +522,13 @@ function Index() {
         .projects { display: flex; flex-direction: column; gap: 20px; }
         .see-all-wrap { display: flex; justify-content: center; padding: 0 var(--p) var(--pv); }
 
-        .phase-card { border-radius: 5px; overflow: hidden; }
-        .phase-card-top { background: var(--blue); color: #fff; padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 20px; }
+        .phase-card { display: flex; flex-direction: column; gap: 20px; }
+        .phase-card-top { background: var(--blue); color: #fff; padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 20px; border-radius: 5px; }
         .phase-label { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0px; }
         .phase-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
         .phase-list li { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
         .phase-list li::before { content: '↗'; font-weight: 700; }
-        .phase-card-bottom { background: #000; color: #fff; padding: 20px; display: flex; flex-direction: column; gap: 24px; justify-content: center; }
+        .phase-card-bottom { background: #000; color: #fff; padding: 20px; display: flex; flex-direction: column; gap: 24px; justify-content: center; border-radius: 5px; }
         .phase-card-bottom .tagline { font-weight: 500; font-size: 18px; text-transform: uppercase; line-height: 23px; color: #fff; }
         .phase-card-bottom p { font-size: 18px; font-weight: 500; line-height: 23px; color: #fff; }
 
@@ -562,10 +562,10 @@ function Index() {
         .price-features li.add-on { opacity: .6; }
         .check { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 3px; }
         .check svg { width: 18px; height: 18px; }
-        .btn-white { display: inline-flex; align-items: center; gap: 0; background: #fff; color: #1041D7; font-weight: 600; font-size: 18px; letter-spacing: 1px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: flex-start; }
-        .btn-white::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #fff; opacity: 0; transition: opacity .2s, width .2s; }
-        .btn-white:hover { background: #000; color: #fff; border-color: #000; gap: 8px; }
-        .btn-white:hover::before { opacity: 1; width: 6px; }
+        .btn-white { background: #fff; color: var(--blue); border-color: #fff; }
+        .btn-white::before { background: var(--blue); }
+        .btn-white:hover { background: #000; border-color: #000; color: #fff; }
+        .btn-white:hover::before { background: #fff; }
 
         /* FAQ */
         .faq-section { }
@@ -593,10 +593,10 @@ function Index() {
         .about-photo { width: 300px; border-radius: 5px; display: block; aspect-ratio: 3/4; object-fit: cover; object-position: top; filter: grayscale(100%); }
         .about-headline { font-weight: 500; font-size: 18px; line-height: 23px; text-transform: uppercase; letter-spacing: .3px; }
         .about-body { font-size: 18px; font-weight: 500; line-height: 23px; }
-        .btn-white-outline { display: inline-flex; align-items: center; gap: 0; background: #fff; color: #000; font-weight: 600; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid #fff; transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: center; }
-        .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #000; opacity: 0; transition: opacity .2s, width .2s, background .18s; }
-        .btn-white-outline:hover { background: #1041D7; color: #fff; border-color: #1041D7; gap: 8px; }
-        .btn-white-outline:hover::before { opacity: 1; width: 6px; background: #fff; }
+        .btn-white-outline { background: #fff; color: #000; border-color: #fff; align-self: center; }
+        .btn-white-outline::before { background: #000; }
+        .btn-white-outline:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+        .btn-white-outline:hover::before { background: #fff; }
 
         /* Contact */
         .contact-section { }
@@ -610,38 +610,37 @@ function Index() {
         .form-group input, .form-group textarea { background: var(--surface); border: none; border-radius: 5px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 18px; color: var(--text); width: 100%; outline: none; resize: none; }
         .form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
         .form-group textarea { min-height: 110px; }
-        .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 0; background: #fff; color: #1041D7; font-weight: 600; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s, gap .2s; }
-        .btn-form-submit::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #1041D7; opacity: 0; transition: opacity .2s, width .2s, background .18s; }
-        .btn-form-submit:hover { background: #000; color: #fff; border-color: #000; gap: 8px; }
-        .btn-form-submit:hover::before { opacity: 1; width: 6px; background: #fff; }
+        .btn-form-submit { background: #fff; color: var(--blue); border-color: #fff; width: 100%; justify-content: center; margin-top: 4px; align-self: stretch; }
+        .btn-form-submit::before { background: var(--blue); }
+        .btn-form-submit:hover { background: #000; border-color: #000; color: #fff; }
+        .btn-form-submit:hover::before { background: #fff; }
         .btn-form-submit:disabled { opacity: .6; cursor: not-allowed; }
-        .form-success { background: var(--surface); border-radius: 5px; padding: 60px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; text-align: center; animation: formFadeIn .5s ease; }
-        .form-success-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--text); display: flex; align-items: center; justify-content: center; }
-        .form-success-icon svg { width: 28px; height: 28px; stroke: var(--bg); }
-        .form-success h3 { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 18px; color: var(--text); }
-        .form-success p { font-size: 18px; font-weight: 500; color: var(--muted); line-height: 23px; max-width: 340px; }
-        .form-success .btn-form-reset { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--text); font-weight: 600; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; border: 1px solid var(--muted); cursor: pointer; }
+
+        .btn-form-reset { background: transparent; color: var(--text); border-color: var(--muted); }
+        .btn-form-reset::before { background: var(--text); }
+        .btn-form-reset:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+        .btn-form-reset:hover::before { background: #fff; }
         .form-error-msg { background: rgba(255,0,0,.15); color: #fff; font-size: 13px; font-weight: 600; padding: 12px 16px; border-radius: 5px; text-align: center; }
         @keyframes formFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* Footer */
-        .footer-links a:hover::before { opacity: 1; transform: scale(1); }
-
         .z-footer { background: var(--bg); padding: 40px; min-height: 100vh; display: flex; flex-direction: column; gap: 40px; }
-        .footer-blue-box { background: var(--blue); border-radius: 5px; padding: 60px 40px; display: flex; flex-direction: column; gap: 40px; align-items: center; justify-content: center; flex: 1; width: 100%; }
-        .footer-cta { font-family: 'Anton', sans-serif; font-size: 80px; line-height: 0.9; color: #fff; text-align: center; max-width: 900px; text-transform: uppercase; margin-bottom: 0; }
-        .footer-logo-row svg { width: 140px; height: auto; color: var(--text); display: block; }
-        .footer-bottom-nav { display: flex; justify-content: space-between; align-items: center; width: 100%; padding-top: 20px; }
-        .footer-links { display: flex; flex-direction: row; gap: 32px; align-items: center; }
-        .footer-links a { text-decoration: none; font-size: 18px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
-        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 2px; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
-        .footer-links a:hover { color: var(--blue); }
-        .footer-links a:hover::before { opacity: 1; transform: scale(1); }
+        .footer-grid { display: grid; grid-template-columns: 60fr 40fr; gap: 40px; align-items: stretch; flex: 1; }
+        .footer-blue-box { background: var(--blue); border-radius: 5px; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 600px; }
+        .footer-cta-top { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+        .footer-cta { font-family: 'Anton', sans-serif; font-size: 80px; line-height: 0.9; color: #fff; text-transform: uppercase; margin-bottom: 10px; }
+        .footer-cta-body { font-size: 20px; font-weight: 500; line-height: 1.4; color: rgba(255,255,255,0.85); max-width: 480px; margin-bottom: 20px; }
+        .footer-right { display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; }
+        .footer-links { display: flex; flex-direction: row; flex-wrap: wrap; gap: 24px; padding-top: 40px; justify-content: space-between; width: 100%; }
+        .footer-links a { text-decoration: none; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #fff; transition: opacity .2s; display: inline-flex; align-items: center; gap: 4px; }
+        .footer-links a:hover { opacity: 0.7; }
+        .footer-wordmark { width: 100%; display: flex; justify-content: flex-end; margin-top: auto; }
+        .footer-wordmark svg { width: 100%; max-width: 800px; height: auto; color: var(--text); display: block; margin-right: -20px; }
 
         /* Desktop */
         @media (min-width: 900px) {
-          .hero h1 { font-size: 100px; max-width: 1100px; line-height: 0.95; }
-          .hero-sub { font-size: 22px; }
+          .hero h1 { font-size: 90px; max-width: 1100px; line-height: 0.95; }
+          .hero-sub { font-size: 18px; }
           .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
           .phase-card { display: flex; flex-direction: column; border-radius: 5px; overflow: hidden; }
           .phase-card-bottom { flex: 1; }
@@ -650,12 +649,7 @@ function Index() {
           .process-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
           .process-section .process-title-col { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 80px; align-self: start; }
           .process-steps-col { display: flex; flex-direction: column; gap: 20px; padding-bottom: 60px; }
-          .process-step { height: auto; padding: 40px; position: sticky; }
-          .process-step:nth-child(1) { top: 80px; z-index: 11; }
-          .process-step:nth-child(2) { top: 150px; z-index: 12; }
-          .process-step:nth-child(3) { top: 220px; z-index: 13; }
-          .process-step:nth-child(4) { top: 290px; z-index: 14; }
-          .process-step:nth-child(5) { top: 360px; z-index: 15; }
+          .process-step { height: auto; padding: 20px; }
           .pricing-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
           .pricing-title-col { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
           .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -663,7 +657,7 @@ function Index() {
           .faq-title-col { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
           .about-section { display: flex; flex-direction: column; align-items: center; }
           .contact-grid { grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
-          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 32px; justify-content: center; }
+
           .footer-desc p { font-size: 18px; }
 
         }
@@ -673,7 +667,7 @@ function Index() {
           :root { --p: 24px; --pv: 30px !important; --g: 20px; }
           .z-section, .z-footer, .problem-sticky { padding-top: 30px !important; padding-bottom: 30px !important; gap: 30px !important; }
           .hero { padding-left: var(--p); padding-right: var(--p); gap: 20px !important; }
-          .z-root h1, .hero h1 { font-size: 65px; line-height: 1; }
+          .z-root h1, .hero h1 { font-size: 90px; line-height: 1; }
           .hero-sub { font-size: 18px; font-weight: 500; }
           .z-root h2, .section-title { font-size: 40px; }
           .z-root p { font-size: 18px; font-weight: 500; font-family: 'Inter', sans-serif; line-height: 1.4; }
@@ -681,9 +675,9 @@ function Index() {
           .footer-cta { font-size: 40px; }
           .price-amount { font-size: 48px; }
           .nav-links { gap: 20px; }
-          .footer-links { flex-direction: column; gap: 10px; }
+          .footer-links { flex-direction: row; flex-wrap: wrap; gap: 20px; }
           .z-footer { padding-left: var(--p); padding-right: var(--p); }
-          .footer-blue-box { padding: 20px; }
+          .footer-blue-box { padding: 40px; }
           .footer-desc { max-width: 100%; }
 
           .process-title-col, .solve-title-col { position: sticky; top: 0; z-index: 0; background: var(--bg); padding: 60px var(--p) 20px; margin: -30px calc(var(--p) * -1) 0; text-align: left; }
@@ -697,12 +691,9 @@ function Index() {
           .process-steps-col { padding-bottom: 0; }
 
           .phases > .phase-card { position: sticky; }
-          .phases > .phase-card:nth-child(1) { order: 1; top: 200px; z-index: 7; }
-          .phases > .phase-card:nth-child(4) { order: 2; top: 260px; z-index: 7; }
-          .phases > .phase-card:nth-child(2) { order: 3; top: 320px; z-index: 7; }
-          .phases > .phase-card:nth-child(5) { order: 4; top: 380px; z-index: 7; }
-          .phases > .phase-card:nth-child(3) { order: 5; top: 440px; z-index: 7; }
-          .phases > .phase-card:nth-child(6) { order: 6; top: 500px; z-index: 7; }
+          .phases > .phase-card:nth-child(1) { top: 200px; z-index: 7; }
+          .phases > .phase-card:nth-child(2) { top: 260px; z-index: 8; }
+          .phases > .phase-card:nth-child(3) { top: 320px; z-index: 9; }
           .solve-section .phases { padding-bottom: 0; }
           .solve-section, .faq-section { padding-top: 60px !important; }
           .contact-section, .about-section { padding-top: 60px !important; padding-bottom: 60px !important; }
@@ -731,21 +722,32 @@ function Index() {
               <li>
                 <a href="#contact">DM</a>
               </li>
+              <li>
+                <a href="#contact" className="btn-blue no-anim">
+                  Elevate My Brand
+                </a>
+              </li>
             </ul>
           </nav>
 
           <section className="hero">
             <div className="hero-available">
-              <span className="hero-dot" />
-              <span>Available for new projects</span>
+              <span>Brand • Websites</span>
             </div>
-            <h1>WEBSITES BUILT</h1>
+            <h1>
+              We help growing brands
+              <br />
+              look as valuable as
+              <br />
+              they actually are.
+            </h1>
             <p className="hero-sub">
-              Whether you're raising, launching, or scaling — we ship sites fast, so you can seize
-              the moment.
+              Refresh your visual identity and website with strategic design, clear positioning, and
+              standout visual direction, creating a digital presence that feels polished, credible,
+              and aligned with the level your brand has already reached.
             </p>
-            <a href="#contact" className="btn-black">
-              Start a project
+            <a href="#contact" className="btn-blue">
+              Elevate My Brand
             </a>
           </section>
         </div>
@@ -779,18 +781,24 @@ function Index() {
           <div className="problem-sticky">
             <div className="problem-texts">
               <h2 className={`problem-item ${problemProgress > 0.2 ? "is-active" : ""}`}>
-                YOUR COMPANY GREW.
+                Your service became more refined.
               </h2>
               <h2 className={`problem-item ${problemProgress > 0.4 ? "is-active" : ""}`}>
-                YOUR SERVICE GOT BETTER.
+                Your business moved forward.
               </h2>
               <h2 className={`problem-item ${problemProgress > 0.6 ? "is-active" : ""}`}>
-                YOUR TEAM HAS SCALED.
+                your business evolved.
               </h2>
-              <p className={`problem-item ${problemProgress > 0.8 ? "is-active" : ""}`}>
-                But your brand look still feels like a side project.
+              <h2 className={`problem-item ${problemProgress > 0.8 ? "is-active" : ""}`}>
+                Your team grew.
+              </h2>
+              <p className={`problem-item ${problemProgress > 0.95 ? "is-active" : ""}`}>
+                But your website and visual identity still don’t reflect the level you operate at
+                today.
                 <br />
-                It doesn't match who you are or where you're headed.
+                The result? A brand that feels behind its own potential and a digital presence
+                <br />
+                that no longer builds the trust, clarity, and perception your business deserves.
               </p>
             </div>
           </div>
@@ -805,23 +813,19 @@ function Index() {
             </h2>
           </div>
           <div className="phases reveal-content">
-            {phases.map((p) => (
-              <div key={p.label} className="phase-card">
+            {solveSteps.map((s) => (
+              <div key={s.label} className="phase-card">
                 <div className="phase-card-top">
-                  <div className="phase-label">{p.label}</div>
+                  <div className="phase-label">{s.label}</div>
                   <ul className="phase-list">
-                    {p.items.map((it) => (
+                    {s.items.map((it) => (
                       <li key={it}>{it}</li>
                     ))}
                   </ul>
                 </div>
-              </div>
-            ))}
-            {benefits.map((b) => (
-              <div key={b.title} className="phase-card">
                 <div className="phase-card-bottom">
-                  <div className="tagline">{b.title}</div>
-                  <p>{b.body}</p>
+                  <div className="tagline">{s.tagline}</div>
+                  <p>{s.description}</p>
                 </div>
               </div>
             ))}
@@ -898,9 +902,7 @@ function Index() {
             {processSteps.map((s, i) => (
               <div key={s.num} className="process-step">
                 <div className="process-header">
-                  <div className="process-name">
-                    STEP {s.num}: {s.name}
-                  </div>
+                  <div className="process-name">{s.name}</div>
                 </div>
                 <p>{s.body}</p>
               </div>
@@ -1128,13 +1130,14 @@ function Index() {
               alt="Ivo, founder of Zantana"
             />
             <div className="about-headline">
-              HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT
-              CREATES STANDOUT BRANDS WITH LASTING IMPACT.
+              I’m Ivo — founder of Zantana, a studio focused on building elevated brand identities
+              and strategic digital experiences for modern businesses.
             </div>
             <p className="about-body">
-              Building strategic brand identities and high-performing websites that connect deeply
-              with your target audience. Every project is crafted with precision to help your
-              business grow online.
+              My approach combines visual direction, positioning, and clarity to create brands that
+              not only look premium, but feel aligned with the level they’ve already reached. Every
+              project is crafted with intention, balancing aesthetics, perception, and functionality
+              to help brands build trust, stand out online, and grow with confidence.
             </p>
             <a href="#contact" className="btn-white-outline">
               Start a project
@@ -1144,7 +1147,11 @@ function Index() {
 
         <section className="z-section faq-section reveal" data-theme="light">
           <div className="faq-title-col reveal-title">
-            <h2>F.A.Q</h2>
+            <h2>
+              Frequently
+              <br />
+              asked questions
+            </h2>
           </div>
           <div className="faq-list reveal-content">
             {faqs.map((f, i) => (
@@ -1164,42 +1171,48 @@ function Index() {
         </section>
 
         <footer className="z-footer" data-theme="light">
-          <div className="footer-blue-box">
-            <h2 className="footer-cta">Ready to look and feel like an established player?</h2>
-            <a
-              href="#contact"
-              className="btn-white"
-              style={{ width: "fit-content", margin: "0 auto", padding: "10px 15px" }}
-            >
-              Start a Project
-            </a>
-          </div>
-          <div className="footer-bottom-nav">
-            <div className="footer-logo-row">
-              <ZWordmark />
-            </div>
-            <div className="footer-links">
-              {["INSTAGRAM ↗", "LINKEDIN ↗", "CONTRA ↗", "X ↗", "EMAIL ↗", "WHATSAPP ↗"].map(
-                (label, i) => (
-                  <a
-                    key={label}
-                    href={
-                      [
-                        "https://instagram.com/zantana.co",
-                        "https://linkedin.com/in/ivozantana",
-                        "https://contra.com/zantanastudio",
-                        "https://x.com/zantanastudio",
-                        "mailto:zantanadesign@gmail.com",
-                        "https://wa.link/l9pzfv",
-                      ][i]
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+          <div className="footer-grid">
+            {/* Left: Blue CTA Box */}
+            <div className="footer-blue-box">
+              <div className="footer-cta-top">
+                <h2 className="footer-cta">
+                  Ready to create a brand
+                  <br />
+                  that feels impossible
+                  <br />
+                  to ignore?
+                </h2>
+                <p className="footer-cta-body">
+                  Let’s explore how your brand could look, feel, and perform with the right strategic
+                  direction behind it, combining visual identity, digital experience, and intentional
+                  design to create a presence people instantly trust, remember, and connect with.
+                </p>
+                <a href="#contact" className="btn-white">
+                  Start Your Brand Upgrade
+                </a>
+              </div>
+
+              <div className="footer-links">
+                {[
+                  ["INSTAGRAM ↗", "https://instagram.com/zantana.co"],
+                  ["LINKEDIN ↗", "https://linkedin.com/in/ivozantana"],
+                  ["CONTRA ↗", "https://contra.com/zantanastudio"],
+                  ["X ↗", "https://x.com/zantanastudio"],
+                  ["EMAIL ↗", "mailto:zantanadesign@gmail.com"],
+                  ["WHATSAPP ↗", "https://wa.link/l9pzfv"],
+                ].map(([label, href]) => (
+                  <a key={label} href={href} target="_blank" rel="noopener noreferrer">
                     {label}
                   </a>
-                ),
-              )}
+                ))}
+              </div>
+            </div>
+
+            {/* Right: Wordmark */}
+            <div className="footer-right">
+              <div className="footer-wordmark">
+                <ZWordmark />
+              </div>
             </div>
           </div>
         </footer>
