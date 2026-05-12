@@ -288,7 +288,7 @@ function Index() {
         }
 
         /* Typography */
-        .z-root h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 100px; }
+        .z-root h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 90px; }
         .z-root h2 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 75px; }
         .z-root p { font-size: 18px; font-weight: 500; line-height: 23px; }
         .z-section-sub { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; }
@@ -322,7 +322,7 @@ function Index() {
         .hero-sub { font-size: 18px; line-height: 23px; color: var(--muted); max-width: 600px; opacity: 0; animation: zHeroIn .6s ease 2.8s forwards; }
         .btn-black { display: inline-flex; align-items: center; gap: 0; background: var(--text); color: var(--bg); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 4px; text-decoration: none; border: 1px solid var(--text); cursor: pointer; transition: background .18s, border-color .18s, color .18s, gap .2s; align-self: flex-start; opacity: 0; animation: zHeroIn .6s ease 3.0s forwards; }
         .btn-black::before { content: ''; height: 6px; border-radius: 2px; background: var(--bg); opacity: 0; width: 0; transition: opacity .2s, width .2s; }
-        .btn-black:hover { background: var(--blue); border-color: var(--blue); color: #fff; gap: 8px; }
+        .btn-black:hover { background: #1041D7; border-color: #1041D7; color: #fff; gap: 8px; }
         .btn-black:hover::before { opacity: 1; width: 6px; background: #fff; }
         .btn-black.no-anim { opacity: 1; animation: none; }
 
@@ -354,6 +354,8 @@ function Index() {
           .footer-cta { font-size: 42px; }
           .z-footer { padding: 20px; }
           .footer-blue-box { padding: 40px 20px; gap: 40px; }
+          .footer-bottom-nav { flex-direction: column; gap: 32px; text-align: center; }
+          .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
         }
 
         /* Solve Section */
@@ -361,6 +363,12 @@ function Index() {
 
         /* Section title block */
         .section-title { font-size: 75px; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; margin-bottom: 40px; width: 100%; }
+        .section-subtitle { max-width: 380px; text-align: right; font-size: 18px; font-weight: 500; text-transform: none; line-height: 1.4; color: var(--text); padding-top: 0; }
+        @media (max-width: 899px) {
+          .section-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+          .section-subtitle { text-align: left; max-width: 100%; padding-top: 0; }
+        }
         .phases { display: flex; flex-direction: column; gap: 20px; }
         .projects { display: flex; flex-direction: column; gap: 20px; }
         .see-all-wrap { display: flex; justify-content: center; padding: 0 var(--p) var(--pv); }
@@ -371,9 +379,9 @@ function Index() {
         .phase-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
         .phase-list li { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
         .phase-list li::before { content: '↗'; font-weight: 700; }
-        .phase-card-bottom { background: var(--text); color: var(--bg); padding: 20px; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
-        .phase-card-bottom .tagline { font-weight: 600; font-size: 18px; text-transform: uppercase; line-height: 23px; }
-        .phase-card-bottom p { font-size: 18px; font-weight: 500; line-height: 23px; }
+        .phase-card-bottom { background: #000; color: #fff; padding: 20px; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
+        .phase-card-bottom .tagline { font-weight: 600; font-size: 18px; text-transform: uppercase; line-height: 23px; color: #fff; }
+        .phase-card-bottom p { font-size: 18px; font-weight: 500; line-height: 23px; color: rgba(255,255,255,0.8); }
 
         .project-card { background: var(--surface); border-radius: 5px; overflow: hidden; cursor: pointer; transition: background .25s; }
         .project-card:hover, .project-card.is-active { background: var(--blue); }
@@ -404,7 +412,7 @@ function Index() {
         .price-features li.add-on { opacity: .6; }
         .check { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 3px; }
         .check svg { width: 18px; height: 18px; }
-        .btn-white { display: inline-flex; align-items: center; gap: 0; background: #fff; color: var(--blue); font-weight: 700; font-size: 18px; letter-spacing: 1px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: flex-start; }
+        .btn-white { display: inline-flex; align-items: center; gap: 0; background: #fff; color: #1041D7; font-weight: 700; font-size: 18px; letter-spacing: 1px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid #fff; cursor: pointer; transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: flex-start; }
         .btn-white::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #fff; opacity: 0; transition: opacity .2s, width .2s; }
         .btn-white:hover { background: #000; color: #fff; border-color: #000; gap: 8px; }
         .btn-white:hover::before { opacity: 1; width: 6px; }
@@ -434,9 +442,9 @@ function Index() {
         .about-photo { width: 300px; border-radius: 5px; display: block; aspect-ratio: 3/4; object-fit: cover; object-position: top; filter: grayscale(100%); }
         .about-headline { font-weight: 700; font-size: 18px; line-height: 23px; text-transform: uppercase; letter-spacing: .3px; }
         .about-body { font-size: 18px; font-weight: 500; line-height: 23px; }
-        .btn-white-outline { display: inline-flex; align-items: center; gap: 0; background: var(--text); color: var(--bg); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid var(--text); transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: center; }
-        .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--bg); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
-        .btn-white-outline:hover { background: var(--blue); color: #fff; border-color: var(--blue); gap: 8px; }
+        .btn-white-outline { display: inline-flex; align-items: center; gap: 0; background: #fff; color: #000; font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid #fff; transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: center; }
+        .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #000; opacity: 0; transition: opacity .2s, width .2s, background .18s; }
+        .btn-white-outline:hover { background: #1041D7; color: #fff; border-color: #1041D7; gap: 8px; }
         .btn-white-outline:hover::before { opacity: 1; width: 6px; background: #fff; }
 
         /* Contact */
@@ -451,8 +459,8 @@ function Index() {
         .form-group input, .form-group textarea { background: var(--surface); border: none; border-radius: 5px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 18px; color: var(--text); width: 100%; outline: none; resize: none; transition: background .8s ease, color .8s ease; }
         .form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
         .form-group textarea { min-height: 110px; }
-        .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 0; background: var(--text); color: var(--bg); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; border: 1px solid var(--text); cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s, gap .2s; }
-        .btn-form-submit::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--bg); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
+        .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 0; background: #fff; color: #1041D7; font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s, gap .2s; }
+        .btn-form-submit::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #1041D7; opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-form-submit:hover { background: #000; color: #fff; border-color: #000; gap: 8px; }
         .btn-form-submit:hover::before { opacity: 1; width: 6px; background: #fff; }
         .btn-form-submit:disabled { opacity: .6; cursor: not-allowed; }
@@ -471,9 +479,10 @@ function Index() {
         .z-footer { background: var(--bg); padding: 40px; min-height: 100vh; display: flex; flex-direction: column; gap: 40px; }
         .footer-blue-box { background: var(--blue); border-radius: 5px; padding: 60px 40px; display: flex; flex-direction: column; gap: 40px; align-items: center; justify-content: center; flex: 1; width: 100%; }
         .footer-cta { font-family: 'Anton', sans-serif; font-size: 80px; line-height: 0.9; color: #fff; text-align: center; max-width: 900px; text-transform: uppercase; margin-bottom: 0; }
-        .footer-logo-row svg { width: 200px; height: auto; color: var(--text); margin: 0 auto; display: block; }
-        .footer-links { display: flex; flex-direction: column; gap: 24px; align-items: center; }
-        .footer-links a { text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
+        .footer-logo-row svg { width: 140px; height: auto; color: var(--text); display: block; }
+        .footer-bottom-nav { display: flex; justify-content: space-between; align-items: center; width: 100%; padding-top: 20px; }
+        .footer-links { display: flex; flex-direction: row; gap: 32px; align-items: center; }
+        .footer-links a { text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
         .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 2px; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
         .footer-links a:hover { color: var(--blue); }
         .footer-links a:hover::before { opacity: 1; transform: scale(1); }
@@ -633,8 +642,11 @@ function Index() {
         </section>
 
         <section className="z-section reveal" id="work" data-theme="light">
-          <div className="reveal-title">
+          <div className="reveal-title section-header">
             <h2 className="section-title">WEBSITE<br />PROJECTS</h2>
+            <div className="section-subtitle">
+              I turn bold ideas into websites you're proud to share — with ease.
+            </div>
           </div>
           <div className="projects reveal-content">
             {websiteProjects.map((pr) => (
@@ -650,8 +662,11 @@ function Index() {
         </section>
 
         <section className="z-section reveal" data-theme="light">
-          <div className="reveal-title">
+          <div className="reveal-title section-header">
             <h2 className="section-title">VISUAL BRAND<br />PROJECTS</h2>
+            <div className="section-subtitle">
+              I create iconic visual identities that define your brand's unique essence.
+            </div>
           </div>
           <div className="projects reveal-content">
             {brandProjects.map((pr) => (
@@ -806,27 +821,29 @@ function Index() {
             <h2 className="footer-cta">Ready to look and feel like an established player?</h2>
             <a href="#contact" className="btn-white" style={{ width: 'fit-content', margin: '0 auto', padding: '16px 40px' }}>Start a Project</a>
           </div>
-          <div className="footer-links">
-            {['INSTAGRAM ↗', 'LINKEDIN ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
-              <a
-                key={label}
-                href={[
-                  'https://instagram.com/zantana.co',
-                  'https://linkedin.com/in/ivozantana',
-                  'https://contra.com/zantanastudio',
-                  'https://x.com/zantanastudio',
-                  'mailto:zantanadesign@gmail.com',
-                  'https://wa.link/l9pzfv'
-                ][i]}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-          <div className="footer-logo-row">
-            <ZWordmark />
+          <div className="footer-bottom-nav">
+            <div className="footer-logo-row">
+              <ZWordmark />
+            </div>
+            <div className="footer-links">
+              {['INSTAGRAM ↗', 'LINKEDIN ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
+                <a
+                  key={label}
+                  href={[
+                    'https://instagram.com/zantana.co',
+                    'https://linkedin.com/in/ivozantana',
+                    'https://contra.com/zantanastudio',
+                    'https://x.com/zantanastudio',
+                    'mailto:zantanadesign@gmail.com',
+                    'https://wa.link/l9pzfv'
+                  ][i]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
           </div>
         </footer>
       </div>
