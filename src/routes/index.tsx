@@ -534,21 +534,21 @@ function Index() {
           .footer-blue-box { padding: 20px; }
           .footer-desc { max-width: 100%; }
 
-          .process-title-col, .solve-title-col { position: sticky; top: 60px; z-index: 10; background: var(--bg); padding: 30px var(--p) 30px; margin: -30px calc(var(--p) * -1) 0px; text-align: left; }
+          .process-title-col, .solve-title-col { position: sticky; top: 0; z-index: 30; background: var(--bg); padding: 60px var(--p) 20px; margin: -30px calc(var(--p) * -1) 0; text-align: left; }
           .process-step { position: sticky; }
-          .process-step:nth-child(1) { top: 90px; z-index: 11; }
-          .process-step:nth-child(2) { top: 150px; z-index: 12; }
-          .process-step:nth-child(3) { top: 210px; z-index: 13; }
-          .process-step:nth-child(4) { top: 270px; z-index: 14; }
-          .process-step:nth-child(5) { top: 330px; z-index: 15; }
+          .process-step:nth-child(1) { top: 200px; z-index: 11; }
+          .process-step:nth-child(2) { top: 260px; z-index: 12; }
+          .process-step:nth-child(3) { top: 320px; z-index: 13; }
+          .process-step:nth-child(4) { top: 380px; z-index: 14; }
+          .process-step:nth-child(5) { top: 440px; z-index: 15; }
           .process-steps-col { padding-bottom: 0; }
 
           .phases > .phase-card { position: sticky; }
-          .phases > .phase-card:nth-child(1) { order: 1; top: 90px; z-index: 11; }
-          .phases > .phase-card:nth-child(4) { order: 2; top: 150px; z-index: 12; }
-          .phases > .phase-card:nth-child(2) { order: 3; top: 210px; z-index: 13; }
-          .phases > .phase-card:nth-child(5) { order: 4; top: 270px; z-index: 14; }
-          .phases > .phase-card:nth-child(3) { order: 5; top: 330px; z-index: 15; }
+          .phases > .phase-card:nth-child(1) { order: 1; top: 200px; z-index: 11; }
+          .phases > .phase-card:nth-child(4) { order: 2; top: 260px; z-index: 12; }
+          .phases > .phase-card:nth-child(2) { order: 3; top: 320px; z-index: 13; }
+          .phases > .phase-card:nth-child(5) { order: 4; top: 380px; z-index: 14; }
+          .phases > .phase-card:nth-child(3) { order: 5; top: 440px; z-index: 15; }
           .phases > .phase-card:nth-child(6) { order: 6; top: 390px; z-index: 16; }
           .solve-section .phases { padding-bottom: 0; }
           .solve-section, .faq-section { padding-top: 60px !important; }
