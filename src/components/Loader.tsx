@@ -48,7 +48,7 @@ export function Loader() {
         src="/logo.png"
         alt="Zantana Logo"
         className={`absolute bottom-8 left-8 w-32 h-auto transition-opacity duration-1000 ${mounted ? "opacity-100" : "opacity-0"
-          }`}
+          } hidden md:block`}
       />
 
       {/* Porcentagem no bottom inferior direito */}
