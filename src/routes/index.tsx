@@ -242,10 +242,11 @@ function Index() {
         .z-root { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 18px; line-height: 23px; overflow-x: clip; min-height: 100vh; transition: background .5s ease, color .5s ease; }
         .z-root section, .z-root .section-bg { transition: background .5s ease, color .5s ease; }
 
+        .z-cursor, .z-cursor-label { display: none; }
         @media (hover: hover) and (pointer: fine) {
-          .z-cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 2px; background: #fff; mix-blend-mode: difference; pointer-events: none; z-index: 9999; transition: width .2s, height .2s, opacity .2s; will-change: transform; }
+          .z-cursor { display: block; position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 2px; background: #fff; mix-blend-mode: difference; pointer-events: none; z-index: 9999; transition: width .2s, height .2s, opacity .2s; will-change: transform; }
           .z-cursor.is-magnetic { width: 36px; height: 36px; }
-          .z-cursor-label { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px; border-radius: 4px; opacity: 0; transform: translate(0%, 0%) scale(.6); transition: opacity .2s, transform .2s; }
+          .z-cursor-label { display: block; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px; border-radius: 4px; opacity: 0; transform: translate(0%, 0%) scale(.6); transition: opacity .2s, transform .2s; }
         }
 
         /* Typography */
@@ -442,10 +443,30 @@ function Index() {
         @media (max-width: 899px) {
           :root { --p: 24px; --pv: 48px; --g: 32px; }
           .hero { padding: 24px; padding-bottom: 40px; gap: 30px; }
-          .hero h1 { font-size: 48px; line-height: 1; }
+          .z-root h1, .hero h1 { font-size: 50px; line-height: 1; }
           .hero-sub { font-size: 18px; }
-          .z-root h2, .section-title { font-size: 44px; }
+          .z-root h2, .section-title { font-size: 35px; }
           .price-amount { font-size: 48px; }
+          .nav-links { gap: 20px; }
+          .footer-links { gap: 20px; }
+          .z-footer { padding: 20px; }
+          .footer-blue-box { padding: 20px; }
+
+          .process-title-col { position: sticky; top: 0; z-index: 10; background: var(--bg); padding: 24px 24px 16px; margin: -24px -24px 24px; }
+          .process-step { position: sticky; box-shadow: 0 -8px 20px rgba(0,0,0,0.15); }
+          .process-step:nth-child(1) { top: 110px; z-index: 11; }
+          .process-step:nth-child(2) { top: 170px; z-index: 12; }
+          .process-step:nth-child(3) { top: 230px; z-index: 13; }
+          .process-step:nth-child(4) { top: 290px; z-index: 14; }
+          .process-step:nth-child(5) { top: 350px; z-index: 15; }
+          .process-steps-col { padding-bottom: 48px; }
+
+          .phases > .phase-card:nth-child(1) { order: 2; }
+          .phases > .phase-card:nth-child(2) { order: 4; }
+          .phases > .phase-card:nth-child(3) { order: 6; }
+          .phases > .phase-card:nth-child(4) { order: 1; }
+          .phases > .phase-card:nth-child(5) { order: 3; }
+          .phases > .phase-card:nth-child(6) { order: 5; }
         }
       `}</style>
 
