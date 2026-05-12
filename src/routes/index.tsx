@@ -191,10 +191,12 @@ function Index() {
         if (entry.isIntersecting) {
           const theme = entry.target.getAttribute("data-theme");
           if (theme) zRoot.setAttribute("data-theme", theme);
+          entry.target.classList.add("is-visible");
         }
       });
-    }, { rootMargin: "-40% 0px -40% 0px" });
+    }, { rootMargin: "-10% 0px -10% 0px" });
     sections.forEach(s => observer.observe(s));
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
@@ -243,6 +245,26 @@ function Index() {
     drag.current.down = false;
     tickerRef.current?.classList.remove("dragging");
   };
+
+  const [problemProgress, setProblemProgress] = useState(0);
+  const problemRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleScroll = () => {
+      const el = problemRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const totalHeight = rect.height;
+      // Calculate progress from 0 (top of section enters) to 1 (bottom of section leaves)
+      const progress = Math.max(0, Math.min(1, -rect.top / (totalHeight - windowHeight)));
+      setProblemProgress(progress);
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -310,6 +332,32 @@ function Index() {
         .ticker-track { display: flex; gap: 16px; width: max-content; }
         .ticker-item { width: 400px; height: 260px; border-radius: 5px; overflow: hidden; flex-shrink: 0; pointer-events: none; }
         .ticker-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* Reveal system */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+        .reveal.is-visible { opacity: 1; transform: translateY(0); }
+        .reveal-content { opacity: 0; transform: translateY(20px); transition: opacity .8s ease .2s, transform .8s ease .2s; }
+        .reveal.is-visible .reveal-content { opacity: 1; transform: translateY(0); }
+
+        /* Problem Section (Scrollytelling) */
+        .problem-section { height: 450vh; position: relative; padding: 0; }
+        .problem-sticky { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--blue); color: #fff; padding: var(--p); overflow: hidden; }
+        .problem-texts { display: flex; flex-direction: column; gap: 15px; text-align: center; align-items: center; width: 100%; max-width: 1000px; }
+        .problem-item { opacity: 0; transform: translateY(30px); transition: all .8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .problem-item.is-active { opacity: 1; transform: translateY(0); }
+        .problem-section h2 { font-size: 75px; text-transform: uppercase; }
+
+        @media (max-width: 899px) {
+          .problem-section { height: 400vh; }
+          .problem-section h2 { font-size: 42px; }
+          .problem-texts { gap: 24px; }
+          .footer-cta { font-size: 42px; }
+          .z-footer { padding: 20px; }
+          .footer-blue-box { padding: 40px 20px; gap: 40px; }
+        }
+
+        /* Solve Section */
+        .solve-title-col { text-align: center; width: 100%; margin-bottom: 40px; }
 
         /* Section title block */
         .section-title { font-size: 75px; }
@@ -418,16 +466,16 @@ function Index() {
         @keyframes formFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* Footer */
-        .z-footer { background: var(--bg); padding: 40px; }
-        .footer-blue-box { background: var(--blue); border-radius: 5px; padding: 40px; display: flex; flex-direction: column; gap: 40px; align-items: center; }
-        .footer-logo-row { width: 100%; text-align: center; }
-        .footer-logo-row svg { width: 100%; max-width: 1200px; height: auto; color: #fff; margin: 0 auto; display: block; }
-        .footer-desc { width: 100%; max-width: 50%; margin: 0 auto; text-align: center; }
-        .footer-desc p { font-size: 18px; font-weight: 500; text-transform: none; letter-spacing: .5px; line-height: 23px; color: #fff; }
+        .footer-links a:hover::before { opacity: 1; transform: scale(1); }
+
+        .z-footer { background: var(--bg); padding: 40px; min-height: 100vh; display: flex; flex-direction: column; gap: 40px; }
+        .footer-blue-box { background: var(--blue); border-radius: 5px; padding: 60px 40px; display: flex; flex-direction: column; gap: 40px; align-items: center; justify-content: center; flex: 1; width: 100%; }
+        .footer-cta { font-family: 'Anton', sans-serif; font-size: 80px; line-height: 0.9; color: #fff; text-align: center; max-width: 900px; text-transform: uppercase; margin-bottom: 0; }
+        .footer-logo-row svg { width: 200px; height: auto; color: var(--text); margin: 0 auto; display: block; }
         .footer-links { display: flex; flex-direction: column; gap: 24px; align-items: center; }
-        .footer-links a { text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
-        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 2px; background: #000; opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
-        .footer-links a:hover { color: #000; }
+        .footer-links a { text-decoration: none; font-size: 18px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; }
+        .footer-links a::before { content: ''; width: 6px; height: 6px; border-radius: 2px; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
+        .footer-links a:hover { color: var(--blue); }
         .footer-links a:hover::before { opacity: 1; transform: scale(1); }
 
         /* Desktop */
@@ -483,7 +531,7 @@ function Index() {
           .process-step:nth-child(5) { top: 350px; z-index: 15; }
           .process-steps-col { padding-bottom: 48px; }
 
-          .solve-title-col { position: sticky; top: 0; z-index: 10; background: var(--bg); padding: 24px 24px 16px; margin: -24px -24px 24px; }
+          .solve-title-col { position: static; background: transparent; padding: 0; margin: 0 0 32px 0; }
           .phases > .phase-card { position: sticky; }
           
           .phases > .phase-card:nth-child(1) { order: 1; top: 110px; z-index: 11; }
@@ -542,6 +590,20 @@ function Index() {
                   <div key={i} className="ticker-item"><img src={src} alt="" /></div>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section ref={problemRef} className="problem-section" data-theme="blue">
+          <div className="problem-sticky">
+            <div className="problem-texts">
+              <h2 className={`problem-item ${problemProgress > 0.2 ? "is-active" : ""}`}>YOUR COMPANY GREW.</h2>
+              <h2 className={`problem-item ${problemProgress > 0.4 ? "is-active" : ""}`}>YOUR SERVICE GOT BETTER.</h2>
+              <h2 className={`problem-item ${problemProgress > 0.6 ? "is-active" : ""}`}>YOUR TEAM HAS SCALED.</h2>
+              <p className={`problem-item ${problemProgress > 0.8 ? "is-active" : ""}`}>
+                But your brand look still feels like a side project.<br />
+                It doesn't match who you are or where you're headed.
+              </p>
             </div>
           </div>
         </section>
@@ -664,36 +726,6 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section faq-section reveal" data-theme="light">
-          <div className="faq-title-col reveal-title">
-            <h2>F.A.Q</h2>
-          </div>
-          <div className="faq-list reveal-content">
-            {faqs.map((f, i) => (
-              <div key={i} className={`faq-item ${openFaqs.has(i) ? "open" : ""}`}>
-                <button className="faq-question" onClick={() => toggleFaq(i)}>
-                  <span className="faq-q-text">{f.q}</span>
-                  <span className="faq-icon" />
-                </button>
-                <div className="faq-answer"><div><p>{f.a}</p></div></div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="z-section about-section reveal" data-theme="dark">
-          <div className="about-inner reveal-title">
-            <h2>MORE ABOUT<br />ZANTANA STUDIO</h2>
-            <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" />
-            <div className="about-headline">
-              HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT CREATES STANDOUT BRANDS WITH LASTING IMPACT.
-            </div>
-            <p className="about-body">
-              Building strategic brand identities and high-performing websites that connect deeply with your target audience. Every project is crafted with precision to help your business grow online.
-            </p>
-            <a href="#contact" className="btn-white-outline">Start a project</a>
-          </div>
-        </section>
 
         <section className="z-section contact-section reveal" id="contact" data-theme="blue">
           <div className="contact-grid">
@@ -738,38 +770,63 @@ function Index() {
           </div>
         </section>
 
+        <section className="z-section about-section reveal" data-theme="dark">
+          <div className="about-inner reveal-title">
+            <h2>MORE ABOUT<br />ZANTANA STUDIO</h2>
+            <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" />
+            <div className="about-headline">
+              HEY! I'M IVO — THE CREATIVE MIND BEHIND ZANTANA, A PASSIONATE ONE-PERSON STUDIO THAT CREATES STANDOUT BRANDS WITH LASTING IMPACT.
+            </div>
+            <p className="about-body">
+              Building strategic brand identities and high-performing websites that connect deeply with your target audience. Every project is crafted with precision to help your business grow online.
+            </p>
+            <a href="#contact" className="btn-white-outline">Start a project</a>
+          </div>
+        </section>
+
+        <section className="z-section faq-section reveal" data-theme="light">
+          <div className="faq-title-col reveal-title">
+            <h2>F.A.Q</h2>
+          </div>
+          <div className="faq-list reveal-content">
+            {faqs.map((f, i) => (
+              <div key={i} className={`faq-item ${openFaqs.has(i) ? "open" : ""}`}>
+                <button className="faq-question" onClick={() => toggleFaq(i)}>
+                  <span className="faq-q-text">{f.q}</span>
+                  <span className="faq-icon" />
+                </button>
+                <div className="faq-answer"><div><p>{f.a}</p></div></div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <footer className="z-footer" data-theme="light">
           <div className="footer-blue-box">
-            <div className="footer-logo-row">
-              <ZWordmark />
-            </div>
-            <div className="footer-desc">
-              <p>
-                An independent design studio specializing in visual identity and web design.
-                I transform ideas into high-impact design and development solutions by
-                combining strategy, aesthetics, and functionality to create memorable
-                and results-driven brand experiences.
-              </p>
-            </div>
-            <div className="footer-links">
-              {['INSTAGRAM ↗', 'LINKEDIN ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
-                <a
-                  key={label}
-                  href={[
-                    'https://instagram.com/zantana.co',
-                    'https://linkedin.com/in/ivozantana',
-                    'https://contra.com/zantanastudio',
-                    'https://x.com/zantanastudio',
-                    'mailto:zantanadesign@gmail.com',
-                    'https://wa.link/l9pzfv'
-                  ][i]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
+            <h2 className="footer-cta">Ready to look and feel like an established player?</h2>
+            <a href="#contact" className="btn-white" style={{ width: 'fit-content', margin: '0 auto', padding: '16px 40px' }}>Start a Project</a>
+          </div>
+          <div className="footer-links">
+            {['INSTAGRAM ↗', 'LINKEDIN ↗', 'CONTRA ↗', 'X ↗', 'EMAIL ↗', 'WHATSAPP ↗'].map((label, i) => (
+              <a
+                key={label}
+                href={[
+                  'https://instagram.com/zantana.co',
+                  'https://linkedin.com/in/ivozantana',
+                  'https://contra.com/zantanastudio',
+                  'https://x.com/zantanastudio',
+                  'mailto:zantanadesign@gmail.com',
+                  'https://wa.link/l9pzfv'
+                ][i]}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+          <div className="footer-logo-row">
+            <ZWordmark />
           </div>
         </footer>
       </div>
