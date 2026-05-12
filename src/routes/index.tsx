@@ -182,7 +182,21 @@ function Index() {
     return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
   }, []);
 
-
+  useEffect(() => {
+    const sections = document.querySelectorAll<HTMLElement>("[data-theme]");
+    const zRoot = document.querySelector(".z-root");
+    if (!zRoot) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const theme = entry.target.getAttribute("data-theme");
+          if (theme) zRoot.setAttribute("data-theme", theme);
+        }
+      });
+    }, { rootMargin: "-40% 0px -40% 0px" });
+    sections.forEach(s => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
 
   const toggleFaq = (i: number) => setOpenFaqs(prev => {
     const next = new Set(prev);
@@ -236,11 +250,13 @@ function Index() {
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet" />
       <style>{`
-        :root { --blue: #1041D7; --black: #000; --white: #fff; --p: 40px; --pv: 60px; --g: 40px; --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; }
-        .z-root.dark { --bg: #000; --text: #fff; --surface: #1a1a1a; --muted: #aaa; }
+        :root { --blue: #1041D7; --black: #000; --white: #fff; --p: 40px; --pv: 45px; --g: 40px; --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; }
+        .z-root[data-theme="light"] { --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; }
+        .z-root[data-theme="dark"] { --bg: #000; --text: #fff; --surface: #1a1a1a; --muted: #aaa; }
+        .z-root[data-theme="blue"] { --bg: var(--blue); --text: #fff; --surface: rgba(255,255,255,0.1); --muted: rgba(255,255,255,0.8); }
         .z-root *, .z-root *::before, .z-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        .z-root { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 18px; line-height: 23px; overflow-x: clip; min-height: 100vh; transition: background .5s ease, color .5s ease; }
-        .z-root section, .z-root .section-bg { transition: background .5s ease, color .5s ease; }
+        .z-root { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 18px; line-height: 23px; overflow-x: clip; min-height: 100vh; transition: background .8s ease, color .8s ease; }
+        .z-root section, .z-root .section-bg { transition: background .8s ease, color .8s ease; }
 
         .z-cursor, .z-cursor-label { display: none; }
         @media (hover: hover) and (pointer: fine) {
@@ -255,7 +271,7 @@ function Index() {
         .z-root p { font-size: 18px; font-weight: 500; line-height: 23px; }
         .z-section-sub { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; }
 
-        /* Section base — 40px lateral, 60px vertical */
+        /* Section base — 40px lateral, 45px vertical */
         .z-section { padding: var(--pv) var(--p); display: flex; flex-direction: column; gap: var(--g); }
 
 
@@ -365,39 +381,39 @@ function Index() {
         .faq-item.open .faq-answer p { color: #fff; }
 
         /* About */
-        .about-section { background: var(--text); color: var(--bg); }
+        .about-section { }
         .about-inner { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; }
         .about-photo { width: 300px; border-radius: 5px; display: block; aspect-ratio: 3/4; object-fit: cover; object-position: top; filter: grayscale(100%); }
-        .about-headline { font-weight: 700; font-size: 18px; line-height: 23px; text-transform: uppercase; color: var(--bg); letter-spacing: .3px; }
-        .about-body { font-size: 18px; font-weight: 500; color: var(--bg); line-height: 23px; }
-        .btn-white-outline { display: inline-flex; align-items: center; gap: 0; background: var(--bg); color: var(--text); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid var(--bg); transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: center; }
-        .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--text); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
+        .about-headline { font-weight: 700; font-size: 18px; line-height: 23px; text-transform: uppercase; letter-spacing: .3px; }
+        .about-body { font-size: 18px; font-weight: 500; line-height: 23px; }
+        .btn-white-outline { display: inline-flex; align-items: center; gap: 0; background: var(--text); color: var(--bg); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; text-decoration: none; border: 1px solid var(--text); transition: background .18s, color .18s, border-color .18s, gap .2s; align-self: center; }
+        .btn-white-outline::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--bg); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-white-outline:hover { background: var(--blue); color: #fff; border-color: var(--blue); gap: 8px; }
         .btn-white-outline:hover::before { opacity: 1; width: 6px; background: #fff; }
 
         /* Contact */
-        .contact-section { background: var(--blue); color: #fff; }
-        .contact-section h2 { color: #fff; }
-        .contact-section .z-section-sub { color: rgba(255,255,255,.7); }
-        .contact-subtitle { font-size: 18px; line-height: 23px; color: rgba(255,255,255,.8); max-width: 600px; }
+        .contact-section { }
+        .contact-section h2 { color: var(--text); }
+        .contact-section .z-section-sub { color: var(--muted); }
+        .contact-subtitle { font-size: 18px; line-height: 23px; color: var(--muted); max-width: 600px; }
         .contact-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
         .contact-form { background: transparent; border: none; padding: 0; display: flex; flex-direction: column; gap: 16px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
-        .form-group label { font-size: 18px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
-        .form-group input, .form-group textarea { background: rgba(255,255,255,.12); border: none; border-radius: 5px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 18px; color: #fff; width: 100%; outline: none; resize: none; }
-        .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.4); }
+        .form-group label { font-size: 18px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); }
+        .form-group input, .form-group textarea { background: var(--surface); border: none; border-radius: 5px; padding: 14px; font-family: 'Inter', sans-serif; font-size: 18px; color: var(--text); width: 100%; outline: none; resize: none; transition: background .8s ease, color .8s ease; }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
         .form-group textarea { min-height: 110px; }
-        .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 0; background: #fff; color: var(--blue); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; border: 1px solid #fff; cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s, gap .2s; }
-        .btn-form-submit::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--blue); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
+        .btn-form-submit { display: flex; justify-content: center; align-items: center; gap: 0; background: var(--text); color: var(--bg); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 5px; border: 1px solid var(--text); cursor: pointer; width: 100%; margin-top: 4px; transition: background .18s, color .18s, border-color .18s, gap .2s; }
+        .btn-form-submit::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--bg); opacity: 0; transition: opacity .2s, width .2s, background .18s; }
         .btn-form-submit:hover { background: #000; color: #fff; border-color: #000; gap: 8px; }
         .btn-form-submit:hover::before { opacity: 1; width: 6px; background: #fff; }
         .btn-form-submit:disabled { opacity: .6; cursor: not-allowed; }
-        .form-success { background: rgba(255,255,255,.1); border-radius: 5px; padding: 60px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; text-align: center; animation: formFadeIn .5s ease; }
-        .form-success-icon { width: 64px; height: 64px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; }
-        .form-success-icon svg { width: 28px; height: 28px; }
-        .form-success h3 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 18px; color: #fff; }
-        .form-success p { font-size: 18px; font-weight: 500; color: rgba(255,255,255,.85); line-height: 23px; max-width: 340px; }
-        .form-success .btn-form-reset { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: #fff; font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 24px; border-radius: 5px; border: 1px solid rgba(255,255,255,.4); cursor: pointer; }
+        .form-success { background: var(--surface); border-radius: 5px; padding: 60px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; text-align: center; animation: formFadeIn .5s ease; transition: background .8s ease; }
+        .form-success-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--text); display: flex; align-items: center; justify-content: center; transition: background .8s ease; }
+        .form-success-icon svg { width: 28px; height: 28px; stroke: var(--bg); }
+        .form-success h3 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 18px; color: var(--text); }
+        .form-success p { font-size: 18px; font-weight: 500; color: var(--muted); line-height: 23px; max-width: 340px; }
+        .form-success .btn-form-reset { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--text); font-weight: 700; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 24px; border-radius: 5px; border: 1px solid var(--muted); cursor: pointer; }
         .form-error-msg { background: rgba(255,0,0,.15); color: #fff; font-size: 13px; font-weight: 600; padding: 12px 16px; border-radius: 5px; text-align: center; }
         @keyframes formFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -446,16 +462,17 @@ function Index() {
 
         /* Mobile */
         @media (max-width: 899px) {
-          :root { --p: 24px; --pv: 48px; --g: 32px; }
-          .hero { padding: 24px; padding-bottom: 40px; gap: 30px; }
+          :root { --p: 24px; --pv: 45px; --g: 32px; }
+          .hero { padding: 45px var(--p); gap: 30px; }
           .z-root h1, .hero h1 { font-size: 50px; line-height: 1; }
           .hero-sub { font-size: 18px; }
           .z-root h2, .section-title { font-size: 35px; }
           .price-amount { font-size: 48px; }
           .nav-links { gap: 20px; }
           .footer-links { gap: 20px; }
-          .z-footer { padding: 20px; }
+          .z-footer { padding: 45px var(--p); }
           .footer-blue-box { padding: 20px; }
+          .footer-desc { max-width: 100%; }
 
           .process-title-col { position: sticky; top: 0; z-index: 10; background: var(--bg); padding: 24px 24px 16px; margin: -24px -24px 24px; }
           .process-step { position: sticky; }
@@ -482,7 +499,7 @@ function Index() {
       <div ref={cursorRef} className="z-cursor" aria-hidden />
       <div ref={cursorLabelRef} className="z-cursor-label" aria-hidden>View</div>
       <div className="z-root">
-        <div className="hero-viewport">
+        <div className="hero-viewport" data-theme="light">
           <nav>
             <div className="nav-logo"><ZLogo /></div>
             <ul className="nav-links">
@@ -505,7 +522,7 @@ function Index() {
           </section>
         </div>
 
-        <section className="z-section reveal">
+        <section className="z-section reveal" data-theme="light">
 
           <div className="reveal-content">
             <div
@@ -529,7 +546,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section reveal solve-section">
+        <section className="z-section reveal solve-section" data-theme="light">
           <div className="solve-title-col reveal-title">
             <h2 className="section-title">HOW I SOLVE<br />YOUR PROBLEMS</h2>
           </div>
@@ -553,7 +570,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section reveal" id="work">
+        <section className="z-section reveal" id="work" data-theme="light">
           <div className="reveal-title">
             <h2 className="section-title">WEBSITE<br />PROJECTS</h2>
           </div>
@@ -570,7 +587,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section reveal">
+        <section className="z-section reveal" data-theme="light">
           <div className="reveal-title">
             <h2 className="section-title">VISUAL BRAND<br />PROJECTS</h2>
           </div>
@@ -587,7 +604,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section process-section reveal">
+        <section className="z-section process-section reveal" data-theme="light">
           <div className="process-title-col reveal-title">
             <h2>CREATIVE<br />PROCESS</h2>
           </div>
@@ -606,7 +623,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section pricing-section reveal" id="pricing">
+        <section className="z-section pricing-section reveal" id="pricing" data-theme="light">
           <div className="pricing-title-col reveal-title">
             <h2>PICK THE PLAN<br />THAT FITS.</h2>
           </div>
@@ -647,7 +664,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section faq-section reveal">
+        <section className="z-section faq-section reveal" data-theme="light">
           <div className="faq-title-col reveal-title">
             <h2>F.A.Q</h2>
           </div>
@@ -664,7 +681,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section about-section reveal">
+        <section className="z-section about-section reveal" data-theme="dark">
           <div className="about-inner reveal-title">
             <h2>MORE ABOUT<br />ZANTANA STUDIO</h2>
             <img className="about-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Ivo, founder of Zantana" />
@@ -678,7 +695,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section contact-section reveal" id="contact">
+        <section className="z-section contact-section reveal" id="contact" data-theme="blue">
           <div className="contact-grid">
             <div className="reveal-title">
               <h2>LET'S FIGURE<br />IT OUT<br />— TOGETHER.</h2>
@@ -721,7 +738,7 @@ function Index() {
           </div>
         </section>
 
-        <footer className="z-footer">
+        <footer className="z-footer" data-theme="light">
           <div className="footer-blue-box">
             <div className="footer-logo-row">
               <ZWordmark />
