@@ -424,9 +424,14 @@ function Index() {
           .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
           .project-card img { height: 280px; }
           .process-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
-          .process-section .process-title-col { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 80px; align-self: start; }
-          .process-steps-col { display: flex; flex-direction: column; gap: 20px; }
-          .process-step { height: auto; padding: 20px; }
+          .process-section .process-title-col { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 40px; align-self: start; }
+          .process-steps-col { display: flex; flex-direction: column; gap: 20px; padding-bottom: 60px; }
+          .process-step { height: auto; padding: 40px; position: sticky; border-top: 1px solid rgba(255,255,255,0.05); }
+          .process-step:nth-child(1) { top: 40px; z-index: 11; }
+          .process-step:nth-child(2) { top: 110px; z-index: 12; }
+          .process-step:nth-child(3) { top: 180px; z-index: 13; }
+          .process-step:nth-child(4) { top: 250px; z-index: 14; }
+          .process-step:nth-child(5) { top: 320px; z-index: 15; }
           .pricing-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
           .pricing-title-col { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
           .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -453,7 +458,7 @@ function Index() {
           .footer-blue-box { padding: 20px; }
 
           .process-title-col { position: sticky; top: 0; z-index: 10; background: var(--bg); padding: 24px 24px 16px; margin: -24px -24px 24px; }
-          .process-step { position: sticky; box-shadow: 0 -8px 20px rgba(0,0,0,0.15); }
+          .process-step { position: sticky; }
           .process-step:nth-child(1) { top: 110px; z-index: 11; }
           .process-step:nth-child(2) { top: 170px; z-index: 12; }
           .process-step:nth-child(3) { top: 230px; z-index: 13; }
@@ -461,12 +466,16 @@ function Index() {
           .process-step:nth-child(5) { top: 350px; z-index: 15; }
           .process-steps-col { padding-bottom: 48px; }
 
-          .phases > .phase-card:nth-child(1) { order: 2; }
-          .phases > .phase-card:nth-child(2) { order: 4; }
-          .phases > .phase-card:nth-child(3) { order: 6; }
-          .phases > .phase-card:nth-child(4) { order: 1; }
-          .phases > .phase-card:nth-child(5) { order: 3; }
-          .phases > .phase-card:nth-child(6) { order: 5; }
+          .solve-title-col { position: sticky; top: 0; z-index: 10; background: var(--bg); padding: 24px 24px 16px; margin: -24px -24px 24px; }
+          .phases > .phase-card { position: sticky; }
+          
+          .phases > .phase-card:nth-child(1) { order: 1; top: 110px; z-index: 11; }
+          .phases > .phase-card:nth-child(4) { order: 2; top: 170px; z-index: 12; }
+          .phases > .phase-card:nth-child(2) { order: 3; top: 230px; z-index: 13; }
+          .phases > .phase-card:nth-child(5) { order: 4; top: 290px; z-index: 14; }
+          .phases > .phase-card:nth-child(3) { order: 5; top: 350px; z-index: 15; }
+          .phases > .phase-card:nth-child(6) { order: 6; top: 410px; z-index: 16; }
+          .solve-section .phases { padding-bottom: 48px; }
         }
       `}</style>
 
@@ -520,8 +529,8 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section reveal">
-          <div className="reveal-title">
+        <section className="z-section reveal solve-section">
+          <div className="solve-title-col reveal-title">
             <h2 className="section-title">HOW I SOLVE<br />YOUR PROBLEMS</h2>
           </div>
           <div className="phases reveal-content">
