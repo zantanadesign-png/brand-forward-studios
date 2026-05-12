@@ -549,7 +549,7 @@ function Index() {
           .phases > .phase-card:nth-child(2) { order: 3; top: 320px; z-index: 13; }
           .phases > .phase-card:nth-child(5) { order: 4; top: 380px; z-index: 14; }
           .phases > .phase-card:nth-child(3) { order: 5; top: 440px; z-index: 15; }
-          .phases > .phase-card:nth-child(6) { order: 6; top: 390px; z-index: 16; }
+          .phases > .phase-card:nth-child(6) { order: 6; top: 500px; z-index: 16; }
           .solve-section .phases { padding-bottom: 0; }
           .solve-section, .faq-section { padding-top: 60px !important; }
           .contact-section, .about-section { padding-top: 60px !important; padding-bottom: 60px !important; }
