@@ -692,9 +692,11 @@ function Index() {
 
           .phases > .phase-card { position: static; }
           .solve-section .phases { padding-bottom: 0; }
-          .solve-section, .faq-section, .process-section { padding-top: 20px !important; padding-bottom: 20px !important; }
-          .contact-section, .about-section { padding-top: 20px !important; padding-bottom: 20px !important; }
-          .pricing-section { padding-top: 20px !important; padding-bottom: 20px !important; }
+          .solve-section { padding-top: 40px !important; padding-bottom: 20px !important; }
+          .process-section { padding-top: 40px !important; padding-bottom: 20px !important; }
+          .faq-section { padding-top: 40px !important; padding-bottom: 20px !important; }
+          .contact-section, .about-section { padding-top: 40px !important; padding-bottom: 40px !important; }
+          .pricing-section { padding-top: 20px !important; padding-bottom: 40px !important; }
           .section-header { margin-bottom: 0 !important; }
         }
       `}</style>
