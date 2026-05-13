@@ -649,7 +649,7 @@ function Index() {
           .process-step { height: auto; padding: 20px; }
           .pricing-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; padding-bottom: 80px; }
           .pricing-title-col { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
-          .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+          .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
           .faq-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
           .faq-title-col { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
           .about-section { display: flex; flex-direction: column; align-items: center; }
@@ -1010,36 +1010,6 @@ function Index() {
             </h2>
           </div>
           <div className="pricing-grid reveal-content">
-            <div className="price-card">
-              <div className="price-card-header">
-                <span className="plan-name">Free Plan</span>
-              </div>
-              <div className="price-card-body">
-                <div className="price-amount">$0</div>
-                <div className="price-label">What's included</div>
-                <ul className="price-features">
-                  {[
-                    "1-page starter website",
-                    "Responsive layout for mobile + desktop",
-                    "Basic UI design and layout",
-                    "Simple contact form setup",
-                    "Light performance optimization",
-                    "Free support for 7 days",
-                  ].map((f) => (
-                    <li key={f}>
-                      <span className="check">
-                        <CheckIcon />
-                      </span>
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a href="#contact" className="btn-white">
-                  Start Free Plan
-                </a>
-              </div>
-            </div>
-
             <div className="price-card">
               <div className="price-card-header">
                 <span className="plan-name">Landing Page</span>
