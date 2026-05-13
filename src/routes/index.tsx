@@ -807,11 +807,22 @@ function Index() {
               <span>Brand • Websites</span>
             </div>
             <h1>
-              We help growing brands
-              <br />
-              look as valuable as
-              <br />
-              they actually are
+              <span className="hero-h1-desktop">
+                We help growing brands
+                <br />
+                look as valuable as
+                <br />
+                they actually are
+              </span>
+              <span className="hero-h1-mobile">
+                We help growing
+                <br />
+                brands look as
+                <br />
+                valuable as they
+                <br />
+                actually are
+              </span>
             </h1>
             <p className="hero-sub">
               Refresh your visual identity and website with strategic design, clear positioning, and
