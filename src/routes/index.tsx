@@ -630,6 +630,7 @@ function Index() {
         .footer-links a:hover::before { opacity: 1; width: 6px; background: #000; }
         .footer-wordmark { width: 100%; display: flex; justify-content: flex-end; align-items: flex-end; margin-top: auto; }
         .footer-wordmark img { width: 100%; max-width: 800px; height: auto; display: block; object-fit: contain; object-position: right bottom; }
+        .mobile-only-links { display: none; }
 
         /* Desktop */
         @media (min-width: 900px) {
@@ -653,7 +654,6 @@ function Index() {
           .contact-grid { grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
 
           .footer-desc p { font-size: 18px; }
-
         }
 
         /* Mobile */
@@ -1217,7 +1217,7 @@ function Index() {
                 </a>
               </div>
 
-              <div className="footer-links">
+              <div className="footer-links desktop-only-links">
                 {[
                   ["INSTAGRAM ↗", "https://instagram.com/zantana.co"],
                   ["LINKEDIN ↗", "https://linkedin.com/in/ivozantana"],
@@ -1235,6 +1235,20 @@ function Index() {
 
             {/* Right: Wordmark */}
             <div className="footer-right">
+              <div className="footer-links mobile-only-links">
+                {[
+                  ["INSTAGRAM ↗", "https://instagram.com/zantana.co"],
+                  ["LINKEDIN ↗", "https://linkedin.com/in/ivozantana"],
+                  ["CONTRA ↗", "https://contra.com/zantanastudio"],
+                  ["X ↗", "https://x.com/zantanastudio"],
+                  ["EMAIL ↗", "mailto:zantanadesign@gmail.com"],
+                  ["WHATSAPP ↗", "https://wa.link/l9pzfv"],
+                ].map(([label, href]) => (
+                  <a key={`mob-${label}`} href={href} target="_blank" rel="noopener noreferrer">
+                    {label}
+                  </a>
+                ))}
+              </div>
               <div className="footer-wordmark">
                 <ZWordmark />
               </div>
