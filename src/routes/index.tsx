@@ -662,6 +662,8 @@ function Index() {
           .z-section, .z-footer, .problem-sticky { padding-top: 20px !important; padding-bottom: 20px !important; gap: 40px !important; }
           .hero { padding-left: var(--p); padding-right: var(--p); gap: 20px !important; }
           .z-root h1, .hero h1 { font-size: 40px !important; line-height: 1; letter-spacing: 0 !important; }
+          .hero-h1-desktop { display: none !important; }
+          .hero-h1-mobile { display: inline !important; }
           .hero-sub { font-size: 18px; font-weight: 500; }
           .z-root h2, .section-title { font-size: 30px !important; letter-spacing: 0 !important; }
           .z-root p { font-size: 18px !important; font-weight: 500; font-family: 'Inter', sans-serif !important; line-height: 20px !important; }
