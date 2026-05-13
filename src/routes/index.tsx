@@ -669,12 +669,13 @@ function Index() {
           .footer-cta { font-size: 40px; }
           .price-amount { font-size: 48px; }
           .nav-links { gap: 20px; }
-          .z-footer { padding-left: var(--p); padding-right: var(--p); }
-          .footer-grid { grid-template-columns: 1fr !important; gap: 40px; }
-          .footer-blue-box { padding: 20px !important; min-height: auto; width: 100%; box-sizing: border-box; }
+          .z-footer { padding-left: var(--p); padding-right: var(--p); min-height: 0; }
+          .footer-grid { grid-template-rows: auto auto; flex: 0 0 auto; }
+          .footer-blue-box { padding: 20px !important; min-height: auto; height: auto; width: 100%; box-sizing: border-box; display: block; }
           .footer-blue-box .desktop-only-links { display: none; }
-          .footer-desc { max-width: 100%; }
+          .footer-cta-top { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
           .footer-right { align-items: flex-start; justify-content: flex-start; width: 100%; gap: 24px; }
+          .footer-grid { grid-template-columns: 1fr !important; gap: 40px; }
           .footer-wordmark { justify-content: center; align-items: center; width: 100%; }
           .footer-wordmark img { object-position: center bottom; max-width: 100%; width: 100%; }
           .mobile-only-links { display: flex !important; flex-direction: column; gap: 16px; align-items: flex-start; padding-top: 0; width: 100%; }
@@ -683,8 +684,9 @@ function Index() {
           .mobile-only-links a:hover { color: var(--blue); }
           .mobile-only-links a:hover::before { background: var(--blue); width: 6px; opacity: 1; }
 
-          .process-title-col, .solve-title-col { position: static; background: var(--bg); padding: 20px var(--p); margin: 0; text-align: left; }
+          .process-title-col, .solve-title-col { position: static; background: var(--bg); padding: 0; margin: 0; text-align: left; }
           .process-steps-col, .solve-section .phases { position: relative; z-index: 7; }
+          .solve-section, .process-section { gap: 40px !important; }
           .process-step { position: static; }
           .process-steps-col { padding-bottom: 0; }
 
