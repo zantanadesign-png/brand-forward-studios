@@ -661,10 +661,10 @@ function Index() {
           :root { --p: 24px; --pv: 20px !important; --g: 40px !important; }
           .z-section, .z-footer, .problem-sticky { padding-top: 20px !important; padding-bottom: 20px !important; gap: 40px !important; }
           .hero { padding-left: var(--p); padding-right: var(--p); gap: 20px !important; }
-          .z-root h1, .hero h1 { font-size: 40px !important; line-height: 1; }
+          .z-root h1, .hero h1 { font-size: 40px !important; line-height: 1; letter-spacing: 0 !important; }
           .hero-sub { font-size: 18px; font-weight: 500; }
-          .z-root h2, .section-title { font-size: 30px !important; }
-          .z-root p { font-size: 18px !important; font-weight: 500; font-family: 'Inter', sans-serif !important; line-height: 1.4; }
+          .z-root h2, .section-title { font-size: 30px !important; letter-spacing: 0 !important; }
+          .z-root p { font-size: 18px !important; font-weight: 500; font-family: 'Inter', sans-serif !important; line-height: 20px !important; }
           .z-root a { font-size: 18px; font-weight: 600; }
           .footer-cta { font-size: 40px; }
           .price-amount { font-size: 48px; }
