@@ -224,6 +224,8 @@ const PlusIcon = () => (
 );
 
 function Index() {
+
+
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [activeProjects, setActiveProjects] = useState<Set<string>>(new Set());
@@ -846,10 +848,10 @@ function Index() {
                 Your service became more refined
               </h2>
               <h2 className={`problem-item ${problemProgress > 0.4 ? "is-active" : ""}`}>
-                Your business moved forward
+                Your standards became higher
               </h2>
               <h2 className={`problem-item ${problemProgress > 0.6 ? "is-active" : ""}`}>
-                your business evolved
+                Your business kept evolving
               </h2>
               <h2 className={`problem-item ${problemProgress > 0.8 ? "is-active" : ""}`}>
                 Your team grew
