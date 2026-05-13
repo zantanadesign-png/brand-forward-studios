@@ -4,19 +4,22 @@ import { useEffect, useRef, useState } from "react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "(z) — WEBSITES BUILT" },
+      { title: "Zantana — Premium Brand & Web Design Studio" },
       {
         name: "description",
         content:
-          "Zantana Studio — strategic websites and visual identity. Live in weeks, not months.",
+          "Zantana creates strategic websites and visual identities for modern brands looking to elevate perception, credibility, and digital presence.",
       },
-      { property: "og:title", content: "(z) — WEBSITES BUILT" },
+      { property: "og:title", content: "Zantana — Premium Brand & Web Design Studio" },
       {
         property: "og:description",
-        content: "Strategic websites and visual identity. Live in weeks, not months.",
+        content: "Zantana creates strategic websites and visual identities for modern brands looking to elevate perception, credibility, and digital presence.",
       },
+      { property: "og:image", content: "/google-preview.jpg" },
     ],
     links: [
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
       {
@@ -29,14 +32,14 @@ export const Route = createFileRoute("/")({
 });
 
 const tickerImages = [
-  "https://images.unsplash.com/photo-1561070791-2526d30994b8?w=400&q=80",
-  "https://images.unsplash.com/photo-1517292987719-0369a794ec0f?w=400&q=80",
-  "https://images.unsplash.com/photo-1481487196290-c152efe083f5?w=400&q=80",
-  "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&q=80",
-  "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&q=80",
-  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&q=80",
-  "https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=400&q=80",
-  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80",
+  "/ticker-1.jpg",
+  "/ticker-2.jpg",
+  "/ticker-3.jpg",
+  "/ticker-4.jpg",
+  "/ticker-5.jpg",
+  "/ticker-6.jpg",
+  "/ticker-7.jpg",
+  "/ticker-8.jpg",
 ];
 
 const solveSteps = [
@@ -67,32 +70,38 @@ const websiteProjects = [
   {
     name: "LATE",
     type: "Catering Services",
-    img: "https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80",
+    img: "/project-website-1.jpg",
+    alt: "Premium Custom Web Design and High-Performance Framer Development for Catering Services",
   },
   {
     name: "BLOOM",
     type: "Restaurant & Bar",
-    img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
+    img: "/project-website-2.jpg",
+    alt: "Strategic Website Redesign and UI/UX Optimization for Restaurant & Bar Brands",
   },
   {
     name: "ORBIT",
     type: "SaaS Platform",
-    img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    img: "/project-website-3.jpg",
+    alt: "Conversion-Focused B2B SaaS Website Design and Scalable Web Architecture",
   },
   {
     name: "PULSE",
     type: "Fitness Studio",
-    img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80",
+    img: "/project-website-4.jpg",
+    alt: "Modern Fitness Studio Website Design with Interactive Elements and Smooth Animations",
   },
   {
     name: "VERA",
     type: "Skincare Brand",
-    img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80",
+    img: "/project-website-5.jpg",
+    alt: "E-commerce and Premium Landing Page Web Design for Skincare and Beauty Brands",
   },
   {
     name: "NORTH",
     type: "Travel Agency",
-    img: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80",
+    img: "/project-website-6.jpg",
+    alt: "Immersive Web Design and Digital Experience Strategy for Travel Agencies",
   },
 ];
 
@@ -100,17 +109,20 @@ const brandProjects = [
   {
     name: "SKIP",
     type: "Events Ticketing",
-    img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80",
+    img: "/project-brand-1.jpg",
+    alt: "Elevated Visual Brand Identity and Strategic Positioning for Events Ticketing",
   },
   {
     name: "NOVA",
     type: "Brand Identity",
-    img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80",
+    img: "/project-brand-2.jpg",
+    alt: "Comprehensive Branding, Logo Design, and Visual Direction Strategy",
   },
   {
     name: "FERN",
     type: "Botanical Studio",
-    img: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800&q=80",
+    img: "/project-brand-3.jpg",
+    alt: "Minimalist Brand Identity and Premium Typography System for Botanical Studio",
   },
 ];
 
@@ -170,49 +182,19 @@ const faqs = [
 ];
 
 const ZLogo = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    viewBox="0 0 60 32"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-label="Zantana logo"
-  >
-    <text
-      x="0"
-      y="24"
-      fill="currentColor"
-      fontFamily="Inter, sans-serif"
-      fontWeight="800"
-      fontSize="22"
-      letterSpacing="-0.5"
-    >
-      (z)
-    </text>
-  </svg>
+  <img 
+    src="/logo-icon.png" 
+    alt="Zantana Logo" 
+    className={className} 
+  />
 );
 
 const ZWordmark = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    viewBox="0 0 600 120"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-label="Zantana wordmark"
-    preserveAspectRatio="xMidYMid meet"
-  >
-    <text
-      x="600"
-      y="115"
-      textAnchor="end"
-      fill="currentColor"
-      fontFamily="Inter, sans-serif"
-      fontWeight="900"
-      fontSize="120"
-      letterSpacing="-6"
-    >
-      zantana
-    </text>
-  </svg>
+  <img 
+    src="/logo-wordmark.png" 
+    alt="Zantana Wordmark" 
+    className={className} 
+  />
 );
 
 const CheckIcon = () => (
@@ -437,7 +419,7 @@ function Index() {
         /* Navbar */
         .z-root nav { display: flex; justify-content: space-between; align-items: center; padding: 24px var(--p); opacity: 0; transform: translateY(-12px); animation: zNavIn .6s ease 3.1s forwards; }
         .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; display: flex; align-items: center; }
-        .nav-logo svg { width: 50px; height: 28px; }
+        .nav-logo img { width: 50px; height: 28px; object-fit: contain; object-position: left center; }
         .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
         .nav-links a { text-decoration: none; font-size: 18px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: var(--text); transition: color .2s, gap .2s; display: inline-flex; align-items: center; gap: 0; position: relative; cursor: pointer; }
         .nav-links a::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--blue); opacity: 0; transition: opacity .2s, width .2s; }
@@ -642,7 +624,7 @@ function Index() {
         .footer-links a:hover { color: #000; gap: 8px; opacity: 1; }
         .footer-links a:hover::before { opacity: 1; width: 6px; background: #000; }
         .footer-wordmark { width: 100%; display: flex; justify-content: flex-end; align-items: flex-end; margin-top: auto; }
-        .footer-wordmark svg { width: 100%; max-width: 800px; height: auto; color: var(--text); display: block; }
+        .footer-wordmark img { width: 100%; max-width: 800px; height: auto; display: block; object-fit: contain; object-position: right bottom; }
 
         /* Desktop */
         @media (min-width: 900px) {
@@ -713,6 +695,79 @@ function Index() {
       <div ref={cursorLabelRef} className="z-cursor-label" aria-hidden>
         View
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "ProfessionalService",
+                "name": "Zantana Studio",
+                "url": "https://zantanastudio.com",
+                "logo": "https://zantanastudio.com/logo-icon.png",
+                "description": "Zantana creates strategic websites and visual identities for modern brands looking to elevate perception, credibility, and digital presence.",
+                "founder": {
+                  "@type": "Person",
+                  "name": "Ivo"
+                },
+                "sameAs": [
+                  "https://instagram.com/zantana.co",
+                  "https://linkedin.com/in/ivozantana",
+                  "https://x.com/zantanastudio"
+                ],
+                "areaServed": "Worldwide",
+                "knowsAbout": [
+                  "Premium Web Design",
+                  "Brand Identity Design",
+                  "Visual Strategy",
+                  "Framer Development",
+                  "UI/UX Design",
+                  "Brand Positioning"
+                ],
+                "hasOfferCatalog": {
+                  "@type": "OfferCatalog",
+                  "name": "Studio Services",
+                  "itemListElement": [
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Landing Page Design & Development"
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Full Website Design & Development"
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Visual Identity & Branding"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": faqs.map((faq) => ({
+                  "@type": "Question",
+                  "name": faq.q,
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.a,
+                  },
+                })),
+              }
+            ]
+          }),
+        }}
+      />
       <div className="z-root">
         <div className="hero-viewport" data-theme="light">
           <nav>
@@ -776,7 +831,7 @@ function Index() {
               <div className="ticker-track">
                 {[...tickerImages, ...tickerImages].map((src, i) => (
                   <div key={i} className="ticker-item">
-                    <img src={src} alt="" />
+                    <img src={src} alt="Premium Web Design and Brand Identity Portfolio Example" />
                   </div>
                 ))}
               </div>
@@ -891,7 +946,7 @@ function Index() {
                 className={`project-card ${activeProjects.has(pr.name) ? "is-active" : ""}`}
                 onClick={() => toggleProject(pr.name)}
               >
-                <img src={pr.img} alt={pr.name} />
+                <img src={pr.img} alt={pr.alt} />
                 <div className="project-info">
                   <div className="project-name">{pr.name}</div>
                   <div className="project-type">{pr.type}</div>
@@ -1095,7 +1150,7 @@ function Index() {
             </h2>
             <img
               className="about-photo"
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+              src="/about-photo.jpg"
               alt="Ivo, founder of Zantana"
             />
             <div className="about-headline">
