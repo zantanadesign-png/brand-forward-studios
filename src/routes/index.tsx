@@ -683,8 +683,9 @@ function Index() {
           .mobile-only-links a:hover { color: var(--blue); }
           .mobile-only-links a:hover::before { background: var(--blue); width: 6px; opacity: 1; }
 
-          .process-title-col, .solve-title-col { position: static; background: var(--bg); padding: 20px var(--p); margin: 0; text-align: left; }
+          .process-title-col, .solve-title-col { position: static; background: var(--bg); padding: 0; margin: 0; text-align: left; }
           .process-steps-col, .solve-section .phases { position: relative; z-index: 7; }
+          .solve-section, .process-section { gap: 40px !important; }
           .process-step { position: static; }
           .process-steps-col { padding-bottom: 0; }
 
