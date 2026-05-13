@@ -482,14 +482,17 @@ function Index() {
 
         @media (max-width: 899px) {
           .problem-section { height: 400vh; }
-          .problem-section h2 { font-size: 42px; }
+          .problem-section h2 { font-size: 30px !important; }
           .problem-texts { gap: 24px; }
           .footer-cta { font-size: 38px; }
           .z-footer { padding: 20px; }
-          .footer-grid { grid-template-columns: 1fr; }
-          .footer-blue-box { padding: 30px 20px; min-height: auto; }
+          .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+          .footer-blue-box { padding: 20px !important; min-height: auto; width: 100%; box-sizing: border-box; }
           .footer-links { align-items: flex-start; }
-          .footer-wordmark { justify-content: flex-end; }
+          .footer-right { align-items: center; justify-content: center; width: 100%; }
+          .footer-wordmark { justify-content: center; align-items: center; width: 100%; }
+          .footer-wordmark img { object-position: center bottom; max-width: 100%; width: 100%; }
+          .mobile-hidden { display: none !important; }
         }
 
         /* Solve Section */
@@ -655,40 +658,36 @@ function Index() {
 
         /* Mobile */
         @media (max-width: 899px) {
-          :root { --p: 24px; --pv: 40px !important; --g: 40px !important; }
-          .z-section, .z-footer, .problem-sticky { padding-top: 40px !important; padding-bottom: 40px !important; gap: 40px !important; }
+          :root { --p: 24px; --pv: 20px !important; --g: 40px !important; }
+          .z-section, .z-footer, .problem-sticky { padding-top: 20px !important; padding-bottom: 20px !important; gap: 40px !important; }
           .hero { padding-left: var(--p); padding-right: var(--p); gap: 20px !important; }
-          .z-root h1, .hero h1 { font-size: 90px; line-height: 1; }
+          .z-root h1, .hero h1 { font-size: 40px !important; line-height: 1; }
           .hero-sub { font-size: 18px; font-weight: 500; }
-          .z-root h2, .section-title { font-size: 40px; }
-          .z-root p { font-size: 18px; font-weight: 500; font-family: 'Inter', sans-serif; line-height: 1.4; }
+          .z-root h2, .section-title { font-size: 30px !important; }
+          .z-root p { font-size: 18px !important; font-weight: 500; font-family: 'Inter', sans-serif !important; line-height: 1.4; }
           .z-root a { font-size: 18px; font-weight: 600; }
           .footer-cta { font-size: 40px; }
           .price-amount { font-size: 48px; }
           .nav-links { gap: 20px; }
           .footer-links { flex-direction: row; flex-wrap: wrap; gap: 20px; }
           .z-footer { padding-left: var(--p); padding-right: var(--p); }
-          .footer-blue-box { padding: 40px; }
+          .footer-grid { grid-template-columns: 1fr !important; gap: 40px; }
+          .footer-blue-box { padding: 20px !important; min-height: auto; width: 100%; box-sizing: border-box; }
           .footer-desc { max-width: 100%; }
+          .footer-right { align-items: center; justify-content: center; width: 100%; }
+          .footer-wordmark { justify-content: center; align-items: center; width: 100%; }
+          .footer-wordmark img { object-position: center bottom; max-width: 100%; width: 100%; }
 
-          .process-title-col, .solve-title-col { position: sticky; top: 0; z-index: 0; background: var(--bg); padding: 60px var(--p) 20px; margin: -30px calc(var(--p) * -1) 0; text-align: left; }
+          .process-title-col, .solve-title-col { position: static; background: var(--bg); padding: 20px var(--p); margin: 0; text-align: left; }
           .process-steps-col, .solve-section .phases { position: relative; z-index: 7; }
-          .process-step { position: sticky; }
-          .process-step:nth-child(1) { top: 200px; z-index: 7; }
-          .process-step:nth-child(2) { top: 260px; z-index: 7; }
-          .process-step:nth-child(3) { top: 320px; z-index: 7; }
-          .process-step:nth-child(4) { top: 380px; z-index: 7; }
-          .process-step:nth-child(5) { top: 440px; z-index: 7; }
+          .process-step { position: static; }
           .process-steps-col { padding-bottom: 0; }
 
-          .phases > .phase-card { position: sticky; }
-          .phases > .phase-card:nth-child(1) { top: 200px; z-index: 7; }
-          .phases > .phase-card:nth-child(2) { top: 260px; z-index: 8; }
-          .phases > .phase-card:nth-child(3) { top: 320px; z-index: 9; }
+          .phases > .phase-card { position: static; }
           .solve-section .phases { padding-bottom: 0; }
-          .solve-section, .faq-section { padding-top: 80px !important; }
-          .contact-section, .about-section { padding-top: 80px !important; padding-bottom: 80px !important; }
-          .pricing-section { padding-bottom: 80px !important; }
+          .solve-section, .faq-section { padding-top: 20px !important; }
+          .contact-section, .about-section { padding-top: 20px !important; padding-bottom: 20px !important; }
+          .pricing-section { padding-bottom: 20px !important; }
           .section-header { margin-bottom: 0 !important; }
         }
       `}</style>
@@ -786,7 +785,7 @@ function Index() {
               <li>
                 <a href="#contact">DM</a>
               </li>
-              <li>
+              <li className="mobile-hidden">
                 <a href="#contact" className="btn-blue no-anim">
                   Elevate My Brand
                 </a>
