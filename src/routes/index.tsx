@@ -440,6 +440,8 @@ function Index() {
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
         .hero h1 { font-size: 90px; opacity: 0; animation: zHeroIn .7s ease 2.5s forwards; }
+        .hero-h1-mobile { display: none; }
+        .hero-h1-desktop { display: inline; }
         .hero-sub { font-size: 18px; line-height: 23px; color: #000; max-width: 600px; opacity: 0; animation: zHeroIn .6s ease 2.8s forwards; }
         .btn-black, .btn-blue, .btn-white, .btn-white-outline, .btn-form-submit, .btn-form-reset { display: inline-flex; align-items: center; gap: 0; font-weight: 600; font-size: 18px; letter-spacing: 0.3px; text-transform: uppercase; padding: 10px 15px; border-radius: 4px; text-decoration: none; cursor: pointer; transition: background .18s, border-color .18s, color .18s, gap .2s; border: 1px solid transparent; position: relative; align-self: flex-start; }
         .btn-black::before, .btn-blue::before, .btn-white::before, .btn-white-outline::before, .btn-form-submit::before, .btn-form-reset::before { content: ''; width: 0; height: 6px; border-radius: 2px; opacity: 0; transition: opacity .2s, width .2s; }
@@ -662,6 +664,8 @@ function Index() {
           .z-section, .z-footer, .problem-sticky { padding-top: 20px !important; padding-bottom: 20px !important; gap: 40px !important; }
           .hero { padding-left: var(--p); padding-right: var(--p); gap: 20px !important; }
           .z-root h1, .hero h1 { font-size: 40px !important; line-height: 1; letter-spacing: 0 !important; }
+          .hero-h1-desktop { display: none !important; }
+          .hero-h1-mobile { display: inline !important; }
           .hero-sub { font-size: 18px; font-weight: 500; }
           .z-root h2, .section-title { font-size: 30px !important; letter-spacing: 0 !important; }
           .z-root p { font-size: 18px !important; font-weight: 500; font-family: 'Inter', sans-serif !important; line-height: 20px !important; }
@@ -807,11 +811,22 @@ function Index() {
               <span>Brand • Websites</span>
             </div>
             <h1>
-              We help growing brands
-              <br />
-              look as valuable as
-              <br />
-              they actually are
+              <span className="hero-h1-desktop">
+                We help growing brands
+                <br />
+                look as valuable as
+                <br />
+                they actually are
+              </span>
+              <span className="hero-h1-mobile">
+                We help growing
+                <br />
+                brands look as
+                <br />
+                valuable as they
+                <br />
+                actually are
+              </span>
             </h1>
             <p className="hero-sub">
               Refresh your visual identity and website with strategic design, clear positioning, and
