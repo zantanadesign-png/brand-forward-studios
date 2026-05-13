@@ -201,9 +201,9 @@ const ZWordmark = ({ className }: { className?: string }) => (
     preserveAspectRatio="xMidYMid meet"
   >
     <text
-      x="300"
-      y="100"
-      textAnchor="middle"
+      x="600"
+      y="115"
+      textAnchor="end"
       fill="currentColor"
       fontFamily="Inter, sans-serif"
       fontWeight="900"
@@ -407,7 +407,7 @@ function Index() {
         rel="stylesheet"
       />
       <style>{`
-        :root { --blue: #1041D7; --black: #000; --white: #fff; --p: 40px; --pv: 40px; --g: 20px; }
+        :root { --blue: #1041D7; --black: #000; --white: #fff; --p: 40px; --pv: 40px; --g: 40px; }
 
         /* Section-scoped themes */
         [data-theme="light"] { --bg: #fff; --text: #000; --surface: #f2f2f2; --muted: #333; background: #fff; color: #000; }
@@ -415,7 +415,7 @@ function Index() {
         [data-theme="blue"] { --bg: #1041D7; --text: #fff; --surface: rgba(255,255,255,0.1); --muted: rgba(255,255,255,0.8); background: #1041D7; color: #fff; }
 
         .z-root *, .z-root *::before, .z-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        .z-root { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 500; line-height: 23px; overflow-x: clip; min-height: 100vh; }
+        .z-root { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 500; line-height: 23px; overflow-x: clip; min-height: 100vh; letter-spacing: 0.3px; }
 
         .z-cursor, .z-cursor-label { display: none; }
         @media (hover: hover) and (pointer: fine) {
@@ -428,7 +428,7 @@ function Index() {
         .z-root h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 90px; }
         .z-root h2 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; line-height: 1; letter-spacing: -1px; font-size: 75px; }
         .z-root p { font-size: 18px; font-weight: 500; line-height: 23px; }
-        .z-section-sub { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; }
+        .z-section-sub { font-size: 18px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; }
 
         /* Section base — 40px lateral, 45px vertical */
         .z-section { padding: var(--pv) var(--p); display: flex; flex-direction: column; gap: var(--g); }
@@ -439,10 +439,10 @@ function Index() {
         .nav-logo { font-weight: 800; font-size: 20px; letter-spacing: -0.5px; display: flex; align-items: center; }
         .nav-logo svg { width: 50px; height: 28px; }
         .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
-        .nav-links a { text-decoration: none; font-size: 18px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); transition: color .2s; display: inline-flex; align-items: center; gap: 6px; position: relative; cursor: pointer; }
-        .nav-links a::before { content: ''; width: 6px; height: 6px; border-radius: 2px; background: var(--blue); opacity: 0; transform: scale(0); transition: opacity .2s, transform .2s; }
-        .nav-links a:hover { color: var(--blue); }
-        .nav-links a:hover::before { opacity: 1; transform: scale(1); }
+        .nav-links a { text-decoration: none; font-size: 18px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: var(--text); transition: color .2s, gap .2s; display: inline-flex; align-items: center; gap: 0; position: relative; cursor: pointer; }
+        .nav-links a::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: var(--blue); opacity: 0; transition: opacity .2s, width .2s; }
+        .nav-links a:hover { color: var(--blue); gap: 8px; }
+        .nav-links a:hover::before { opacity: 1; width: 6px; }
 
         @keyframes zNavIn { to { opacity: 1; transform: translateY(0); } }
         @keyframes zHeroIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -451,27 +451,29 @@ function Index() {
         .hero-viewport { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
         /* Hero */
-        .hero { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; gap: 30px; padding-bottom: 40px; box-sizing: border-box; }
-        .hero-available { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue); opacity: 0; animation: zHeroIn .6s ease 2.4s forwards; }
+        .hero { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; gap: 20px; padding-bottom: 40px; box-sizing: border-box; }
+        .hero-available { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 500; letter-spacing: 0.3px; text-transform: uppercase; color: var(--blue); opacity: 0; animation: zHeroIn .6s ease 2.4s forwards; }
         .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; flex-shrink: 0; animation: z-pulse 2s ease-in-out infinite; }
         @keyframes z-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.3); } }
         .hero h1 { font-size: 90px; opacity: 0; animation: zHeroIn .7s ease 2.5s forwards; }
-        .hero-sub { font-size: 18px; line-height: 23px; color: var(--muted); max-width: 600px; opacity: 0; animation: zHeroIn .6s ease 2.8s forwards; }
-        .btn-black, .btn-blue, .btn-white, .btn-white-outline, .btn-form-submit, .btn-form-reset { display: inline-flex; align-items: center; gap: 0; font-weight: 600; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 15px; border-radius: 4px; text-decoration: none; cursor: pointer; transition: background .18s, border-color .18s, color .18s, gap .2s; border: 1px solid transparent; position: relative; align-self: flex-start; }
+        .hero-sub { font-size: 18px; line-height: 23px; color: #000; max-width: 600px; opacity: 0; animation: zHeroIn .6s ease 2.8s forwards; }
+        .btn-black, .btn-blue, .btn-white, .btn-white-outline, .btn-form-submit, .btn-form-reset { display: inline-flex; align-items: center; gap: 0; font-weight: 600; font-size: 18px; letter-spacing: 0.3px; text-transform: uppercase; padding: 10px 15px; border-radius: 4px; text-decoration: none; cursor: pointer; transition: background .18s, border-color .18s, color .18s, gap .2s; border: 1px solid transparent; position: relative; align-self: flex-start; }
         .btn-black::before, .btn-blue::before, .btn-white::before, .btn-white-outline::before, .btn-form-submit::before, .btn-form-reset::before { content: ''; width: 0; height: 6px; border-radius: 2px; opacity: 0; transition: opacity .2s, width .2s; }
         .btn-black:hover, .btn-blue:hover, .btn-white:hover, .btn-white-outline:hover, .btn-form-submit:hover, .btn-form-reset:hover { gap: 8px; }
         .btn-black:hover::before, .btn-blue:hover::before, .btn-white:hover::before, .btn-white-outline:hover::before, .btn-form-submit:hover::before, .btn-form-reset:hover::before { opacity: 1; width: 6px; }
 
-        .btn-black { background: var(--text); color: var(--bg); border-color: var(--text); }
-        .btn-black::before { background: var(--bg); }
+        .btn-black { background: var(--text); color: #fff; border-color: var(--text); }
+        .btn-black::before { background: #fff; }
         .btn-black:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
         .btn-black:hover::before { background: #fff; }
         .btn-black.no-anim, .btn-blue.no-anim { opacity: 1; animation: none; }
 
         .btn-blue { background: var(--blue); color: #fff; border-color: var(--blue); opacity: 0; animation: zHeroIn .6s ease 3.0s forwards; }
         .btn-blue::before { background: #fff; }
-        .btn-blue:hover { background: #000; border-color: #000; }
+        .btn-blue:hover { background: #000; border-color: #000; color: #fff; }
+        .btn-blue:hover::before { background: #fff; }
         .nav-links .btn-blue { color: #fff; }
+        .nav-links .btn-blue:hover { color: #fff; }
 
         /* Ticker */
         .ticker-wrapper { overflow: hidden; padding: 20px 0; cursor: grab; user-select: none; margin-left: calc(var(--p) * -1); margin-right: calc(var(--p) * -1); width: calc(100% + (var(--p) * 2)); }
@@ -507,13 +509,13 @@ function Index() {
         }
 
         /* Solve Section */
-        .solve-section { }
-        .solve-title-col { text-align: center; width: 100%; margin-bottom: 40px; }
+        .solve-section { padding-top: 80px; }
+        .solve-title-col { text-align: center; width: 100%; margin-bottom: 0; }
 
         /* Section title block */
         .section-title { font-size: 75px; }
-        .section-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; margin-bottom: 40px; width: 100%; }
-        .section-subtitle { max-width: 380px; text-align: right; font-size: 18px; font-weight: 500; text-transform: uppercase; line-height: 1.4; color: var(--text); padding-top: 0; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; margin-bottom: 0; width: 100%; }
+        .section-subtitle { max-width: 50%; text-align: right; font-size: 18px; font-weight: 500; text-transform: uppercase; line-height: 1.4; color: var(--text); padding-top: 0; }
         @media (max-width: 899px) {
           .section-header { flex-direction: column; gap: 16px; align-items: flex-start; }
           .section-subtitle { display: none; }
@@ -568,7 +570,7 @@ function Index() {
         .btn-white:hover::before { background: #fff; }
 
         /* FAQ */
-        .faq-section { }
+        .faq-section { padding-top: 80px; }
         .faq-list { display: flex; flex-direction: column; gap: 20px; }
         .faq-item { background: var(--surface); border-radius: 5px; overflow: hidden; transition: background .2s; }
         .faq-item.open { background: var(--blue); }
@@ -588,7 +590,7 @@ function Index() {
         .faq-item.open .faq-answer p { color: #fff; }
 
         /* About */
-        .about-section { }
+        .about-section { padding-top: 80px; padding-bottom: 80px; }
         .about-inner { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; }
         .about-photo { width: 300px; border-radius: 5px; display: block; aspect-ratio: 3/4; object-fit: cover; object-position: top; filter: grayscale(100%); }
         .about-headline { font-weight: 500; font-size: 18px; line-height: 23px; text-transform: uppercase; letter-spacing: .3px; }
@@ -599,7 +601,7 @@ function Index() {
         .btn-white-outline:hover::before { background: #fff; }
 
         /* Contact */
-        .contact-section { }
+        .contact-section { padding-top: 80px; padding-bottom: 80px; }
         .contact-section h2 { color: var(--text); }
         .contact-section .z-section-sub { color: var(--muted); }
         .contact-subtitle { font-size: 18px; line-height: 23px; color: var(--muted); max-width: 600px; }
@@ -621,21 +623,26 @@ function Index() {
         .btn-form-reset:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
         .btn-form-reset:hover::before { background: #fff; }
         .form-error-msg { background: rgba(255,0,0,.15); color: #fff; font-size: 13px; font-weight: 600; padding: 12px 16px; border-radius: 5px; text-align: center; }
-        @keyframes formFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .form-success { display: flex; flex-direction: column; gap: 8px; animation: formFadeIn .4s ease forwards; }
+        .form-success h3 { font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 1px; }
+        .form-success p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.4; }
+        @keyframes formFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Footer */
         .z-footer { background: var(--bg); padding: 40px; min-height: 100vh; display: flex; flex-direction: column; gap: 40px; }
         .footer-grid { display: grid; grid-template-columns: 60fr 40fr; gap: 40px; align-items: stretch; flex: 1; }
         .footer-blue-box { background: var(--blue); border-radius: 5px; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 600px; }
         .footer-cta-top { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
-        .footer-cta { font-family: 'Anton', sans-serif; font-size: 80px; line-height: 0.9; color: #fff; text-transform: uppercase; margin-bottom: 10px; }
-        .footer-cta-body { font-size: 20px; font-weight: 500; line-height: 1.4; color: rgba(255,255,255,0.85); max-width: 480px; margin-bottom: 20px; }
+        .footer-cta { font-family: 'Anton', sans-serif; font-size: 80px; line-height: 0.9; color: #fff; text-transform: uppercase; margin: 0; }
+        .footer-cta-body { font-size: 20px; font-weight: 500; line-height: 1.4; color: #fff; max-width: 480px; margin: 0; }
         .footer-right { display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; }
         .footer-links { display: flex; flex-direction: row; flex-wrap: wrap; gap: 24px; padding-top: 40px; justify-content: space-between; width: 100%; }
-        .footer-links a { text-decoration: none; font-size: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #fff; transition: opacity .2s; display: inline-flex; align-items: center; gap: 4px; }
-        .footer-links a:hover { opacity: 0.7; }
-        .footer-wordmark { width: 100%; display: flex; justify-content: flex-end; margin-top: auto; }
-        .footer-wordmark svg { width: 100%; max-width: 800px; height: auto; color: var(--text); display: block; margin-right: -20px; }
+        .footer-links a { text-decoration: none; font-size: 16px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; color: #fff; transition: opacity .2s, gap .2s; display: inline-flex; align-items: center; gap: 0; position: relative; }
+        .footer-links a::before { content: ''; width: 0; height: 6px; border-radius: 2px; background: #fff; opacity: 0; transition: opacity .2s, width .2s; }
+        .footer-links a:hover { color: #000; gap: 8px; opacity: 1; }
+        .footer-links a:hover::before { opacity: 1; width: 6px; background: #000; }
+        .footer-wordmark { width: 100%; display: flex; justify-content: flex-end; align-items: flex-end; margin-top: auto; }
+        .footer-wordmark svg { width: 100%; max-width: 800px; height: auto; color: var(--text); display: block; }
 
         /* Desktop */
         @media (min-width: 900px) {
@@ -650,7 +657,7 @@ function Index() {
           .process-section .process-title-col { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 80px; align-self: start; }
           .process-steps-col { display: flex; flex-direction: column; gap: 20px; padding-bottom: 60px; }
           .process-step { height: auto; padding: 20px; }
-          .pricing-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
+          .pricing-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; padding-bottom: 80px; }
           .pricing-title-col { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 16px; align-self: start; }
           .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
           .faq-section { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; align-items: start; }
@@ -664,8 +671,8 @@ function Index() {
 
         /* Mobile */
         @media (max-width: 899px) {
-          :root { --p: 24px; --pv: 30px !important; --g: 20px; }
-          .z-section, .z-footer, .problem-sticky { padding-top: 30px !important; padding-bottom: 30px !important; gap: 30px !important; }
+          :root { --p: 24px; --pv: 40px !important; --g: 40px !important; }
+          .z-section, .z-footer, .problem-sticky { padding-top: 40px !important; padding-bottom: 40px !important; gap: 40px !important; }
           .hero { padding-left: var(--p); padding-right: var(--p); gap: 20px !important; }
           .z-root h1, .hero h1 { font-size: 90px; line-height: 1; }
           .hero-sub { font-size: 18px; font-weight: 500; }
@@ -695,9 +702,9 @@ function Index() {
           .phases > .phase-card:nth-child(2) { top: 260px; z-index: 8; }
           .phases > .phase-card:nth-child(3) { top: 320px; z-index: 9; }
           .solve-section .phases { padding-bottom: 0; }
-          .solve-section, .faq-section { padding-top: 60px !important; }
-          .contact-section, .about-section { padding-top: 60px !important; padding-bottom: 60px !important; }
-          .pricing-section { padding-bottom: 60px !important; }
+          .solve-section, .faq-section { padding-top: 80px !important; }
+          .contact-section, .about-section { padding-top: 80px !important; padding-bottom: 80px !important; }
+          .pricing-section { padding-bottom: 80px !important; }
           .section-header { margin-bottom: 0 !important; }
         }
       `}</style>
@@ -739,7 +746,7 @@ function Index() {
               <br />
               look as valuable as
               <br />
-              they actually are.
+              they actually are
             </h1>
             <p className="hero-sub">
               Refresh your visual identity and website with strategic design, clear positioning, and
@@ -781,16 +788,16 @@ function Index() {
           <div className="problem-sticky">
             <div className="problem-texts">
               <h2 className={`problem-item ${problemProgress > 0.2 ? "is-active" : ""}`}>
-                Your service became more refined.
+                Your service became more refined
               </h2>
               <h2 className={`problem-item ${problemProgress > 0.4 ? "is-active" : ""}`}>
-                Your business moved forward.
+                Your business moved forward
               </h2>
               <h2 className={`problem-item ${problemProgress > 0.6 ? "is-active" : ""}`}>
-                your business evolved.
+                your business evolved
               </h2>
               <h2 className={`problem-item ${problemProgress > 0.8 ? "is-active" : ""}`}>
-                Your team grew.
+                Your team grew
               </h2>
               <p className={`problem-item ${problemProgress > 0.95 ? "is-active" : ""}`}>
                 But your website and visual identity still don’t reflect the level you operate at
@@ -840,7 +847,9 @@ function Index() {
               PROJECTS
             </h2>
             <div className="section-subtitle">
-              I TURN BOLD IDEAS INTO WEBSITES YOU'RE PROUD TO SHARE — WITH EASE.
+              I TURN BOLD IDEAS INTO WEBSITES
+              <br />
+              YOU'RE PROUD TO SHARE
             </div>
           </div>
           <div className="projects reveal-content">
@@ -869,7 +878,9 @@ function Index() {
               PROJECTS
             </h2>
             <div className="section-subtitle">
-              I CREATE ICONIC VISUAL IDENTITIES THAT DEFINE YOUR BRAND'S UNIQUE ESSENCE.
+              I CREATE ICONIC VISUAL IDENTITIES THAT
+              <br />
+              DEFINE YOUR BRAND'S UNIQUE ESSENCE
             </div>
           </div>
           <div className="projects reveal-content">
@@ -915,7 +926,7 @@ function Index() {
             <h2>
               PICK THE PLAN
               <br />
-              THAT FITS.
+              THAT FITS
             </h2>
           </div>
           <div className="pricing-grid reveal-content">
@@ -999,120 +1010,78 @@ function Index() {
           <div className="contact-grid">
             <div className="reveal-title">
               <h2>
-                LET'S FIGURE
+                LET'S FIGURE IT OUT
                 <br />
-                IT OUT
-                <br />— TOGETHER.
+                — TOGETHER
               </h2>
             </div>
             <div className="reveal-content">
-              {formStatus === "sent" ? (
-                <div className="form-success">
-                  <div className="form-success-icon">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="var(--blue)"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <h3>MESSAGE SENT!</h3>
-                  <p>
-                    Thank you for reaching out. I'll review your project details and get back to you
-                    within 24–48 hours.
-                  </p>
-                  <button className="btn-form-reset" onClick={() => setFormStatus("idle")}>
-                    Send another message
-                  </button>
-                </div>
-              ) : (
-                <form
-                  className="contact-form"
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    setFormStatus("sending");
-                    const form = e.currentTarget;
-                    const formData = new FormData(form);
-                    formData.append("access_key", "ff788bc1-0eed-4d8a-b7db-fd1ad8c08a54");
-                    formData.append("subject", `New project inquiry from ${formData.get("name")}`);
-                    formData.append("from_name", "Zantana Studio Website");
-                    try {
-                      const res = await fetch("https://api.web3forms.com/submit", {
-                        method: "POST",
-                        body: formData,
-                      });
-                      const data = await res.json();
-                      if (data.success) {
-                        setFormStatus("sent");
-                        form.reset();
-                      } else {
-                        setFormStatus("error");
-                      }
-                    } catch {
+              <form
+                className="contact-form"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setFormStatus("sending");
+                  const form = e.currentTarget;
+                  const formData = new FormData(form);
+                  formData.append("access_key", "ff788bc1-0eed-4d8a-b7db-fd1ad8c08a54");
+                  formData.append("subject", `New project inquiry from ${formData.get("name")}`);
+                  formData.append("from_name", "Zantana Studio Website");
+                  try {
+                    const res = await fetch("https://api.web3forms.com/submit", {
+                      method: "POST",
+                      body: formData,
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                      setFormStatus("sent");
+                      form.reset();
+                    } else {
                       setFormStatus("error");
                     }
-                  }}
-                >
-                  <div className="form-group">
-                    <label>Name</label>
-                    <input
-                      name="name"
-                      type="text"
-                      placeholder="Your name"
-                      maxLength={100}
-                      required
-                    />
+                  } catch {
+                    setFormStatus("error");
+                  }
+                }}
+              >
+                <div className="form-group">
+                  <label>Name</label>
+                  <input name="name" type="text" placeholder="Your name" required />
+                </div>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input name="email" type="email" placeholder="email@company.com" required />
+                </div>
+                <div className="form-group">
+                  <label>Company Name</label>
+                  <input name="company" type="text" placeholder="Company name" />
+                </div>
+                <div className="form-group">
+                  <label>Message</label>
+                  <textarea name="message" placeholder="Tell me about your project..." required />
+                </div>
+
+                {formStatus === "sent" ? (
+                  <div className="form-success">
+                    <h3>MESSAGE SENT!</h3>
+                    <p>
+                      Thank you for reaching out. I'll get back to you within 24–48 hours.
+                    </p>
                   </div>
-                  <div className="form-group">
-                    <label>Email</label>
-                    <input
-                      name="email"
-                      type="email"
-                      placeholder="email@company.com"
-                      maxLength={255}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>What is your company name?</label>
-                    <input name="company" type="text" placeholder="Company name" maxLength={100} />
-                  </div>
-                  <div className="form-group">
-                    <label>What services does your company provide?</label>
-                    <input
-                      name="services"
-                      type="text"
-                      placeholder="e.g. SaaS, e-commerce, agency"
-                      maxLength={200}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Message</label>
-                    <textarea
-                      name="message"
-                      placeholder="Tell me about your project..."
-                      maxLength={1000}
-                    />
-                  </div>
-                  {formStatus === "error" && (
-                    <div className="form-error-msg">
-                      Something went wrong. Please try again or email directly at
-                      zantanadesign@gmail.com
-                    </div>
-                  )}
-                  <button
-                    type="submit"
-                    className="btn-form-submit"
-                    disabled={formStatus === "sending"}
-                  >
-                    {formStatus === "sending" ? "Sending..." : "Start a project"}
-                  </button>
-                </form>
-              )}
+                ) : (
+                  <>
+                    <button
+                      type="submit"
+                      className="btn-form-submit"
+                      disabled={formStatus === "sending"}
+                    >
+                      {formStatus === "sending" ? "Sending..." : "Elevate My Brand"}
+                    </button>
+                    {formStatus === "error" && (
+                      <div className="form-error-msg">Something went wrong. Please try again.</div>
+                    )}
+                  </>
+                )}
+              </form>
             </div>
           </div>
         </section>
