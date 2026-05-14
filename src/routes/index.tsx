@@ -487,9 +487,9 @@ function Index() {
         .reveal.is-visible .reveal-content { opacity: 1; transform: translateY(0); }
 
         /* Problem Section (Scrollytelling) */
-        .problem-section { height: 450vh; position: relative; padding: 0; }
+        .problem-section { height: 600vh; position: relative; padding: 0; }
         .problem-sticky { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--blue); color: #fff; padding: var(--p); overflow: hidden; }
-        .problem-texts { display: flex; flex-direction: column; gap: 15px; text-align: center; align-items: center; width: 100%; }
+        .problem-texts { display: flex; flex-direction: column; gap: 15px; text-align: center; justify-content: center; align-items: center; width: 100%; height: 100%; }
         .problem-item { opacity: 0; transform: translateY(30px); transition: all .8s cubic-bezier(0.16, 1, 0.3, 1); }
         .problem-item.is-active { opacity: 1; transform: translateY(0); }
         .problem-section h2 { font-size: 75px; text-transform: uppercase; }
@@ -897,16 +897,16 @@ function Index() {
           {/* Desktop: scrollytelling */}
           <div className="problem-sticky problem-desktop">
             <div className="problem-texts">
-              <h2 className={`problem-item ${problemProgress > 0.2 ? "is-active" : ""}`}>
+              <h2 className={`problem-item ${problemProgress > 0.15 ? "is-active" : ""}`}>
                 Your company grew.
               </h2>
-              <h2 className={`problem-item ${problemProgress > 0.5 ? "is-active" : ""}`}>
+              <h2 className={`problem-item ${problemProgress > 0.35 ? "is-active" : ""}`}>
                 Your service got better.
               </h2>
-              <h2 className={`problem-item ${problemProgress > 0.8 ? "is-active" : ""}`}>
+              <h2 className={`problem-item ${problemProgress > 0.55 ? "is-active" : ""}`}>
                 Your team has scaled.
               </h2>
-              <p className={`problem-item ${problemProgress > 0.95 ? "is-active" : ""}`}>
+              <p className={`problem-item ${problemProgress > 0.70 ? "is-active" : ""}`}>
                 But your website and visual identity still don't
                 <br />
                 reflect the level you operate at today.
@@ -1146,11 +1146,15 @@ function Index() {
                   formData.append("access_key", "ff788bc1-0eed-4d8a-b7db-fd1ad8c08a54");
                   formData.append("subject", `New project inquiry from ${formData.get("name")}`);
                   formData.append("from_name", "Zantana Studio Website");
+                  const controller = new AbortController();
+                  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
                   try {
                     const res = await fetch("https://api.web3forms.com/submit", {
                       method: "POST",
                       body: formData,
+                      signal: controller.signal,
                     });
+                    clearTimeout(timeoutId);
                     const data = await res.json();
                     if (data.success) {
                       setFormStatus("sent");
@@ -1158,8 +1162,13 @@ function Index() {
                     } else {
                       setFormStatus("error");
                     }
-                  } catch {
-                    setFormStatus("error");
+                  } catch (error) {
+                    clearTimeout(timeoutId);
+                    if (error.name === 'AbortError') {
+                      setFormStatus("error");
+                    } else {
+                      setFormStatus("error");
+                    }
                   }
                 }}
               >
