@@ -182,18 +182,18 @@ const faqs = [
 ];
 
 const ZLogo = ({ className }: { className?: string }) => (
-  <img 
-    src="/logo-icon.png" 
-    alt="Zantana Logo" 
-    className={className} 
+  <img
+    src="/logo-icon.png"
+    alt="Zantana Logo"
+    className={className}
   />
 );
 
 const ZWordmark = ({ className }: { className?: string }) => (
-  <img 
-    src="/logo-wordmark.png" 
-    alt="Zantana Wordmark" 
-    className={className} 
+  <img
+    src="/logo-wordmark.png"
+    alt="Zantana Wordmark"
+    className={className}
   />
 );
 
@@ -224,6 +224,14 @@ const PlusIcon = () => (
 );
 
 function Index() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 899px)");
+    const handler = (e: MediaQueryListEvent | MediaQueryList) => setIsMobile(e.matches);
+    handler(mql);
+    mql.addEventListener("change", handler as (e: MediaQueryListEvent) => void);
+    return () => mql.removeEventListener("change", handler as (e: MediaQueryListEvent) => void);
+  }, []);
 
 
   const [openFaqs, setOpenFaqs] = useState<Set<number>>(new Set([0]));
@@ -367,6 +375,10 @@ function Index() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (isMobile) {
+      setProblemProgress(1);
+      return;
+    }
     const handleScroll = () => {
       const el = problemRef.current;
       if (!el) return;
@@ -380,7 +392,7 @@ function Index() {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isMobile]);
 
   return (
     <>
@@ -482,10 +494,18 @@ function Index() {
         .problem-item.is-active { opacity: 1; transform: translateY(0); }
         .problem-section h2 { font-size: 75px; text-transform: uppercase; }
 
+        /* Mobile/Desktop visibility for problem section */
+        .problem-mobile { display: none; }
+        .problem-desktop { display: block; }
+
         @media (max-width: 899px) {
-          .problem-section { height: 400vh; }
-          .problem-section h2 { font-size: 30px !important; }
-          .problem-texts { gap: 24px; }
+          .problem-section { height: auto !important; position: relative; padding: 40px 20px 20px 20px !important; background: #1041D7 !important; }
+          .problem-sticky { position: static !important; height: auto !important; background: transparent !important; color: #fff !important; padding: 0 !important; }
+          .problem-desktop { display: none !important; }
+          .problem-mobile { display: flex !important; flex-direction: column; gap: 40px !important; text-align: left; }
+          .problem-mobile h2 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; font-size: 30px !important; line-height: 1; color: #fff !important; margin: 0 !important; padding: 0 !important; }
+          .problem-mobile-text { font-family: 'Inter', sans-serif; font-size: 18px !important; font-weight: 500; line-height: 23px; color: #fff !important; margin: 0 !important; padding: 0 !important; letter-spacing: 0.3px; }
+          .problem-mobile-text .uppercase-part { text-transform: uppercase; }
           .footer-cta { font-size: 38px; }
           .z-footer { padding: 20px; }
           .footer-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -688,7 +708,7 @@ function Index() {
           .mobile-only-links a:hover { color: var(--blue); }
           .mobile-only-links a:hover::before { background: var(--blue); width: 6px; opacity: 1; }
 
-          .process-title-col, .solve-title-col { position: static; background: var(--bg); padding: 0; margin: 0; text-align: left; }
+          .process-title-col, .solve-title-col { position: static; background: transparent; padding: 0; margin: 0; text-align: left; }
           .process-steps-col, .solve-section .phases { position: relative; z-index: 7; }
           .solve-section, .process-section { gap: 40px !important; }
           .process-step { position: static; }
@@ -696,12 +716,21 @@ function Index() {
 
           .phases > .phase-card { position: static; }
           .solve-section .phases { padding-bottom: 0; }
-          .solve-section { padding-top: 40px !important; padding-bottom: 20px !important; }
-          .process-section { padding-top: 40px !important; padding-bottom: 20px !important; }
+          .solve-section { padding-top: 20px !important; padding-bottom: 40px !important; background: #1041D7 !important; }
+          .solve-section .section-title { color: #fff !important; }
+          .solve-section .phase-card-top { color: #fff !important; background: #0b3ac2 !important; }
+          .solve-section .phase-card-bottom { color: #fff !important; }
+          .solve-section .phase-card-top *, .solve-section .phase-card-bottom * { color: #fff !important; }
+          .solve-section .phase-label, .solve-section .phase-list li, .solve-section .tagline, .solve-section .phase-card-bottom p { color: #fff !important; }
+          .process-section { padding-top: 20px !important; padding-bottom: 20px !important; }
           .faq-section { padding-top: 40px !important; padding-bottom: 20px !important; }
           .contact-section, .about-section { padding-top: 40px !important; padding-bottom: 40px !important; }
           .pricing-section { padding-top: 20px !important; padding-bottom: 40px !important; }
           .section-header { margin-bottom: 0 !important; }
+
+          /* Visual Brand Projects — bottom padding 20px */
+          .visual-brand-section { padding-bottom: 20px !important; }
+          .website-projects-section { padding-top: 40px !important; }
         }
       `}</style>
 
@@ -865,29 +894,40 @@ function Index() {
         </section>
 
         <section ref={problemRef} className="problem-section" data-theme="blue">
-          <div className="problem-sticky">
+          {/* Desktop: scrollytelling */}
+          <div className="problem-sticky problem-desktop">
             <div className="problem-texts">
               <h2 className={`problem-item ${problemProgress > 0.2 ? "is-active" : ""}`}>
-                Your service became more refined
+                Your company grew.
               </h2>
-              <h2 className={`problem-item ${problemProgress > 0.4 ? "is-active" : ""}`}>
-                Your standards became higher
-              </h2>
-              <h2 className={`problem-item ${problemProgress > 0.6 ? "is-active" : ""}`}>
-                Your business kept evolving
+              <h2 className={`problem-item ${problemProgress > 0.5 ? "is-active" : ""}`}>
+                Your service got better.
               </h2>
               <h2 className={`problem-item ${problemProgress > 0.8 ? "is-active" : ""}`}>
-                Your team grew
+                Your team has scaled.
               </h2>
               <p className={`problem-item ${problemProgress > 0.95 ? "is-active" : ""}`}>
-                But your website and visual identity still don’t reflect the level you operate at
-                today.
+                But your website and visual identity still don't
                 <br />
-                The result? A brand that feels behind its own potential and a digital presence
-                <br />
-                that no longer builds the trust, clarity, and perception your business deserves.
+                reflect the level you operate at today.
               </p>
             </div>
+          </div>
+          {/* Mobile: static layout */}
+          <div className="problem-mobile">
+            <h2>Facing this problem?</h2>
+            <p className="problem-mobile-text">
+              <span className="uppercase-part">
+                Your company grew.
+                <br />
+                Your service got better.
+                <br />
+                Your team has scaled.
+              </span>
+              <br />
+              But your website and visual identity still don't reflect the level you operate at
+              today.
+            </p>
           </div>
         </section>
 
@@ -919,7 +959,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section reveal" id="work" data-theme="light">
+        <section className="z-section reveal website-projects-section" id="work" data-theme="light">
           <div className="reveal-title section-header">
             <h2 className="section-title">
               WEBSITE
@@ -950,7 +990,7 @@ function Index() {
           </div>
         </section>
 
-        <section className="z-section reveal" data-theme="light">
+        <section className="z-section reveal visual-brand-section" data-theme="light">
           <div className="reveal-title section-header">
             <h2 className="section-title">
               VISUAL BRAND
@@ -1049,10 +1089,10 @@ function Index() {
 
             <div className="price-card">
               <div className="price-card-header">
-                <span className="plan-name">Full Website</span>
+                <span className="plan-name">Multipage</span>
               </div>
               <div className="price-card-body">
-                <div className="price-amount">$2800</div>
+                <div className="price-amount">$2500</div>
                 <div className="price-label">What's included</div>
                 <ul className="price-features">
                   {[
@@ -1079,7 +1119,7 @@ function Index() {
                   </li>
                 </ul>
                 <a href="#contact" className="btn-white">
-                  Start Full Website
+                  Start Multipage
                 </a>
               </div>
             </div>
@@ -1225,11 +1265,7 @@ function Index() {
             <div className="footer-blue-box">
               <div className="footer-cta-top">
                 <h2 className="footer-cta">
-                  Ready to create a brand
-                  <br />
-                  that feels impossible
-                  <br />
-                  to ignore?
+                  Ready to create a brand that feels impossible to ignore?
                 </h2>
                 <p className="footer-cta-body">
                   Let’s explore how your brand could look, feel, and perform with the right strategic
