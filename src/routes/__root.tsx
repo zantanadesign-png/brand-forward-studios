@@ -30,7 +30,7 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Zantana — Premium Brand & Web Design Studio" },
+      { title: "Zantana — Premium Brand & Web Design Sttudio" },
       { name: "description", content: "Zantana creates strategic websites and visual identities for modern brands looking to elevate perception, credibility, and digital presence." },
       { name: "author", content: "Zantana Studio" },
       { property: "og:title", content: "Zantana — Premium Brand & Web Design Studio" },
